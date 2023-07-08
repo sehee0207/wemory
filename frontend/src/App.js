@@ -1,44 +1,29 @@
 import React, { Component } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
 //import logo from './logo.svg';
 
-import AddTutorial from "./components/add-tutorial.component";
-import Tutorial from "./components/tutorial.component";
-import TutorialsList from "./components/tutorials-list.component";
+// practice
+//import AddTutorial from "./components/add-tutorial.component";
+//import Tutorial from "./components/tutorial.component";
+//import TutorialsList from "./components/tutorials-list.component";
+
+// wemory
+import MainPage from "./components/page/MainPage";
+import CreateCommunityPage from "./components/page/CreateCommunityPage";
+import LoginPage from "./components/page/LoginPage";
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <nav className="navbar navbar-expand navbar-dark bg-dark">
-          <a href="/tutorials" className="navbar-brand">
-            bezKoder
-          </a>
-          <div className="navbar-nav mr-auto">
-            <li className="nav-item">
-              <Link to={"/tutorials"} className="nav-link">
-                Tutorials
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link to={"/add"} className="nav-link">
-                Add
-              </Link>
-            </li>
-          </div>
-        </nav>
-
-        <div className="container mt-3">
-          <Routes>
-            <Route path="/" element={<TutorialsList/>} />
-            <Route path="/tutorials" element={<TutorialsList/>} />
-            <Route path="/add" element={<AddTutorial/>} />
-            <Route path="/tutorials/:id" element={<Tutorial/>} />
-          </Routes>
-        </div>
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route index element={<MainPage />} />
+          <Route path="create-community" element={<CreateCommunityPage />} />
+          <Route path="login" element={<LoginPage />} />
+        </Routes>
+      </BrowserRouter>
     );
   }
 }
