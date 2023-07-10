@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 const StyleButton = styled.button`
-    font-size: 1.3em;
+    font-size: 1em;
     font-weight: 800;
     border-radius: 50px;
     border: 0px;
@@ -16,8 +16,11 @@ const StyleButton = styled.button`
 function Button(props){
     const { title, onClick } = props;
 
-    //return <StyleButton>{ title || "버튼"}</StyleButton>;
-    return <StyleButton onClick={onClick}>{ title || "버튼"}</StyleButton>;
+    return(
+        <StyleButton onClick={onClick}>
+            { title || "버튼"}
+        </StyleButton>
+    );
 }
 
 export default Button;
