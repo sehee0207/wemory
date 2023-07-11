@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import TopBar from "../ui/TopBar";
@@ -28,105 +28,77 @@ const TitleText = styled.p`
     font-weight: 800;
 `
 
-export default class SignupTest extends Component {
-    constructor(props) {
-        super(props);
-        this.onChangeId = this.onChangeId.bind(this);
-        this.onChangePw1 = this.onChangePw1.bind(this);
-        this.onChangePw2 = this.onChangePw2.bind(this);
-        this.onChangeEmail = this.onChangeEmail.bind(this);
-        this.saveMember = this.saveMember.bind(this);
-        this.newMember = this.newMember.bind(this);
-    
-        this.state = {
-          memberId: "",
-          pw1: "",
-          pw2: "", 
-          email: "",
-    
-          submitted: false
-        };
-    }
+export default function SignupTest(props) {
+  const [memberId, setMemberId] = useState("");
+  const [pw1, setPw1] = useState("");
+  const [pw2, setPw2] = useState("");
+  const [email, setEmail] = useState("");
+  const [submitted, setSubmitted] = useState(false);
 
-    onChangeId(e) {
-      this.setState({
-        memberId: e.target.value
-      });
-    }
-  
-    onChangePw1(e) {
-      this.setState({
-        pw1: e.target.value
-      });
-    }
-  
-    onChangePw2(e) {
-      this.setState({
-        pw2: e.target.value
-      });
-    }
-  
-    onChangeEmail(e) {
-      this.setState({
-        email: e.target.value
-      });
-    }
+  const onChangeId= e => {
+    setMemberId(e.target.value);
+  }
 
-    saveMember() {
-        var data = {
-          memberId: this.state.memberId,
-          pw1: this.state.pw1,
-          pw2: this.state.pw2,
-          email: this.state.email
-        };
-    
-        MemberDataService.signup(data)
-          .then(response => {
-            this.setState({
-              memberId: response.data.memberId,
-              pw1: response.data.pw1,
-              pw2: response.data.pw2,
-              email: response.data.email,
-    
-              submitted: true
-            });
-            console.log(response.data);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-    }
-    
-    newMember() {
-        this.setState({
-          memberId: "",
-          pw1: "",
-          pw2: "", 
-          email: "",
-    
-          submitted: false
+  const onChangePw1= e => {
+    setPw1(e.target.value);
+  }
+
+  const onChangePw2= e => {
+    setPw2(e.target.value);
+  }
+
+  const onChangeEmail= e => {
+    setEmail(e.target.value);
+  }
+
+  const saveMember=()=> {
+      var data = {
+        memberId: memberId,
+        pw1: pw1,
+        pw2: pw2,
+        email: email
+      };
+  
+      MemberDataService.signup(data)
+        .then(response => {
+          setMemberId(response.data.memberId);
+          setPw1(response.data.pw1);
+          setPw2(response.data.pw2);
+          setEmail(response.data.email);
+          setSubmitted(true);
+
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
         });
-    }
+  }
+  
+  const newMember=()=> {
+      setMemberId("");
+      setPw1("");
+      setPw2("");
+      setEmail("");
+      setSubmitted(false);    
+  };
 
-    render() {
-        return(
-            <Wrapper>
-                <TopBar />
-                  <Container>
-                      <TitleText>회원 가입</TitleText>
-                      <Form method="post" action="./login">
-                          아이디: <Input type="text" name="id" id="memberId" value={this.state.memberId} onChange={this.onChangeId}/><br />
-                          비밀번호: <Input type="password" name="pw1" id="pw1" value={this.state.pw1} onChange={this.onChangePw1}/><br />
-                          2차 비밀번호: <Input type="password" name="pw2" id="pw2" value={this.state.pw2} onChange={this.onChangePw2}/><br />
-                          이메일 주소: <Input type="text" id="email" value={this.state.email} onChange={this.onChangeEmail}/><br />
-                      </Form>
-                      <Button
-                          title="회원가입"
-                          onClick={
-                              this.saveMember
-                          }/>
-                  </Container>
-            </Wrapper>
-        );
-    }
+      return(
+          <Wrapper>
+              <TopBar />
+                <Container>
+                    <TitleText>회원 가입</TitleText>
+                    <Form method="post" action="./login">
+                        아이디: <Input type="text" name="id" id="memberId" value={memberId} onChange={onChangeId}/><br />
+                        비밀번호: <Input type="password" name="pw1" id="pw1" value={pw1} onChange={onChangePw1}/><br />
+                        2차 비밀번호: <Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br />
+                        이메일 주소: <Input type="text" id="email" value={email} onChange={onChangeEmail}/><br />
+                    </Form>
+                    <Button
+                        title="회원가입"
+                        onClick={
+                            saveMember
+                        }/>
+                </Container>
+          </Wrapper>
+      );
 }
