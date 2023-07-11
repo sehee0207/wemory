@@ -1,0 +1,38 @@
+.title {
+    color: #838383;
+    font-size: 25px;
+    font-weight: bold;
+}
+.inputform {
+    margin-top: 20px;
+    display: flex;
+}
+.text {
+    width: 100px;
+    text-align: right;
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 10px;
+    justify-content: center;
+    padding-left: 30%;
+}
+.under_text{
+    text-decoration: underline;
+    cursor: pointer;
+}
+.input {
+    justify-content: center;
+}
+.button-div > Button{
+    width: 10vw;
+    justify-content: center;
+}
+.button-container {
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    padding-left: 30%;
+    padding-right: 30%;
+    justify-content: center;
+}

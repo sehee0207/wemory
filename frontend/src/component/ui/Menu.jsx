@@ -14,8 +14,8 @@ const Wrapper = styled.div`
 `
 
 const TitleText = styled.p`
-    font-size: 1.3em;
-    padding: 0px 15px;
+    font-size: 0.8em;
+    padding: 3px 12px;
     margin-block-start: 1em;
     margin-block-end: 0.5em;
     margin-inline-start: 10px;
@@ -26,7 +26,8 @@ const TitleText = styled.p`
 
 const ContentText = styled.div`
     color: grey;
-    padding: 10px 15px;
+    font-size: 0.8em;
+    padding: 5px 15px;
     margin-block-start: 1em;
     margin-block-end: 0.5em;
     margin-inline-start: 10px;

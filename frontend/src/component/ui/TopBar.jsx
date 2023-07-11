@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
-  height: 8vh;
+  height: 6vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -12,14 +12,14 @@ const Wrapper = styled.div`
 `
 const MainTitleText = styled.div`
   color: red;
-  font-size: 32px;
+  font-size: 25px;
   font-weight: bold;
   cursor: pointer;
 `
 
-const LoginText = styled.div`
-  cursor: pointer;
-`
+// const LoginText = styled.div`
+//   cursor: pointer;
+// `
 
 function TopBar(props){
     const {} = props;
@@ -28,12 +28,12 @@ function TopBar(props){
     return(
         <Wrapper>
             <MainTitleText onClick={() => {
-                navigate("/")
+                navigate("/main")
             }}>Wemory</MainTitleText>
             
-            <LoginText onClick={() => {
+            {/* <LoginText onClick={() => {
                 navigate("/login")
-            }}>로그인/회원가입</LoginText>
+            }}>로그인/회원가입</LoginText> */}
         </Wrapper>
     )
 }

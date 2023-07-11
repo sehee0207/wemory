@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Button from "../ui/Button";
 import Menu from "../ui/Menu";
 import TopBar from "../ui/TopBar";
-import Calender from "../ui/Calender";
+import Memory from "../ui/Memory";
 
 const Wrapper = styled.div`
     height: 90vh;
@@ -12,7 +12,6 @@ const Wrapper = styled.div`
 
 const Container = styled.div`
     width: 100vw;
-    height: 80vh;
     display: flex;
     justify-content: center;
 `
@@ -36,12 +35,12 @@ function MainPage(props){
                     <Button
                         title="커뮤니티 생성하기"
                         onClick={() => {
-                            navigate("/create-community");
+                            navigate("/main/create-community");
                         }}
                     />
                     <Menu
                         title="나의 커뮤니티"
-                        height={20}
+                        height={15}
                     />
                     <Menu
                         title="지역 커뮤니티"
@@ -49,11 +48,11 @@ function MainPage(props){
                     />
                     <Menu
                         title="채팅"
-                        height={40}
+                        height={30}
                     />
                 </MenuList>
 
-                <Calender
+                <Memory
                     comname="커뮤니티1"
                 />
 
