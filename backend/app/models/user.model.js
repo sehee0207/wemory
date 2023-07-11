@@ -3,20 +3,19 @@ const bcrypt = require('bcrypt');
 module.exports = mongoose => {
   var schema = mongoose.Schema(
     {
-      memberId: {
+      userId: {
         type: String,
         required: true,
         unique: true
       },
-      pw1: {
-        type: String,
-        required: true
-      },
-      pw2: {
+      password: {
         type: String,
         required: true
       },
       email: {
+        type: String
+      },
+      salt: {
         type: String
       }
     },
@@ -28,11 +27,11 @@ module.exports = mongoose => {
     const saltFactor = 10;
     bcrypt.genSalt(saltFactor, (err, salt) => { // create salt
       if (err) return next(err);
+      user.salt = salt;
     
-      bcrypt.hash(user.pw1, salt, (err, hash) => {  // create Hash
+      bcrypt.hash(user.password, salt, (err, hash) => {  // create Hash
         if (err) return next(err);
-        user.pw1 = hash;  // save Hash
-        user.pw2 = hash;
+        user.password = hash;  // save Hash
         next();
       });
     });
@@ -44,6 +43,6 @@ module.exports = mongoose => {
     return object;
   });
 
-  const Member = mongoose.model("member", schema);
-  return Member;
+  const User = mongoose.model("user", schema);
+  return User;
 };

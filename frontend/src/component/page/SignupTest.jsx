@@ -4,7 +4,7 @@ import styled from "styled-components";
 import TopBar from "../ui/TopBar";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import MemberDataService from "../../services/member.service";
+import UserDataService from "../../services/user.service";
 
 const Wrapper = styled.div`
     height: 92vh;
@@ -29,18 +29,18 @@ const TitleText = styled.p`
 `
 
 export default function SignupTest(props) {
-  const [memberId, setMemberId] = useState("");
-  const [pw1, setPw1] = useState("");
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
   const [pw2, setPw2] = useState("");
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const onChangeId= e => {
-    setMemberId(e.target.value);
+    setUserId(e.target.value);
   }
 
-  const onChangePw1= e => {
-    setPw1(e.target.value);
+  const onChangePassword= e => {
+    setPassword(e.target.value);
   }
 
   const onChangePw2= e => {
@@ -51,19 +51,17 @@ export default function SignupTest(props) {
     setEmail(e.target.value);
   }
 
-  const saveMember=()=> {
+  const saveUser=()=> {
       var data = {
-        memberId: memberId,
-        pw1: pw1,
-        pw2: pw2,
+        userId: userId,
+        password: password,
         email: email
       };
   
-      MemberDataService.signup(data)
+      UserDataService.signup(data)
         .then(response => {
-          setMemberId(response.data.memberId);
-          setPw1(response.data.pw1);
-          setPw2(response.data.pw2);
+          setUserId(response.data.memberId);
+          setPassword(response.data.password);
           setEmail(response.data.email);
           setSubmitted(true);
 
@@ -73,32 +71,24 @@ export default function SignupTest(props) {
           console.log(e);
         });
   }
-  
-  const newMember=()=> {
-      setMemberId("");
-      setPw1("");
-      setPw2("");
-      setEmail("");
-      setSubmitted(false);    
-  };
 
-      return(
-          <Wrapper>
-              <TopBar />
-                <Container>
-                    <TitleText>회원 가입</TitleText>
-                    <Form method="post" action="./login">
-                        아이디: <Input type="text" name="id" id="memberId" value={memberId} onChange={onChangeId}/><br />
-                        비밀번호: <Input type="password" name="pw1" id="pw1" value={pw1} onChange={onChangePw1}/><br />
-                        2차 비밀번호: <Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br />
-                        이메일 주소: <Input type="text" id="email" value={email} onChange={onChangeEmail}/><br />
-                    </Form>
-                    <Button
-                        title="회원가입"
-                        onClick={
-                            saveMember
-                        }/>
-                </Container>
-          </Wrapper>
-      );
+  return(
+      <Wrapper>
+          <TopBar />
+            <Container>
+                <TitleText>회원 가입</TitleText>
+                <Form method="post" action="./login">
+                    아이디: <Input type="text" name="id" id="userId" value={userId} onChange={onChangeId}/><br />
+                    비밀번호: <Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword}/><br />
+                    2차 비밀번호: <Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br />
+                    이메일 주소: <Input type="text" id="email" value={email} onChange={onChangeEmail}/><br />
+                </Form>
+                <Button
+                    title="회원가입"
+                    onClick={
+                        saveUser
+                    }/>
+            </Container>
+      </Wrapper>
+  );
 }

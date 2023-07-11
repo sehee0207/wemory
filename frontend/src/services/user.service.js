@@ -1,16 +1,17 @@
 import http from "../http-common";
 
-class MemberDataService {
+class UserDataService {
+  signup(data) {
+    return http.post("/users/signup", data);
+  }
+
+  /*
   getAll() {
     return http.get("/tutorials");
   }
 
   get(id) {
     return http.get(`/tutorials/${id}`);
-  }
-
-  signup(data) {
-    return http.post("/members/signup", data);
   }
 
   update(id, data) {
@@ -28,6 +29,7 @@ class MemberDataService {
   findByTitle(title) {
     return http.get(`/tutorials?title=${title}`);
   }
+  */
 }
 
-export default new MemberDataService();
+export default new UserDataService();

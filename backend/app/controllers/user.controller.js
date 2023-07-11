@@ -1,44 +1,60 @@
 const db = require("../models");
-const Member = db.members;
+const bcrypt = require('bcrypt');
+const User = db.users;
 
-// Create and Save a new Member
+// Create and Save a new User
 exports.signup = (req, res) => {
   // Validate request
-  if (!req.body.memberId) {
+  if (!req.body.userId) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
-  if (!req.body.pw1) {
+  if (!req.body.password) {
     res.status(400).send({ message: "Content can not be empty!" });
     return;
   }
+  /*
   // check password
   if (req.body.pw1 != req.body.pw2) {
     res.status(400).send({ message: "비밀번호가 서로 다릅니다." });
     return;
-  }
+  }*/
 
-  // Create a new account(Member)
-  const member = new Member({
-    memberId: req.body.memberId,
-    pw1: req.body.pw1,
-    pw2: req.body.pw2,
+  // Create a new user
+  const user = new User({
+    userId: req.body.userId,
+    password: req.body.password,
     email: req.body.email
   });
 
   // Save account in the database
-  member
-    .save(member)
+  user
+    .save(user)
     .then(data => {
       res.send(data);
     })
     .catch(err => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the Member."
+          err.message || "Some error occurred while creating the account."
       });
     });
 };
+/*
+// Find a single Member with an memberId
+exports.login = (req, res) => {
+  const id = req.body.id;
+  const pw = req.body.pw;
+  const user = Member.findOne({memberId: id});
+
+  if (!user) {
+    res.status(404).send({ message: "Not found User with id: " + id });
+  }
+
+  const hashedPw = bcrypt.hash(pw, user.salt);
+
+};
+*/
 
 /*
 // Retrieve all Tutorials from the database.

@@ -1,11 +1,11 @@
 module.exports = app => {
-    const members = require("../controllers/member.controller");
+    const users = require("../controllers/user.controller");
     //const tutorials = require("../controllers/tutorial.controller");  //rm
   
     var router = require("express").Router();
   
     // Sign up
-    router.post("/signup", members.signup);
+    router.post("/signup", users.signup);
   
     /*
     // Retrieve all Tutorials
@@ -27,5 +27,5 @@ module.exports = app => {
     router.delete("/", tutorials.deleteAll);
     */
   
-    app.use('/api/members', router);
+    app.use('/api/users', router);
   };
