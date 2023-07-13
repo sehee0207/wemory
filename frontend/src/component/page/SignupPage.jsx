@@ -47,7 +47,7 @@ function SignupPage(props){
                         <div class="input"><Input type="password" name="pw2" /><br /></div></div>
                     <div class="inputform">
                         <div class="text">이메일</div>
-                        <div class="input"><Input type="password" name="pw1" /><br /></div></div>
+                        <div class="input"><Input type="email" name="email" /><br /></div></div>
                 </Form>
                 <div class="button-container">
                     <div class="button-div">               
