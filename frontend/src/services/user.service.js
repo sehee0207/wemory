@@ -1,35 +1,28 @@
-import http from "../http-common";
+import axios from "axios";
 
-class UserDataService {
-  signup(data) {
-    return http.post("/users/signup", data);
-  }
+const API_URL = "http://localhost:8090/api/test/";
 
-  /*
-  getAll() {
-    return http.get("/tutorials");
-  }
+const getPublicContent = () => {
+  return axios.get(API_URL + "all");
+};
 
-  get(id) {
-    return http.get(`/tutorials/${id}`);
-  }
+const getUserBoard = () => {
+  return axios.get(API_URL + "user");
+};
 
-  update(id, data) {
-    return http.put(`/tutorials/${id}`, data);
-  }
+const getModeratorBoard = () => {
+  return axios.get(API_URL + "mod");
+};
 
-  delete(id) {
-    return http.delete(`/tutorials/${id}`);
-  }
+const getAdminBoard = () => {
+  return axios.get(API_URL + "admin");
+};
 
-  deleteAll() {
-    return http.delete(`/tutorials`);
-  }
-
-  findByTitle(title) {
-    return http.get(`/tutorials?title=${title}`);
-  }
-  */
+const UserService = {
+  getPublicContent,
+  getUserBoard,
+  getModeratorBoard,
+  getAdminBoard,
 }
 
-export default new UserDataService();
+export default UserService;

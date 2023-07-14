@@ -1,9 +1,13 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-import UserDataService from "../../services/user.service";
+
+import Form from "react-validation/build/form";
+import { isEmail } from "validator";
+
+import AuthService from "../../services/auth.service";
 
 
 const Wrapper = styled.div`
@@ -32,9 +36,9 @@ const MainTitle = styled.p`
   margin-bottom: 35px;
 `
 
-const Form = styled.form`
-
-`
+//const Form = styled.form`
+//
+//`
 
 const Text = styled.div`
   width: 100px;
@@ -75,20 +79,68 @@ const Under_text = styled.div`
   cursor: pointer;
 `
 
-export default function SignupTest(props) {
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="invalid-feedback d-block">
+        This field is required!
+      </div>
+    );
+  }
+};
+
+const validEmail = (value) => {
+  if (!isEmail(value)) {
+    return (
+      <div className="invalid-feedback d-block">
+        This is not a valid email.
+      </div>
+    );
+  }
+};
+
+const vusername = (value) => {
+  if (value.length < 3 || value.length > 20) {
+    return (
+      <div className="invalid-feedback d-block">
+        The username must be between 3 and 20 characters.
+      </div>
+    );
+  }
+};
+
+const vpassword = (value) => {
+  if (value.length < 6 || value.length > 40) {
+    return (
+      <div className="invalid-feedback d-block">
+        The password must be between 6 and 40 characters.
+      </div>
+    );
+  }
+};
+
+const SignupTest = (props) => {
+  const form = useRef();
+  //const checkBtn = useRef();
+  
   const navigate = useNavigate();
-  const [userId, setUserId] = useState("");
+
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [pw2, setPw2] = useState("");
   const [email, setEmail] = useState("");
+  const [successful, setSuccessful] = useState(false);
+  const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
   const onChangeId= e => {
-    setUserId(e.target.value);
+    const username = e.target.value;
+    setUsername(username);
   }
 
   const onChangePassword= e => {
-    setPassword(e.target.value);
+    const password = e.target.value;
+    setPassword(password);
   }
 
   const onChangePw2= e => {
@@ -96,42 +148,67 @@ export default function SignupTest(props) {
   }
 
   const onChangeEmail= e => {
-    setEmail(e.target.value);
+    const email = e.target.value;
+    setEmail(email);
   }
 
-  const saveUser=()=> {
-      var data = {
-        userId: userId,
-        password: password,
-        email: email
-      };
-  
-      UserDataService.signup(data)
-        .then(response => {
-          setUserId(response.data.memberId);
-          setPassword(response.data.password);
-          setEmail(response.data.email);
-          setSubmitted(true);
+  const handleRegister = (e) => {
+    e.preventDefault();
 
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-  }
+    setMessage("");
+    setSuccessful(false);
+
+    form.current.validateAll();
+
+    if (true) { // need rewrite
+      AuthService.register(username, password, email).then(
+        (response) => {
+          setMessage(response.data.message);
+          setSuccessful(true);
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+
+          setMessage(resMessage);
+          setSuccessful(false);
+        }
+      );
+    }
+  };
 
   return(
       <Wrapper>
             <Container>
               <SubTitle>추억 저장 서비스 Wemory</SubTitle>
               <MainTitle>회원가입</MainTitle>
-              <Form method="post" action="./login">
-                  <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={userId} onChange={onChangeId}/><br /></StyledInputForm>
-                  <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
-                  <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
-                  <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
+              <Form method="post" action="./login" onSubmit={handleRegister} ref={form}>
+                  {!successful && (
+                  <div>
+                    <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId} validations={[required, vusername]}/><br /></StyledInputForm>
+                    <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required, vpassword]}/><br /></StyledInputForm>
+                    <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
+                    <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail} validations={[required, validEmail]}/><br /></StyledInputForm>
+                  
+                    <StyledButtonContainer>
+                      <Button
+                          title="회원가입"
+                          />
+                      <Under_text
+                      onClick={() => {
+                        navigate("/");
+                        }}>
+                        이미 계정이 있나요?
+                      </Under_text>
+                    </StyledButtonContainer>
+                  </div>
+                  )}
               </Form>
-              
+              {/*
               <StyledButtonContainer>
                 <Button
                     title="회원가입"
@@ -145,7 +222,10 @@ export default function SignupTest(props) {
                   이미 계정이 있나요?
                 </Under_text>
               </StyledButtonContainer>
+                */}
             </Container>
       </Wrapper>
   );
-}
+};
+
+export default SignupTest;
