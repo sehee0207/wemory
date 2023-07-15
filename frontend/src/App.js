@@ -17,16 +17,14 @@ import SignupTest from "./component/page/SignupTest"; //test
 
 function App() {
   return (
-    <BrowserRouter>
-			<Routes>
-				<Route index element={<LoginPage />} />
-				<Route path="signup" element={<SignupPage />} />
-        <Route path="signuptest" element={<SignupTest />} />
-				<Route path="main" element={<MainPage />} />
-				<Route path="main/create-community" element={<CreateCommunityPage />} />
-				<Route path="main/post-write" element={<PostWritePage />} />
-			</Routes>
-		</BrowserRouter>
+	<Routes>
+		<Route index element={<LoginPage />} />
+		<Route path="signup" element={<SignupPage />} />
+		<Route path="signuptest" element={<SignupTest />} />
+		<Route path="main" element={<MainPage />} />
+		<Route path="main/create-community" element={<CreateCommunityPage />} />
+		<Route path="main/post-write/:date" element={<PostWritePage />} />
+	</Routes>
   );
 }
 
