@@ -144,6 +144,7 @@ const SignupTest = (props) => {
   }
 
   const onChangePw2= e => {
+    const pw2 = e.target.value;
     setPw2(e.target.value);
   }
 

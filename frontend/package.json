@@ -18,6 +18,7 @@
     "react-scripts": "5.0.1",
     "react-validation": "^3.0.7",
     "styled-components": "^6.0.3",
+    "validate": "^5.2.0",
     "validator": "^13.9.0",
     "web-vitals": "^2.1.4"
   },
