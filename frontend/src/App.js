@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import './index.css';
 import styled from "styled-components";
+import Modal from "react-modal";
 
 import MainPage from "./component/page/MainPage";
 import CreateCommunityPage from "./component/page/CreateCommunityPage";
@@ -17,6 +18,7 @@ import SignupTest from "./component/page/SignupTest"; //test
 
 function App() {
   return (
+	
 	<Routes>
 		<Route index element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
