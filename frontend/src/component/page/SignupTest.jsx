@@ -36,9 +36,8 @@ const MainTitle = styled.p`
   margin-bottom: 35px;
 `
 
-//const Form = styled.form`
-//
-//`
+// const Form = styled.form`
+// `
 
 const Text = styled.div`
   width: 100px;
@@ -48,7 +47,12 @@ const Text = styled.div`
   margin-right: 10px;
   margin-top: 10px;
   justify-content: center;
-  padding-left: 30%;
+`
+
+const StyledInputContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 const StyledInputForm = styled.div`
@@ -190,10 +194,12 @@ const SignupTest = (props) => {
               <Form method="post" action="./login" onSubmit={handleRegister} ref={form}>
                   {!successful && (
                   <div>
-                    <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId} validations={[required, vusername]}/><br /></StyledInputForm>
-                    <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required, vpassword]}/><br /></StyledInputForm>
-                    <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
-                    <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail} validations={[required, validEmail]}/><br /></StyledInputForm>
+                    <StyledInputContainer>
+                      <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId} validations={[required, vusername]}/><br /></StyledInputForm>
+                      <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required, vpassword]}/><br /></StyledInputForm>
+                      <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
+                      <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail} validations={[required, validEmail]}/><br /></StyledInputForm>
+                    </StyledInputContainer>
                   
                     <StyledButtonContainer>
                       <Button

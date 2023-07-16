@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
-  height: 6vh;
+  height: 8vh;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +22,6 @@ const MainTitleText = styled.div`
 // `
 
 function TopBar(props){
-    const {} = props;
     const navigate = useNavigate();
 
     return(

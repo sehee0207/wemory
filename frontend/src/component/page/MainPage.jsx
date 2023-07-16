@@ -16,7 +16,7 @@ const Container = styled.div`
     justify-content: center;
 `
 const MenuList = styled.div`
-    width: 20vw;
+    width: 25vw;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
