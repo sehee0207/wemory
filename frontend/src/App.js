@@ -15,6 +15,7 @@ import SignupPage from "./component/page/SignupPage";
 import PostWritePage from "./component/page/PostWritePage";
 
 import SignupTest from "./component/page/SignupTest"; //test
+import LoginTest from "./component/page/LoginTest"; //test
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 		<Route index element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
 		<Route path="signuptest" element={<SignupTest />} />
+		<Route path="logintest" element={<LoginTest />} />
 		<Route path="main" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
 		<Route path="main/post-write/:date" element={<PostWritePage />} />
