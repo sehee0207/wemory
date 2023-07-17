@@ -1,8 +1,12 @@
-import {React, useState, useEffect} from "react";
+import {React, useState, useEffect, useRef} from "react";
 // import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
+import Form from "react-validation/build/form";
+import Button from "../ui/Button";
+
+import DiaryService from "../../services/dairy.service";
 
 const Wrapper = styled.div`
 `
@@ -32,15 +36,64 @@ const StyledModal = {
 // 	},
 }
 
+const required = (value) => {
+    if (!value) {
+        return (
+        <div className="invalid-feedback d-block">
+            This field is required!
+        </div>
+        );
+    }
+};
 
 function PostWritePage(props){
+    const form = useRef();
     // const params = useParams();
     ///const today = params.date;
     const [modalIsOpen, setModalIsOpen] = useState(false);
+
+    //const [date, setDate] = useState("");
+    const [content, setContent] = useState("");
+    const [photo, setPhoto] = useState("");
+    const [successful, setSuccessful] = useState(false);
+    const [message, setMessage] = useState("");
     
     useEffect(() => {
         setModalIsOpen(true);
     }, [props.date]);
+
+    const onChangeContent = (e) => {
+        const content = e.target.value;
+        setContent(content);
+    };
+
+    const handleCreate = (e) => {
+        e.preventDefault();
+
+        setMessage("");
+        setSuccessful(false);
+
+        form.current.validateAll();
+
+        if (true) { //rewrite
+            DiaryService.create(props.date, content, photo).then(
+            () => {
+                window.location.assign('/main');
+            },
+            (error) => {
+                const resMessage =
+                (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+
+                setMessage(resMessage);
+                setSuccessful(false);
+            }
+            );
+        }
+    };
 
     return(
         <Wrapper>
@@ -50,8 +103,28 @@ function PostWritePage(props){
                 style={StyledModal}
                 onRequestClose={() => setModalIsOpen(false)}
             >
-                <p>오느른 {props.date}</p>
-                <ContentText>게시글 작성 페이지입니다.</ContentText>
+                <Form method="post" onSubmit={handleCreate} ref={form}>
+                    <p>오느른 {props.date}</p>
+                    <ContentText>게시글 작성 페이지입니다.</ContentText>
+                    <input
+                        type="text"
+                        name="content"
+                        id="content"
+                        value={content}
+                        onChange={onChangeContent}
+                        validations={[required]}
+                    />
+                    <div class="button-container">
+                        <div class="button-div">
+                            <Button
+                                title="작성"
+                                //onClick={() => {
+                                //    navigate("/main");
+                                //}}
+                            />
+                        </div>
+                    </div>
+                </Form>
             </Modal>
         </Wrapper>
     )

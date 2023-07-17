@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
-const DayPost = mongoose.model(
-  "DayPost",
+const Diary = mongoose.model(
+  "Diary",
   new mongoose.Schema({
     date: {
       type: String,
@@ -11,10 +11,10 @@ const DayPost = mongoose.model(
       type: String,
       required: true
     },
-    photos: [{
+    photo: [{
       type: String
     }]
   })
 );
 
-module.exports = DayPost;
+module.exports = Diary;

@@ -39,9 +39,11 @@ db.mongoose
   });
 
 // routes
-//require("./app/routes/wemory.routes")(app);
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
+
+require("./app/routes/community.routes")(app);
+require("./app/routes/diary.routes")(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8090;
