@@ -3,6 +3,10 @@ const mongoose = require("mongoose");
 const Community = mongoose.model(
   "Community",
   new mongoose.Schema({
+    communame: {
+      type: String,
+      required: true
+    },
     postlist: [{
       type: String
     }],
