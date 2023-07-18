@@ -137,6 +137,9 @@ const SignupPage = (props) => {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const [emailMessage, setEmailMessage] = useState('');
+  const [isEmail, setIsEmail] = useState(false);
+
   const onChangeId= e => {
     const username = e.target.value;
     setUsername(username);
@@ -152,9 +155,18 @@ const SignupPage = (props) => {
     setPw2(e.target.value);
   }
 
-  const onChangeEmail= e => {
+  const onChangeEmail= (e) => {
     const email = e.target.value;
     setEmail(email);
+    // https://velog.io/@leemember/%EB%A6%AC%EC%95%A1%ED%8A%B8-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
+    const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(email)) {
+      setEmailMessage('이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ');
+      setIsEmail(false);
+    } else {
+      setEmailMessage('올바른 이메일 형식이에요 : )');
+      setIsEmail(true);
+    }
   }
 
   const handleRegister = (e) => {
@@ -199,8 +211,9 @@ const SignupPage = (props) => {
                       <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required, vpassword]}/><br /></StyledInputForm>
                       <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
                       <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail} validations={[required, validEmail]}/><br /></StyledInputForm>
+                      {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
                     </StyledInputContainer>
-                  
+                    
                     <StyledButtonContainer>
                       <Button
                           title="회원가입"
