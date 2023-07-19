@@ -15,6 +15,9 @@ const User = mongoose.model(
     email: {
       type: String
     },
+    commulist: [{
+      type: String
+    }],
     roles: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Role"
