@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import {FaUserCircle} from 'react-icons/fa';
 
 const Wrapper = styled.div`
   height: 8vh;
@@ -17,9 +18,9 @@ const MainTitleText = styled.div`
   cursor: pointer;
 `
 
-// const LoginText = styled.div`
-//   cursor: pointer;
-// `
+const UserInform = styled.div`
+  cursor: pointer;
+`
 
 function TopBar(props){
     const navigate = useNavigate();
@@ -30,9 +31,10 @@ function TopBar(props){
                 navigate("/main")
             }}>Wemory</MainTitleText>
             
-            {/* <LoginText onClick={() => {
-                navigate("/login")
-            }}>로그인/회원가입</LoginText> */}
+            
+            <UserInform onClick={() => {navigate("/") }}>
+                <FaUserCircle/> user이름/로그아웃
+            </UserInform>
         </Wrapper>
     )
 }
