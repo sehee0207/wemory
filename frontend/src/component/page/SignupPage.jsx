@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `
 
 const Container = styled.div`
-  padding-top: 8%;
+  padding-top: 5%;
   text-align: center;
 `
 
@@ -33,7 +33,7 @@ const MainTitle = styled.p`
   margin-inline-start: 10px;
   margin-inline-end: 0px;
   font-weight: 800;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 `
 
 // const Form = styled.form`
@@ -45,26 +45,27 @@ const Text = styled.div`
   font-size: 20px;
   font-weight: bold;
   margin-right: 10px;
-  margin-top: 10px;
   justify-content: center;
 `
 
 const StyledInputContainer = styled.div`
+ 
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 0vw 30vw;
 `
 
 const StyledInputForm = styled.div`
-  margin-top: 20px;
+  height: 10vh;
   display: flex;
+  align-items: center;
   >Input{
     justify-content: center;
   }
 `
 
 const StyledButtonContainer = styled.div`
-  margin-top: 5vh;
+  margin-top: 3vh;
   display: flex;
   flex-direction: column;
   padding-left: 30%;
@@ -93,36 +94,6 @@ const required = (value) => {
   }
 };
 
-const validEmail = (value) => {
-  if (!isEmail(value)) {
-    return (
-      <div className="invalid-feedback d-block">
-        This is not a valid email.
-      </div>
-    );
-  }
-};
-
-const vusername = (value) => {
-  if (value.length < 3 || value.length > 20) {
-    return (
-      <div className="invalid-feedback d-block">
-        The username must be between 3 and 20 characters.
-      </div>
-    );
-  }
-};
-
-const vpassword = (value) => {
-  if (value.length < 6 || value.length > 40) {
-    return (
-      <div className="invalid-feedback d-block">
-        The password must be between 6 and 40 characters.
-      </div>
-    );
-  }
-};
-
 const SignupPage = (props) => {
   const form = useRef();
   //const checkBtn = useRef();
@@ -137,34 +108,67 @@ const SignupPage = (props) => {
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const [usernameMessage, setUsernameMessage] = useState('');
   const [emailMessage, setEmailMessage] = useState('');
+  const [passwordMessage, setPasswordMessage] = useState('');
+  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState('');
+
+  const [isusername, setIsUserName] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
+  const [isPassword, setIsPassword] = useState(false);
+  const [isPasswordConfirm, setIsPasswordConfirm] = useState(false);
 
   const onChangeId= e => {
     const username = e.target.value;
     setUsername(username);
+
+    const usernameRegex = /^[a-zA-Z0-9]{4,10}$/;
+    if (!usernameRegex.test(username)) {
+      setUsernameMessage('4글자 이상 10글자 이하의 영문 대소문자와 숫자만 입력 가능합니다.');
+      setIsUserName(false);
+    } else {
+      setUsernameMessage();
+      setIsUserName(true);
+    }
   }
 
   const onChangePassword= e => {
     const password = e.target.value;
     setPassword(password);
+
+    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(password)) {
+      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요.');
+      setIsPassword(false);
+    } else {
+      setPasswordMessage();
+      setIsPassword(true);
+    }
   }
 
   const onChangePw2= e => {
     const pw2 = e.target.value;
     setPw2(e.target.value);
+
+    if (password === pw2) {
+      setPasswordConfirmMessage('비밀번호를 올바르게 입력했습니다.');
+      setIsPasswordConfirm(true);
+    } else {
+      setPasswordConfirmMessage('비밀번호가 다릅니다.');
+      setIsPasswordConfirm(false);
+    }
+
   }
 
   const onChangeEmail= (e) => {
     const email = e.target.value;
     setEmail(email);
-    // https://velog.io/@leemember/%EB%A6%AC%EC%95%A1%ED%8A%B8-%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85-%EC%9C%A0%ED%9A%A8%EC%84%B1-%EA%B2%80%EC%82%AC
     const emailRegex = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
     if (!emailRegex.test(email)) {
-      setEmailMessage('이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ');
+      setEmailMessage('이메일 형식이 틀렸습니다.');
       setIsEmail(false);
     } else {
-      setEmailMessage('올바른 이메일 형식이에요 : )');
+      setEmailMessage('');
       setIsEmail(true);
     }
   }
@@ -202,15 +206,21 @@ const SignupPage = (props) => {
       <Wrapper>
             <Container>
               <SubTitle>추억 저장 서비스 Wemory</SubTitle>
-              <MainTitle>회원가입</MainTitle>
               <Form method="post" action="./login" onSubmit={handleRegister} ref={form}>
                   {!successful && (
                   <div>
+                    <MainTitle>회원가입</MainTitle>
                     <StyledInputContainer>
-                      <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId} validations={[required, vusername]}/><br /></StyledInputForm>
-                      <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required, vpassword]}/><br /></StyledInputForm>
-                      <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
-                      <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail} validations={[required, validEmail]}/><br /></StyledInputForm>
+                      <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId}/><br /></StyledInputForm>
+                      {username.length > 0 && <span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>}
+
+                      <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
+                      {password.length > 0 && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
+
+                      <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
+                      {pw2.length > 0 && (<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
+
+                      <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
                       {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
                     </StyledInputContainer>
                     
@@ -227,22 +237,20 @@ const SignupPage = (props) => {
                     </StyledButtonContainer>
                   </div>
                   )}
+
+                  { successful && (
+                    <div>
+                      <MainTitle>회원가입 성공!</MainTitle>
+                      <Button
+                      title="로그인하러 가기"
+                      onClick={() => {
+                        navigate("/");
+                      }}
+                    />
+                    </div>
+
+                  )}
               </Form>
-              {/*
-              <StyledButtonContainer>
-                <Button
-                    title="회원가입"
-                    onClick={
-                        saveUser
-                    }/>
-                <Under_text
-                onClick={() => {
-                  navigate("/");
-                  }}>
-                  이미 계정이 있나요?
-                </Under_text>
-              </StyledButtonContainer>
-                */}
             </Container>
       </Wrapper>
   );

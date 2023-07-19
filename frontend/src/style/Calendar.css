@@ -51,6 +51,8 @@
 .react-calendar__navigation__label__labelText{
   font-size: 1.5em;
   font-weight: 800;
+  display: flex;
+  justify-content: center;
 }
 
 .react-calendar__navigation button {

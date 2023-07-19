@@ -1,7 +1,14 @@
-.right{
-    background-color: aqua;
+span{
+    height: 3vh;
+    width: 40vw;
+    text-align: left;
+    padding-left: 110px;
 }
 
-.wrong{
-    background-color: red;
+.error{
+    color: rgba(240, 47, 47, 0.567);
+}
+
+.success{
+    color: rgba(134, 118, 118, 0.567);
 }

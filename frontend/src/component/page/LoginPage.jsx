@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 `
 
 const Container = styled.div`
-    padding-top: 8%;
+    padding-top: 5%;
     text-align: center;
 `
 
@@ -33,7 +33,7 @@ const MainTitle = styled.p`
   margin-inline-start: 10px;
   margin-inline-end: 0px;
   font-weight: 800;
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 `
 
 //const Form = styled.form`
@@ -57,6 +57,7 @@ const StyledInputContainer = styled.div`
 `
 
 const StyledInputForm = styled.div`
+  height: 8vh;
   margin-top: 20px;
   display: flex;
   >Input{
@@ -166,22 +167,6 @@ const Loginpage = () => {
                     </StyledButtonContainer>
                     <CheckButton style={{ display: "none" }} ref={checkBtn} />
                 </Form>
-                {/*
-                <div class="button-container">
-                    <div class="button-div">
-                        <Button
-                            title="로그인"
-                            onClick={() => {
-                                navigate("/main");
-                            }}
-                        /> 
-                    </div>
-
-                    <div class="under_text" onClick={() => {navigate("/signup")}}>
-                        계정이 없나요?
-                    </div> 
-                </div>
-                        */}
             </Container>
         </Wrapper>
     )

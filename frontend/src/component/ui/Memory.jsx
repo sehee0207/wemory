@@ -35,6 +35,7 @@ function Memory(props){
     const { comname } = props;
     const [ value, onChange ] = useState(new Date());
     const [WritePageOpen, setWritePageOpen] = useState(false);
+    const [ViewPageOpen, setViewPageOpen] = useState(false);
     // const navigate = useNavigate();
     
     function Handler() {
@@ -56,7 +57,11 @@ function Memory(props){
                 />
                 
                 {/* { createIsOpen && <Link to={`post-write/${moment(value).format('YYMMDD')}`}><p>눌러</p></Link> } */}
+                {/* { createIsOpen && navigate(`post-write/${moment(value).format('YYMMDD')}`)} */}
+                {/* 위에 주석은 지우지 말아주세요!~! */}
+
                 {WritePageOpen && <PostWritePage date = {moment(value).format('YYMMDD')}/>}
+                {/* {ViewPageOpen && <PostViewPage  date = {moment(value).format('YYMMDD')}}/>} */}
             </Container>
         </Wrapper>
         
