@@ -1,0 +1,8 @@
+.button-container {
+    margin-left: 3vw;
+    margin-right: 3vw;
+    display: flex;
+}
+.button-div {
+    margin: auto;
+}
