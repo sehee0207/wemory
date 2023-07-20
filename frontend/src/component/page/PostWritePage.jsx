@@ -60,11 +60,12 @@ const StyledInputContent = styled.div`
     >textarea {
         border : 0px solid;
         width : 100%;
-        height : 15vh;
+        height : 5vh;
         padding-bottom : 8vh;
         font-size: 2vh;
         word-break:break-all;
         resize:none;
+        overflow: auto;
     }
     >textarea::placeholder {
         color: #D9D9D9;
@@ -291,8 +292,7 @@ function PostWritePage(props){
                         <GreyBtn>
                         <Button id="cancel-btn"
                                 title="취소"
-                                onClick={() => {
-                                    navigate("/main");
+                                onClick={() => {setModalIsOpen(false)
                                 }}
                             /></GreyBtn>
                         <Button

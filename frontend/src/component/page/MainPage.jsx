@@ -2,9 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../ui/Button";
-import Menu from "../ui/Menu";
 import TopBar from "../ui/TopBar";
-import Memory from "../ui/Memory";
+import Memory from "../list/Memory";
+import MyCommunityList from "../list/MyCommunityList";
+import LocalCommunityList from "../list/LocalCommunityList";
+import Chatting from "../list/Chatting";
+import MemberList from "../list/MemberList";
+import BookmarkList from "../list/BookmarkList";
 
 const Wrapper = styled.div`
     height: 90vh;
@@ -38,33 +42,16 @@ function MainPage(props){
                             navigate("/main/create-community");
                         }}
                     />
-                    <Menu
-                        title="나의 커뮤니티"
-                        height={15}
-                    />
-                    <Menu
-                        title="지역 커뮤니티"
-                        height={15}
-                    />
-                    <Menu
-                        title="채팅"
-                        height={30}
-                    />
+                    <MyCommunityList />
+                    <LocalCommunityList />
+                    <Chatting />
                 </MenuList>
 
-                <Memory
-                    comname="커뮤니티1"
-                />
+                <Memory comname="커뮤니티1" />
 
                 <MenuList>
-                    <Menu
-                        title="멤버"
-                        height={30}
-                    />
-                    <Menu
-                        title="북마크"
-                        height={30}
-                    />
+                   <MemberList />
+                   <BookmarkList />
                 </MenuList>
             </Container>
         </Wrapper>
