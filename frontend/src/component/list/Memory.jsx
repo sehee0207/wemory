@@ -18,7 +18,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
     height: 75vh;
     justify-content: center;
-    border-radius: 50px;
+    border-radius: 20px;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
     background-color: #FFFFFF;
 `
