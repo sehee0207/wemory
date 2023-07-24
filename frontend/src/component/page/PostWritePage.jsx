@@ -114,6 +114,7 @@ const FileUpload = styled.div`
 const Highlight = styled.span`
     color: #C7DB44;
     font-size: 3vh;
+    padding-left: 0px;
 `
 const SubTxt = styled.div `
     color: #D9D9D9;
