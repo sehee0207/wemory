@@ -5,34 +5,52 @@ const User = db.user;
 // Create a new community
 exports.create = (req, res) => {
     // Validate request
-    if (!req.body.communame) {
+    if (!req.body.communityname) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
 
     // Create a community
-    if (!req.body.communame) {
+    if (!req.body.communityname) {
         res.status(400).send({ message: "Content can not be empty!" });
         return;
     }
     const community = new Community({
-        communame: req.body.communame,
+        communityname: req.body.communityname,
         commuhost: req.body.commuhost,
         member: req.body.member
     });
 
-    // Save community in the database
-    community
-    .save(community)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the community."
-        });
+    // check host
+    User.findOne({
+        username: req.body.commuhost
+    }).exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+        if (!user) {
+            res.status(400).send({ message: "Cannot find user" });
+            return;
+        }
     });
+    // check member
+    for (let i = 0; i < req.body.member.length; i++) {
+        if (req.body.member[i] === "")  continue;
+
+        User.findOne({
+            username: req.body.member[i]
+        }).exec((err, user) => {
+            if (err) {
+                res.status(500).send({ message: err });
+                return;
+            }
+            if (!user) {
+                res.status(400).send({ message: "Cannot find user" });
+                return;
+            }
+        });
+    };
 
     // Save community in the User info
     User.findOneAndUpdate(
@@ -46,6 +64,8 @@ exports.create = (req, res) => {
         }
     });
     for (let i = 0; i < req.body.member.length; i++) {
+        if (req.body.member[i] === "")  continue;
+
         User.findOneAndUpdate(
             {username: req.body.member[i]},
             {$push: {commulist: community._id}}
@@ -56,13 +76,26 @@ exports.create = (req, res) => {
                 return;
             }
         });
-    }
+    };
+
+    // Save community in the database
+    community
+    .save(community)
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message:
+            err.message || "Some error occurred while creating the community."
+        });
+    });
 };
 
 // List of community
 exports.findAll = (req, res) => {
-    const communame = req.query.communame;
-    var condition = communame ? { communame: { $regex: new RegExp(title), $options: "i" } } : {};
+    const communityname = req.query.communityname;
+    var condition = communityname ? { communityname: { $regex: new RegExp(title), $options: "i" } } : {};
   
     Community.find(condition)
       .then(data => {
@@ -81,8 +114,10 @@ exports.findOne = (req, res) => {
   
     Community.findById(id)
       .then(data => {
-        if (!data)
+        if (!data) {
           res.status(404).send({ message: "Not found community with id " + id });
+          return;
+        }
         else res.send(data);
       })
       .catch(err => {
