@@ -9,7 +9,7 @@ import exImg from "../img/ex-img.png";
 import Comment from '../ui/Comment';
 import InputEmoji from "react-input-emoji";
 
-import DiaryService from "../../services/dairy.service";
+import DiaryService from "../../services/diary.service";
 
 const Wrapper = styled.div`
 `

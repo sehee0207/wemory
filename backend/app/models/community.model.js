@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Community = mongoose.model(
   "Community",
   new mongoose.Schema({
-    communame: {
+    communityname: {
       type: String,
       required: true
     },
