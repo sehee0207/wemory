@@ -1,4 +1,5 @@
 span{
+    display: block;
     height: 3vh;
     width: 40vw;
     text-align: left;
