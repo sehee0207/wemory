@@ -6,7 +6,7 @@ import '../../style/Modal.css';
 import Form from "react-validation/build/form";
 import Button from "../ui/Button";
 
-import DiaryService from "../../services/dairy.service";
+import DiaryService from "../../services/diary.service";
 
 const Wrapper = styled.div`
 `

@@ -8,7 +8,7 @@ import Button from "../ui/Button";
 import '../../style/PostWritePage.css'
 import { useNavigate } from "react-router-dom";
 
-import DiaryService from "../../services/dairy.service";
+import DiaryService from "../../services/diary.service";
 
 const Wrapper = styled.div`
     
