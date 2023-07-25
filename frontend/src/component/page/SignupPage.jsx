@@ -211,17 +211,20 @@ const SignupPage = (props) => {
                   <div>
                     <MainTitle>회원가입</MainTitle>
                     <StyledInputContainer>
-                      <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId}/><br /></StyledInputForm>
-                      {username.length > 0 && <span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>}
+                      <label>
+                          <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId}/><br /></StyledInputForm>
+                        {username.length > 0 && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
 
-                      <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
-                      {password.length > 0 && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
+                        <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
+                        {password.length > 0 && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
 
-                      <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
-                      {pw2.length > 0 && (<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
+                        <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
+                        {pw2.length > 0 && (<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
 
-                      <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
-                      {email.length > 0 && <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>}
+                        <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
+                        {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
+                      </label>
+                      
                     </StyledInputContainer>
                     
                     <StyledButtonContainer>

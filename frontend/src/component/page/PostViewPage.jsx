@@ -24,16 +24,19 @@ const StyledModal = {
 		backgroundColor: "rgba(255, 255, 255, 0.45)",
 		zIndex: 10,
 	},
-// 	content: {
-// 		display: "flex",
-//         flexDirection: "column",
-// 		background: "#ffdfe7",
-// 		overflow: "auto",
-// 		WebkitOverflowScrolling: "touch",
-// 		borderRadius: "14px",
-// 		outline: "none",
-// 		zIndex: 10,
-// 	},
+ 	content: {
+ 		display: "flex",
+        flexDirection: "column",
+ 		overflow: "auto",
+ 		WebkitOverflowScrolling: "touch",
+ 		borderRadius: "30px",
+ 		outline: "none",
+ 		zIndex: 10,
+        top: '10vh',
+        left: '25vw',
+        right: '25vw',
+        bottom: '10vh',
+ 	},
 }
 
 const required = (value) => {
