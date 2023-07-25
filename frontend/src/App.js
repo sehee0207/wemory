@@ -13,6 +13,7 @@ import CreateCommunityPage from "./component/page/CreateCommunityPage";
 import LoginPage from "./component/page/LoginPage";
 import SignupPage from "./component/page/SignupPage";
 import PostWritePage from "./component/page/PostWritePage";
+import PostViewPage from "./component/page/PostViewPage";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
 		<Route path="main" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
 		<Route path="main/post-write/:date" element={<PostWritePage />} />
+		<Route path="main/post-view/:date" element={<PostViewPage />} />
 	</Routes>
   );
 }

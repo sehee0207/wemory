@@ -298,9 +298,10 @@ function PostWritePage(props){
                             /></GreyBtn>
                         <Button
                                 title="등록하기"
-                                //onClick={() => {
-                                //    navigate("/main");
-                                //}}
+                                onClick={() => {
+                                    navigate("/main/post-view/:date");
+                                }}
+                                /* 임시 연결 */
                             />
                         </StyledButtonContainer>
                         </div>

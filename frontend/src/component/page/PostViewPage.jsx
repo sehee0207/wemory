@@ -5,6 +5,9 @@ import Modal from 'react-modal';
 import '../../style/Modal.css';
 import Form from "react-validation/build/form";
 import Button from "../ui/Button";
+import exImg from "../img/ex-img.png";
+import Comment from '../ui/Comment';
+import InputEmoji from "react-input-emoji";
 
 import DiaryService from "../../services/dairy.service";
 
@@ -12,6 +15,70 @@ const Wrapper = styled.div`
 `
 
 const ContentText = styled.div`
+    text-align : center;
+    font-size : 2vh;
+    font-weight : 600;
+`
+const DateText = styled.div`
+    text-align : left;
+    color : #C7DB44;
+    margin-left : 3vw;
+    margin-top : 3vh;
+`
+const TitleText = styled.div`
+    text-align : left;
+    margin-left : 3vw;
+    margin-right : 3vw;
+    font-size: 3vh;
+    color: #545454;
+    font-weight : 500;
+`
+const PostBox = styled.div`
+    background-color: #fff;
+    height: 100%;
+    margin-left : 3vw;
+    margin-right : 3vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    display: flex;
+`
+const PhotoBox = styled.div`
+    width: 40%;
+    height: 100%;
+    overflow-x: scroll;
+    white-space: nowrap;
+`
+const Img = styled.img`
+    width: 100%;
+    height: 100%;
+`
+const TxtBox = styled.div`
+    background-color: #fff;
+    width: 100%;
+    height: 33%;
+    max-height: 33%;
+    padding: 3%;
+    overflow-y: scroll;
+`
+const VerticalBox = styled.div`
+    width: 60%;
+    height: 100%;
+`
+const CommentBox = styled.div`
+    width: 100%;
+    background-color: #fff;
+    height: 57%;
+    padding: 3%;    
+`
+const MyComment = styled.div`
+
+`
+const Line = styled.hr`
+    width : 95%;
+    height: 0.1vh;
+    background-color : #D9D9D9;
+    border : 0;
+    margin: auto;
 `
 
 const StyledModal = {
@@ -24,16 +91,20 @@ const StyledModal = {
 		backgroundColor: "rgba(255, 255, 255, 0.45)",
 		zIndex: 10,
 	},
-// 	content: {
-// 		display: "flex",
-//         flexDirection: "column",
-// 		background: "#ffdfe7",
-// 		overflow: "auto",
-// 		WebkitOverflowScrolling: "touch",
-// 		borderRadius: "14px",
-// 		outline: "none",
-// 		zIndex: 10,
-// 	},
+ 	content: {
+ 		display: "flex",
+         flexDirection: "column",
+ 		background: "#fff",
+ 		overflow: "auto",
+ 		WebkitOverflowScrolling: "touch",
+ 		borderRadius: "14px",
+ 		outline: "none",
+ 		zIndex: 10,
+         top: '10vh',
+         left: '15vw',
+         right: '15vw',
+         bottom: '10vh',
+ 	},
 }
 
 const required = (value) => {
@@ -57,6 +128,12 @@ function PostViewPage(props){
     const [photo, setPhoto] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+
+    const [ text, setText ] = useState("");
+
+    function handleOnEnter(text) {
+        console.log("enter", text);
+    }
     
     useEffect(() => {
         setModalIsOpen(true);
@@ -103,16 +180,42 @@ function PostViewPage(props){
                 style={StyledModal}
                 onRequestClose={() => setModalIsOpen(false)}
             >
-                    <p>오느른 {props.date}</p>
-                    <ContentText>작성된 게시글을 볼 수 있는 페이지입니다.</ContentText>
-                    <input
+            <ContentText>추억 확인</ContentText>
+            <DateText>Date :  {props.date}</DateText>
+            <TitleText>제목제목제목</TitleText>
+            <PostBox>
+                <PhotoBox>
+                    <Img src={exImg}></Img>
+                    <Img src={exImg}></Img>
+                    <Img src={exImg}></Img>
+                </PhotoBox>
+                <VerticalBox>
+                <TxtBox>작성한글을 보여주는곳 </TxtBox>
+                <Line />
+                <CommentBox>
+                    <p>댓글 보여주는 곳</p>
+                    <p>예지 : 우리팀 화이팅~</p>
+                    <Comment />
+                </CommentBox>
+                <MyComment>
+                <InputEmoji
+                    value={text}
+                    onChange={setText}
+                    cleanOnEnter
+                    onEnter={handleOnEnter}
+                    placeholder="댓글을 달아보세요"
+                />
+                </MyComment>
+                </VerticalBox>
+            </PostBox>
+                    {/*<input
                         type="text"
                         name="content"
                         id="content"
                         value={content}
                         onChange={onChangeContent}
                         validations={[required]}
-                    />
+                    />*/}
             </Modal>
         </Wrapper>
     )
