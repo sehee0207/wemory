@@ -92,19 +92,6 @@ const StyledModal = {
 		zIndex: 10,
 	},
  	content: {
- 		display: "flex",
-<<<<<<< HEAD
-        flexDirection: "column",
- 		overflow: "auto",
- 		WebkitOverflowScrolling: "touch",
- 		borderRadius: "30px",
- 		outline: "none",
- 		zIndex: 10,
-        top: '10vh',
-        left: '25vw',
-        right: '25vw',
-        bottom: '10vh',
-=======
          flexDirection: "column",
  		background: "#fff",
  		overflow: "auto",
@@ -116,7 +103,6 @@ const StyledModal = {
          left: '15vw',
          right: '15vw',
          bottom: '10vh',
->>>>>>> 825b95be37a3dffae733837f3be8bc3f2b485504
  	},
 }
 
