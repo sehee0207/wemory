@@ -195,6 +195,15 @@ const SignupPage = (props) => {
             error.message ||
             error.toString();
 
+          
+          if (error.response.data.message === "Failed! Username is already in use!") {
+            setUsernameMessage("이미 존재하는 아이디입니다.");
+            setIsUserName(false);
+          }
+          if (error.response.data.message === "Failed! Email is already in use!") {
+            setEmailMessage("이미 존재하는 이메일입니다.");
+            setIsEmail(false);
+          }
           setMessage(resMessage);
           setSuccessful(false);
         }
