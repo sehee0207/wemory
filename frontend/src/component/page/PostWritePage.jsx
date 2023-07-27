@@ -12,7 +12,6 @@ import DiaryService from "../../services/diary.service";
 import PostViewPage from "./PostViewPage";
 
 const Wrapper = styled.div`
-    
 `
 
 const ContentText = styled.div`
@@ -61,8 +60,8 @@ const StyledInputContent = styled.div`
     >textarea {
         border : 0px solid;
         width : 100%;
-        height : 5vh;
-        padding-bottom : 8vh;
+        height : 10vh;
+        // padding-bottom : 5vh;
         font-size: 2vh;
         word-break:break-all;
         resize:none;
@@ -163,10 +162,10 @@ const StyledModal = {
  		borderRadius: "30px",
  		outline: "none",
  		zIndex: 10,
-        top: '10vh',
+        top: '6vh',
         left: '25vw',
         right: '25vw',
-        bottom: '10vh',
+        bottom: '6vh',
  	},
 }
 
@@ -197,6 +196,8 @@ function PostWritePage(props){
     
     useEffect(() => {
         setModalIsOpen(true);
+        setTitle("");
+        setContent("");
     }, [props.date]);
 
     const onChangeContent = (e) => {
@@ -247,28 +248,30 @@ function PostWritePage(props){
                 <ContentText>추억 남기기</ContentText>
                 <Form method="post" onSubmit={handleCreate} ref={form}>
                     <DateText>Date :  {props.date}</DateText>
-                    <TitleText>게시물 제목<Highlight>*</Highlight></TitleText>
+                    <TitleText>게시물 제목 ({title.replace(/<br\s*\?>/gm, "\n").length}글자)<Highlight>*</Highlight></TitleText>
                     <StyledInputForm><input
                         type="text"
                         name="title"
                         id="title"
+                        maxLength={20}
                         value={title}
                         required
                         onChange={onChangeTitle}
                         validations={[required]}
-                        placeholder="제목을 입력해주세요"
+                        placeholder="20글자 이내로 제목을 입력해주세요"
                     />
                     </StyledInputForm>
                     <Line/>
-                    <TitleText>게시물 내용<Highlight>*</Highlight></TitleText>
+                    <TitleText>게시물 내용 ({content.replace(/<br\s*\?>/gm, "\n").length}글자)<Highlight>*</Highlight></TitleText>
                     <StyledInputContent><textarea
                         type="textarea"
                         name="content"
                         id="content"
+                        maxLength={200}
                         value={content}
                         onChange={onChangeContent}
                         validations={[required]}
-                        placeholder="게시물 내용을 작성해주세요 :)"
+                        placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
                     />
                     </StyledInputContent>
                     <TitleText>첨부 파일<Highlight>*</Highlight></TitleText>
