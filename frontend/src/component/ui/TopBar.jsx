@@ -6,6 +6,8 @@ import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
 import {FaUserCircle} from 'react-icons/fa';
 import AuthService from "../../services/auth.service";
+import { BiSolidBellRing } from "react-icons/bi";
+import Notification from "./Notification";
 
 const Wrapper = styled.div`
   height: 8vh;
@@ -32,8 +34,7 @@ const Logout = styled.div`
 
 const NotificationButton = styled.div`
   cursor: pointer;
-  padding: 10px 30px;
-  color: blue;
+  padding: 10px 20px;
 `
 
 const StyledMainText = styled.div`
@@ -80,7 +81,7 @@ function TopBar(props){
               <NotificationButton onClick={() => {
                 SetOpenNotification(true);
               }}>
-                알림
+                <BiSolidBellRing />
               </NotificationButton>
 
                 <Logout onClick={() => {navigate("/") }}>
@@ -95,10 +96,9 @@ function TopBar(props){
                     style={StyledModal}
                     onRequestClose={() => SetOpenNotification(false)}
                   >
-                  <StyledMainText>ㅇㅇㅇ 사용자가 커뮤니티 초대를 보냈습니다.</StyledMainText>
-                  <Button>수락</Button>
-                  {/* <button>거절</button> */}
-              </Modal>
+                  <Notification />
+                  
+                  </Modal>
                 }
             </UserInform>
         </Wrapper>

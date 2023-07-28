@@ -58,7 +58,7 @@ function MemberList(props){
 
     return(
         <Wrapper>
-            <TitleText>채팅</TitleText>
+            <TitleText>멤버</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
 
             <MemberContainer>

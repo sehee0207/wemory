@@ -9,7 +9,6 @@ import '../../style/PostWritePage.css'
 import { useNavigate } from "react-router-dom";
 
 import DiaryService from "../../services/diary.service";
-import PostViewPage from "./PostViewPage";
 
 const Wrapper = styled.div`
 `
@@ -88,18 +87,6 @@ const FileUpload = styled.div`
     margin-right: 3vw;
     height: 15vh;
     display: flex;
-    >label {
-        display: inline;
-        width: 30%;
-        height: 100%;
-        border-radius: 10px;
-        background-color : #D9D9D9;
-        text-align:center;
-        padding-top: 5vh;
-        font-size: 3vh;
-        margin-right: 5%;
-        cursor: pointer;
-    }
     >input[type="file"] {
         position: absolute;
         width: 1px;
@@ -111,6 +98,7 @@ const FileUpload = styled.div`
         border: 0;
     }
 `
+
 const Highlight = styled.span`
     color: #C7DB44;
     font-size: 3vh;
@@ -120,7 +108,7 @@ const SubTxt = styled.div `
     color: #D9D9D9;
     margin-left: 3vw;
     margin-right: 3vw;
-    margin-top: 1vh;
+    margin-top: 2.5vh;
     font-size: 1.5vh;
 `
 const StyledButtonContainer = styled.div`
@@ -141,6 +129,45 @@ const GreyBtn = styled.div`
         margin-left: 2vh;
         background-color: #D9D9D9;
     }
+`
+
+const FileContainer = styled.div`
+    display: inline;
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    background-color : #D9D9D9;
+    
+    text-align:center;
+    padding-top: 5vh;
+    font-size: 3vh;
+    margin-right: 5%;
+    cursor: pointer;
+
+    >input[type="file"] {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip:rect(0,0,0,0);
+        border: 0;
+    }
+`
+
+const PreviewContainer = styled.div`
+    display: inline;
+    width: 200px;
+    height: 120px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    text-align:center;
+    padding-top: 5vh;
+    font-size: 3vh;
+    margin-right: 5%;
+    cursor: pointer;
 `
 
 
@@ -193,11 +220,17 @@ function PostWritePage(props){
     const [photo, setPhoto] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
+    const [image1, setImage1Src] = useState("");
+    const [image2, setImage2Src] = useState("");
+    const [image3, setImage3Src] = useState("");
     
     useEffect(() => {
         setModalIsOpen(true);
         setTitle("");
         setContent("");
+        setImage1Src("");
+        setImage2Src("");
+        setImage3Src("");
     }, [props.date]);
 
     const onChangeContent = (e) => {
@@ -207,6 +240,39 @@ function PostWritePage(props){
     const onChangeTitle = (e) => {
         const title = e.target.value;
         setTitle(title);
+    };
+
+    const img1encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+          reader.onload = () => {
+            setImage1Src(reader.result);
+            resolve();
+          };
+        });
+    };
+
+    const img2encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+          reader.onload = () => {
+            setImage2Src(reader.result);
+            resolve();
+          };
+        });
+    };
+
+    const img3encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+          reader.onload = () => {
+            setImage3Src(reader.result);
+            resolve();
+          };
+        });
     };
 
     const handleCreate = (e) => {
@@ -262,6 +328,7 @@ function PostWritePage(props){
                     />
                     </StyledInputForm>
                     <Line/>
+
                     <TitleText>게시물 내용 ({content.replace(/<br\s*\?>/gm, "\n").length}글자)<Highlight>*</Highlight></TitleText>
                     <StyledInputContent><textarea
                         type="textarea"
@@ -274,22 +341,62 @@ function PostWritePage(props){
                         placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
                     />
                     </StyledInputContent>
+
                     <TitleText>첨부 파일<Highlight>*</Highlight></TitleText>
-                    <FileUpload><label for="file1">📷</label>
-                        <input
-                            type="file"
-                            name="file1"
-                            id="file1"/>
-                        <label for="file2">📷</label>
-                        <input
-                            type="file"
-                            name="file2"
-                            id="file2"/>
-                        <label for="file3">📷</label>
-                        <input
-                            type="file"
-                            name="file3"
-                            id="file3"/></FileUpload>
+                    <FileUpload>
+                        {!image1 && (
+                            <FileContainer>
+                                <label for="file1">📷</label>
+                                <input
+                                    type="file"
+                                    name="file1"
+                                    id="file1"
+                                    onChange={(e) => {
+                                        img1encodeFileToBase64(e.target.files[0]);
+                                    }}
+                                />
+                            </FileContainer>
+                            )
+                        }
+                        {image1 &&
+                            <PreviewContainer style={{backgroundImage: `url(${image1})`, backgroundSize: 'cover'}} />
+                        }
+                        {!image2 && (
+                            <FileContainer>
+                                <label for="file2">📷</label>
+                                <input
+                                    type="file"
+                                    name="file2"
+                                    id="file2"
+                                    onChange={(e) => {
+                                        img2encodeFileToBase64(e.target.files[0]);
+                                    }}
+                                />
+                            </FileContainer>
+                            )
+                        }
+                        {image2 &&
+                            <PreviewContainer style={{backgroundImage: `url(${image2})`, backgroundSize: 'cover'}} />
+                        }
+
+                        {!image3 && (
+                            <FileContainer>
+                                <label for="file3">📷</label>
+                                <input
+                                    type="file"
+                                    name="file3"
+                                    id="file3"
+                                    onChange={(e) => {
+                                        img3encodeFileToBase64(e.target.files[0]);
+                                    }}
+                                />
+                            </FileContainer>
+                            )
+                        }
+                        {image3 &&
+                            <PreviewContainer style={{backgroundImage: `url(${image3})`, backgroundSize: 'cover'}} />
+                        }
+                    </FileUpload>
                     <SubTxt>이미지 파일(GIF,PNG,JPG)을 기준으로 최대 10MB이하, 최대 3개까지 첨부 가능합니다.</SubTxt>
                     <div class="button-container">
                         <div class="button-div">
@@ -302,9 +409,9 @@ function PostWritePage(props){
                             /></GreyBtn>
                         <Button
                                 title="등록하기"
-                                onClick={() => {
-                                    navigate("/main/post-view/:date");
-                                }}
+                                // onClick={() => {
+                                //     navigate("/main/post-view/:date");
+                                // }}
                                 /* 임시 연결 */
                             />
                         </StyledButtonContainer>
