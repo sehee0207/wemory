@@ -99,10 +99,10 @@ const StyledModal = {
  		borderRadius: "14px",
  		outline: "none",
  		zIndex: 10,
-         top: '10vh',
-         left: '15vw',
-         right: '15vw',
-         bottom: '10vh',
+        top: '6vh',
+        left: '25vw',
+        right: '25vw',
+        bottom: '6vh',
  	},
 }
 
