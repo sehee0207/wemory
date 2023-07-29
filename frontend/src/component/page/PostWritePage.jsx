@@ -24,6 +24,8 @@ const DateText = styled.div`
     margin-bottom : 3vh;
 `
 const TitleText = styled.div`
+    display: flex;
+    width: 40vw;
     text-align : left;
     margin-left : 3vw;
     margin-right : 3vw;
@@ -59,7 +61,7 @@ const StyledInputContent = styled.div`
     >textarea {
         border : 0px solid;
         width : 100%;
-        height : 10vh;
+        height : 20vh;
         // padding-bottom : 5vh;
         font-size: 2vh;
         word-break:break-all;
@@ -103,6 +105,7 @@ const Highlight = styled.span`
     color: #C7DB44;
     font-size: 3vh;
     padding-left: 0px;
+    width: 10px;
 `
 const SubTxt = styled.div `
     color: #D9D9D9;
@@ -133,10 +136,9 @@ const GreyBtn = styled.div`
 
 const FileContainer = styled.div`
     display: inline;
-    width: 200px;
+    width: 230px;
     height: 120px;
     border-radius: 10px;
-    border: 1px solid grey;
     background-color : #D9D9D9;
     
     text-align:center;
@@ -159,10 +161,9 @@ const FileContainer = styled.div`
 
 const PreviewContainer = styled.div`
     display: inline;
-    width: 200px;
+    width: 230px;
     height: 120px;
     border-radius: 10px;
-    border: 1px solid grey;
     text-align:center;
     padding-top: 5vh;
     font-size: 3vh;
@@ -324,7 +325,7 @@ function PostWritePage(props){
                         required
                         onChange={onChangeTitle}
                         validations={[required]}
-                        placeholder="20글자 이내로 제목을 입력해주세요"
+                        placeholder="20글자 이내로 제목을 입력해주세요 :)"
                     />
                     </StyledInputForm>
                     <Line/>
@@ -359,7 +360,7 @@ function PostWritePage(props){
                             )
                         }
                         {image1 &&
-                            <PreviewContainer style={{backgroundImage: `url(${image1})`, backgroundSize: 'cover'}} />
+                            <PreviewContainer style={{backgroundImage: `url(${image1})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundColor : '#D9D9D9'}} />
                         }
                         {!image2 && (
                             <FileContainer>
@@ -376,7 +377,7 @@ function PostWritePage(props){
                             )
                         }
                         {image2 &&
-                            <PreviewContainer style={{backgroundImage: `url(${image2})`, backgroundSize: 'cover'}} />
+                            <PreviewContainer style={{backgroundImage: `url(${image2})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundColor : '#D9D9D9'}} />
                         }
 
                         {!image3 && (
@@ -394,7 +395,7 @@ function PostWritePage(props){
                             )
                         }
                         {image3 &&
-                            <PreviewContainer style={{backgroundImage: `url(${image3})`, backgroundSize: 'cover'}} />
+                            <PreviewContainer style={{backgroundImage: `url(${image3})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center', backgroundColor : '#D9D9D9'}} />
                         }
                     </FileUpload>
                     <SubTxt>이미지 파일(GIF,PNG,JPG)을 기준으로 최대 10MB이하, 최대 3개까지 첨부 가능합니다.</SubTxt>
@@ -409,9 +410,9 @@ function PostWritePage(props){
                             /></GreyBtn>
                         <Button
                                 title="등록하기"
-                                // onClick={() => {
-                                //     navigate("/main/post-view/:date");
-                                // }}
+                                onClick={() => {
+                                    navigate("/main/post-view/:date");
+                                }}
                                 /* 임시 연결 */
                             />
                         </StyledButtonContainer>

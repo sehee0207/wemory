@@ -3,8 +3,9 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
-
+import Select from 'react-select';
 import Form from "react-validation/build/form";
+import '../../style/Selectbox.css';
 import { isEmail } from "validator";
 
 import AuthService from "../../services/auth.service";
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
 `
 
 const Container = styled.div`
-  padding-top: 5%;
+  padding-top: 2%;
   text-align: center;
 `
 
@@ -49,7 +50,6 @@ const Text = styled.div`
 `
 
 const StyledInputContainer = styled.div`
- 
   display: flex;
   flex-direction: column;
   padding: 0vw 30vw;
@@ -57,10 +57,21 @@ const StyledInputContainer = styled.div`
 
 const StyledInputForm = styled.div`
   height: 10vh;
+  width: 50vw;
   display: flex;
   align-items: center;
   >Input{
     justify-content: center;
+    width: 30vw;
+  }
+  >Button{
+    padding: 1vw;
+    margin-left: 1.5vw;
+    font-weight: 400;
+    font-size: 10px;
+  }
+  >.react-select-container{
+    width: 30vw;
   }
 `
 
@@ -94,6 +105,19 @@ const required = (value) => {
   }
 };
 
+let genderoptions = [
+  { value: "male", label: "남" },
+  { value: "female", label: "여" },
+];
+
+let ageoptions = [
+  { value: "under10", label: "10대 이하" },
+  { value: "10", label: "10대" },
+  { value: "20", label: "20대" },
+  { value: "30", label: "30대" },
+  { value: "over40", label: "40대 이상" },
+]
+
 const SignupPage = (props) => {
   const form = useRef();
   //const checkBtn = useRef();
@@ -104,6 +128,8 @@ const SignupPage = (props) => {
   const [password, setPassword] = useState("");
   const [pw2, setPw2] = useState("");
   const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("female");
+  const [age, setAge] = useState("20대");
   const [successful, setSuccessful] = useState(false);
   const [message, setMessage] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -221,7 +247,7 @@ const SignupPage = (props) => {
                     <MainTitle>회원가입</MainTitle>
                     <StyledInputContainer>
                       <label>
-                          <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" value={username} onChange={onChangeId}/><br /></StyledInputForm>
+                        <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" className="idinput" value={username} onChange={onChangeId}/><br /><Button title="아이디 중복 확인" /></StyledInputForm>                        
                         {username.length > 0 && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
 
                         <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
@@ -233,9 +259,32 @@ const SignupPage = (props) => {
                         <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
                         {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
                       </label>
-                      
+                      <StyledInputForm>
+                        <Text>성별</Text>
+                        <Select
+                          className="react-select-container"
+                          options={genderoptions}
+                          onChange={(e) => {setGender(e.value)}}
+                          placeholder="성별을 입력해주세요"
+                          components={{
+                            IndicatorSeparator: () => null
+                          }}
+                        />
+                      </StyledInputForm>
+                      <StyledInputForm>
+                        <Text>나이</Text>
+                        <Select
+                            className="react-select-container"
+                            options={ageoptions}
+                            onChange={(e) => {setAge(e.value)}}
+                            placeholder="나이를 입력해주세요"
+                            components={{
+                              IndicatorSeparator: () => null
+                            }}
+                          />
+                      </StyledInputForm>
                     </StyledInputContainer>
-                    
+
                     <StyledButtonContainer>
                       <Button
                           title="회원가입"
