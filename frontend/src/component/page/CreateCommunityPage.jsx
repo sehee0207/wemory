@@ -127,15 +127,30 @@ function CreateCommunityPage(props){
     e.preventDefault();
     form.current.validateAll();
 
-    const member = [];
-    if (m1username !== "")
+    const member = [m1username, m2username, m3username, m4username, m5username];
+
+    for (let i=0; i<member.length; i++) {
+      if (member[i] === "") {
+        member.splice(i, 1);
+        i--;
+      }
+    }
 
     if (true) { //rewrite
         CommunityService.create(communityname, currentUser.username, member).then(
         () => {
             window.location.assign('/main');
-        }
-        );
+        },
+        (error) => {
+          // check community name
+          if (error.response.data.message === "Community name can not be empty!") {
+
+          }
+          // check member
+          if (error.response.data.message === "Community members must be at least 2 people.") {
+
+          }
+        });
     }
   };
 
