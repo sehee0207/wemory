@@ -13,7 +13,7 @@ module.exports = function(app) {
   app.post("/api/community/create", controller.create);
 
   // Retrieve all community
-  app.get("/api/community", controller.findAll);
+  app.post("/api/community", controller.findAll);
 
   // Retrieve a single community with id
   app.get("/api/community/:id", controller.findOne);

@@ -6,15 +6,15 @@ const User = db.user;
 exports.create = (req, res) => {
     // Validate request
     if (!req.body.communityname) {
-        res.status(400).send({ message: "Content can not be empty!" });
+        res.status(400).send({ message: "Community name can not be empty!" });
+        return;
+    }
+    if (req.body.member.length === 0) {
+        res.status(400).send({ message: "Community members must be at least 2 people." });
         return;
     }
 
     // Create a community
-    if (!req.body.communityname) {
-        res.status(400).send({ message: "Content can not be empty!" });
-        return;
-    }
     const community = new Community({
         communityname: req.body.communityname,
         commuhost: req.body.commuhost,
@@ -94,19 +94,40 @@ exports.create = (req, res) => {
 
 // List of community
 exports.findAll = (req, res) => {
-    const communityname = req.query.communityname;
-    var condition = communityname ? { communityname: { $regex: new RegExp(title), $options: "i" } } : {};
-  
-    Community.find(condition)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(err => {
-        res.status(500).send({
-          message:
-            err.message || "Some error occurred while retrieving tutorials."
-        });
-      });
+    User.findOne({
+        username: req.body.username
+    }).exec((err, user) => {
+        if (err) {
+            res.status(500).send({ message: err });
+            return;
+        }
+
+        var communitynameList = [];
+        
+        for (let i=0; i<user.commulist.length; i++) {
+            Community.find({_id: user.commulist[i]})
+            .exec((err, community) => {
+                if (err) {
+                    res.status(500).send({
+                        message:
+                            err.message || "Some error occurred while retrieving communities."
+                    });
+        
+                    return;
+                }
+                communitynameList.push(community[0].communityname);
+
+                if (i === user.commulist.length-1) {
+                    res.status(200).send({
+                        communityList: user.commulist,
+                        communitynameList: communitynameList
+                    });
+                }
+            });
+        }
+
+        return;
+    });
 };
 
 exports.findOne = (req, res) => {

@@ -10,19 +10,20 @@ const create = (communityname, commuhost, member) => {
   });
 };
 
-const getAll = () => {
-  return axios
-    .get(API_URL + "/");
+const getAll = (username) => {
+  return axios.post(API_URL, {username});
 };
 
+/*
 const get = (id) => {
   return axios.get(API_URL + `/${id}`);
 };
+*/
 
 const CommunityService = {
   create,
   getAll,
-  get
+  //get
 }
 
 export default CommunityService;

@@ -16,7 +16,8 @@ const User = mongoose.model(
       type: String
     },
     commulist: [{
-      type: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Community",
     }],
     roles: [{
       type: mongoose.Schema.Types.ObjectId,

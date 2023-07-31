@@ -1,5 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+
+import CommunityService from "../../services/community.service";
+import AuthService from "../../services/auth.service";
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -41,15 +44,31 @@ const ContentText = styled.div`
 
 
 function MyCommunityList(props){
+    const currentUser = AuthService.getCurrentUser();
+
+    const [community, setCommunity] = useState([]);
+    const [communityname, setCommunityname] = useState([]);
+
+    const retrieveCommunities = () => {
+        CommunityService
+        .getAll(currentUser.username)
+        .then((response) => {
+            setCommunity(response.data.communityList);
+            setCommunityname(response.data.communitynameList)
+        }).catch(e => {
+            console.log(e);
+        });
+    }
 
     return(
         <Wrapper>
             <TitleText>나의 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                <ContentText>첫 번째 커뮤니티 목록입니다</ContentText>
-                <ContentText>두 번째 커뮤니티 목록입니다</ContentText>
-                <ContentText>세 번째 커뮤니티 목록입니다</ContentText>
+                {retrieveCommunities()}
+                <ContentText>{communityname[0]}</ContentText>
+                <ContentText>{communityname[1]}</ContentText>
+                <ContentText>{communityname[2]}</ContentText>
             </CommunityList>
         </Wrapper>
     )
