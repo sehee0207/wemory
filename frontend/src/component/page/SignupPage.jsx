@@ -5,7 +5,6 @@ import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Select from 'react-select';
 import Form from "react-validation/build/form";
-import '../../style/Selectbox.css';
 import { isEmail } from "validator";
 
 import AuthService from "../../services/auth.service";

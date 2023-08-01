@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 
 import CommunityService from "../../services/community.service";
@@ -60,12 +60,15 @@ function MyCommunityList(props){
         });
     }
 
+    useEffect(() => {
+        retrieveCommunities();
+    }, []);
+
     return(
         <Wrapper>
             <TitleText>나의 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                {retrieveCommunities()}
                 <ContentText>{communityname[0]}</ContentText>
                 <ContentText>{communityname[1]}</ContentText>
                 <ContentText>{communityname[2]}</ContentText>

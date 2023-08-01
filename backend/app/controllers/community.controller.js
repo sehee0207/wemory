@@ -105,7 +105,7 @@ exports.findAll = (req, res) => {
         var communitynameList = [];
         
         for (let i=0; i<user.commulist.length; i++) {
-            Community.find({_id: user.commulist[i]})
+            Community.findOne({_id: user.commulist[i]})
             .exec((err, community) => {
                 if (err) {
                     res.status(500).send({
@@ -115,7 +115,7 @@ exports.findAll = (req, res) => {
         
                     return;
                 }
-                communitynameList.push(community[0].communityname);
+                communitynameList.push(community.communityname);
 
                 if (i === user.commulist.length-1) {
                     res.status(200).send({
