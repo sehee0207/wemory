@@ -207,7 +207,7 @@ const SignupPage = (props) => {
     form.current.validateAll();
 
     if (true) { // need rewrite
-      AuthService.register(username, password, email).then(
+      AuthService.register(username, password, email, gender, age).then(
         (response) => {
           setMessage(response.data.message);
           setSuccessful(true);

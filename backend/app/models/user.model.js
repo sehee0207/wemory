@@ -15,6 +15,12 @@ const User = mongoose.model(
     email: {
       type: String
     },
+    gender: {
+      type: String
+    },
+    age: {
+      type: Number
+    },
     commulist: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Community",
