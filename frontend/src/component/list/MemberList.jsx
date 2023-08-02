@@ -77,36 +77,23 @@ const GreyBtn = styled.div`
 function MemberList(props){
     const params = useParams();
     const [community, setCommunity] = useState("");
-    const [memberlist, setMemberList] = useState("");
-    const [member1, setMember1] = useState("");
-    const [member2, setMember2] = useState("");
-    const [member3, setMember3] = useState("");
-    const [member4, setMember4] = useState("");
-    const [member5, setMember5] = useState("");
+    const [memberlist, setMemberList] = useState([]);
 
     const {pathname} = useLocation();
 
-    const retrieveCommunity = () => {
+    const retrieveMember = () => {
         CommunityService
         .get(params.communityid)
         .then((response) => {
             setCommunity(response.data.community);
+            setMemberList(response.data.community.member);
         }).catch(e => {
             console.log(e);
         });
     }
 
     useEffect(() => {
-        retrieveCommunity();
-        setMemberList(community.member);
-        
-        if(memberlist && memberlist.length > 0){
-            setMember1(community.member[0]);
-            setMember2(community.member[1]);
-            setMember3(community.member[2]);
-            setMember4(community.member[3]);
-            setMember5(community.member[4]);
-        }
+        retrieveMember();
     }, [pathname]);
 
     return(
@@ -117,13 +104,13 @@ function MemberList(props){
             <MemberContainer>
                 <StyledMemberList>
                     <Member>{community.commuhost}</Member>
-                    <Member>{member1}</Member>
-                    <Member>{member2}</Member>
+                    <Member>{memberlist[0]}</Member>
+                    <Member>{memberlist[1]}</Member>
                 </StyledMemberList>
                 <StyledMemberList>
-                    <Member>{member3}</Member>
-                    <Member>{member4}</Member>
-                    <Member>{member5}</Member>
+                    <Member>{memberlist[2]}</Member>
+                    <Member>{memberlist[3]}</Member>
+                    <Member>{memberlist[4]}</Member>
                 </StyledMemberList>
             </MemberContainer>
             
