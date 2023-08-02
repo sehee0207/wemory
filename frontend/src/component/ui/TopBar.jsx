@@ -8,6 +8,7 @@ import {FaUserCircle} from 'react-icons/fa';
 import AuthService from "../../services/auth.service";
 import { BiSolidBellRing } from "react-icons/bi";
 import Notification from "./Notification";
+import logo from "../img/wemory-logo.svg";
 
 const Wrapper = styled.div`
   height: 8vh;
@@ -17,8 +18,11 @@ const Wrapper = styled.div`
   padding: 15px 30px;
   background-color: #FFFFFF;
 `
+const MainTitle = styled.div`
+  display: flex;
+`
 const MainTitleText = styled.div`
-  color: red;
+  color: black;
   font-size: 25px;
   font-weight: bold;
   cursor: pointer;
@@ -39,6 +43,11 @@ const NotificationButton = styled.div`
 
 const StyledMainText = styled.div`
     color: blue;
+`
+
+const LogoImg = styled.img`
+  width: 50px;
+  cursor: pointer;
 `
 
 const StyledModal = {
@@ -73,9 +82,12 @@ function TopBar(props){
 
     return(
         <Wrapper>
+            <MainTitle>
+            <LogoImg src={logo}/>
             <MainTitleText onClick={() => {
                 navigate("/main")
             }}>Wemory</MainTitleText>
+            </MainTitle>
 
             <UserInform>
               <NotificationButton onClick={() => {
