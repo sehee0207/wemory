@@ -1,14 +1,15 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../ui/Button";
 import TopBar from "../ui/TopBar";
 import Memory from "../list/Memory";
 import MyCommunityList from "../list/MyCommunityList";
 import LocalCommunityList from "../list/LocalCommunityList";
-import Chatting from "../list/Chatting";
 import MemberList from "../list/MemberList";
 import BookmarkList from "../list/BookmarkList";
+import AuthService from "../../services/auth.service";
+import CommunityService from "../../services/community.service";
 
 const Wrapper = styled.div`
     height: 90vh;
@@ -30,6 +31,27 @@ const MenuList = styled.div`
 function MainPage(props){
     const {} = props;
     const navigate = useNavigate();
+    const params = useParams();
+    const currentUser = AuthService.getCurrentUser();
+
+    const [community, setCommunity] = useState([]);
+    const [communityname, setCommunityname] = useState([]);
+
+    const retrieveCommunities = () => {
+        CommunityService
+        .getAll(currentUser.username)
+        .then((response) => {
+            // setCommunity(community);
+            setCommunityname(response.data.communitynameList)
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    useEffect(() => {
+        setCommunity(params.communityname);
+        retrieveCommunities();
+    }, );
 
     return(
         <Wrapper>
@@ -44,10 +66,12 @@ function MainPage(props){
                     />
                     <MyCommunityList />
                     <LocalCommunityList />
-                    <Chatting />
                 </MenuList>
 
-                <Memory comname="커뮤니티1" />
+                <Memory
+                    comname={community}
+                    // name={props.communityname}
+                    />
 
                 <MenuList>
                    <MemberList />

@@ -6,7 +6,7 @@ const Wrapper = styled.div`
     margin: 15px 0px;
     display: flex;
     flex-direction: column;
-    height: 15vh;
+    height: 50vh;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
     background-color: #FFFFFF;
     >hr{
