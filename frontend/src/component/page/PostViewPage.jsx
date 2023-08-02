@@ -9,6 +9,9 @@ import exImg from "../img/ex-img.png";
 import Comment from '../ui/Comment';
 import InputEmoji, { async } from "react-input-emoji";
 import Bookmark from "../ui/Bookmark";
+import Toast from "../ui/Toast";
+import {BsFillBookmarkFill} from 'react-icons/bs';
+import {FaTrash} from 'react-icons/fa';
 
 import DiaryService from "../../services/diary.service";
 
@@ -96,7 +99,7 @@ const StyledModal = {
 		right: 0,
 		bottom: 0,
 		backgroundColor: "rgba(255, 255, 255, 0.45)",
-		zIndex: 10,
+		zIndex: 1,
 	},
  	content: {
          flexDirection: "column",
@@ -138,10 +141,16 @@ function PostViewPage(props){
     const [ text, setText ] = useState("");
 
     const [ bm, setBm ] = useState(false);
+    const [toast, setToast] = useState(false);
 
     const handleBm = async (e) => {
         setBm(!bm);
-    }
+        handleToast();
+    };
+
+    const handleToast = async (e) => {
+        setToast(true);
+    };
 
     function handleOnEnter(text) {
         console.log("enter", text);
@@ -186,6 +195,8 @@ function PostViewPage(props){
 
     return(
         <Wrapper>
+            {bm && toast && <Toast setToast={setToast} icon={<BsFillBookmarkFill/>} text="북마크 추가" />}
+            {!bm && toast && <Toast setToast={setToast} icon={<FaTrash/>} text="북마크 삭제" />}
             <Modal
                 isOpen={modalIsOpen}
                 ariaHideApp={false}
