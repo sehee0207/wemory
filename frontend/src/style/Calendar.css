@@ -160,3 +160,7 @@
 .react-calendar__month-view__days :nth-child(7n) {
   color: blue;
 }
+
+.highlight {
+  background: #f3a95f;
+}

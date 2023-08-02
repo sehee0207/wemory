@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import '../../style/Calendar.css';
 import styled from "styled-components";
 import PostWritePage from "../page/PostWritePage";
 import '../../style/Modal.css';
+import AuthService from "../../services/auth.service";
+import CommunityService from "../../services/community.service";
 
 const Wrapper = styled.div`
     width: 50vw;
@@ -35,8 +37,28 @@ function Memory(props){
     const { comname } = props;
     const [ value, onChange ] = useState(new Date());
     const [WritePageOpen, setWritePageOpen] = useState(false);
-    const [ViewPageOpen, setViewPageOpen] = useState(false);
     // const navigate = useNavigate();
+    const params = useParams();
+    const [community, setCommunity] = useState("");
+
+    const retrieveCommunity = () => {
+        CommunityService
+        .get(params.communityid)
+        .then((response) => {
+            setCommunity(response.data.community);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    useEffect(() => {
+        retrieveCommunity();
+    }, );
+
+    const marks = [
+        "230801",
+        "230815",
+    ];
     
     function Handler() {
         setWritePageOpen(true);
@@ -44,13 +66,18 @@ function Memory(props){
 
     return(
         <Wrapper>
-            <StyledComname>{comname}</StyledComname>
+            <StyledComname>{community.communityname}</StyledComname>
             <Container>
                 <Calendar
                     locale="en"
                     calendarType="US"
                     onChange={onChange}
                     value={value}
+                    tileClassName={({ date, view }) => {
+                        if (marks.find((x) => x === moment(date).format("YYMMDD"))) {
+                          return "highlight";
+                        }
+                      }}
                     next2Label={null}
                     prev2Label={null}
                     onClickDay={Handler}

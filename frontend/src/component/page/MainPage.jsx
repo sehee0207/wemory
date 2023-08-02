@@ -8,8 +8,6 @@ import MyCommunityList from "../list/MyCommunityList";
 import LocalCommunityList from "../list/LocalCommunityList";
 import MemberList from "../list/MemberList";
 import BookmarkList from "../list/BookmarkList";
-import AuthService from "../../services/auth.service";
-import CommunityService from "../../services/community.service";
 
 const Wrapper = styled.div`
     height: 90vh;
@@ -31,24 +29,6 @@ const MenuList = styled.div`
 function MainPage(props){
     const {} = props;
     const navigate = useNavigate();
-    const params = useParams();
-    const currentUser = AuthService.getCurrentUser();
-
-    const [community, setCommunity] = useState("");
-
-    const retrieveCommunity = () => {
-        CommunityService
-        .get(params.communityid)
-        .then((response) => {
-            setCommunity(response.data.community);
-        }).catch(e => {
-            console.log(e);
-        });
-    }
-
-    useEffect(() => {
-        retrieveCommunity();
-    }, );
 
     return(
         <Wrapper>
@@ -62,17 +42,14 @@ function MainPage(props){
                         }}
                     />
                     <MyCommunityList />
-                    <LocalCommunityList />
+                    <MemberList />
+                    <BookmarkList />
                 </MenuList>
 
-                <Memory
-                    comname={community.communityname}
-                    // name={props.communityname}
-                    />
+                <Memory />
 
                 <MenuList>
-                   <MemberList />
-                   <BookmarkList />
+                    <LocalCommunityList />
                 </MenuList>
             </Container>
         </Wrapper>
