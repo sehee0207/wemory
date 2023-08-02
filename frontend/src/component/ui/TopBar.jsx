@@ -8,6 +8,7 @@ import {FaUserCircle} from 'react-icons/fa';
 import AuthService from "../../services/auth.service";
 import { BiSolidBellRing } from "react-icons/bi";
 import Notification from "./Notification";
+import CommunityService from "../../services/community.service";
 import logo from "../img/wemory-logo.svg";
 
 const Wrapper = styled.div`
@@ -80,13 +81,27 @@ function TopBar(props){
     const currentUser = AuthService.getCurrentUser();
     const [OpenNotification, SetOpenNotification] = useState(false);
 
+    const [community, setCommunity] = useState([]);
+
+    // const retrieveCommunities = () => {
+    //     CommunityService
+    //     .then((response) => {
+    //         setCommunity(response.data.communityList);
+    //     }).catch(e => {
+    //         console.log(e);
+    //     });
+    // }
+
+    // useEffect(() => {
+    //     retrieveCommunities();
+    // }, []);
+
     return(
         <Wrapper>
             <MainTitle>
-            <LogoImg src={logo}/>
-            <MainTitleText onClick={() => {
-                navigate("/main")
-            }}>Wemory</MainTitleText>
+              <LogoImg src={logo}/>
+              <MainTitleText onClick={() => navigate("/start")}>Wemory</MainTitleText>
+              {/* navigate(`/main/${community[0]}` */}
             </MainTitle>
 
             <UserInform>
@@ -96,7 +111,7 @@ function TopBar(props){
                 <BiSolidBellRing />
               </NotificationButton>
 
-                <Logout onClick={() => {navigate("/") }}>
+                <Logout onClick={() => navigate("/")}>
                   <FaUserCircle/> {currentUser.username}/로그아웃
                 </Logout>
 
