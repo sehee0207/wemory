@@ -40,6 +40,7 @@ const Community = styled.div`
     // margin-block-end: 0.5em;
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
+    cursor: pointer;
 `
 
 
