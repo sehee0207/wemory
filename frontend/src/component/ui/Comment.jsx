@@ -4,11 +4,21 @@ import styled from "styled-components";
 const StyledComment = styled.div`
     
 `
+const Id = styled.div`
+    font-size: 12px;
+    font-weight: 600;
+`
+const CommentContent = styled.div`
+    font-size: 12px;
+`
 
 function Comment(props){
-    const { type, name, onChange } = props;
+    const { userid, comment, onChange, onClick } = props;
 
-    return <StyledComment />
+    return <StyledComment onClick={onClick}>
+        <Id>{userid || "아이디"}</Id>
+        <CommentContent>{comment || "댓글 내용"}</CommentContent>
+    </StyledComment>
 }
 
 export default Comment;

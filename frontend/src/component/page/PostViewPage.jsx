@@ -192,9 +192,8 @@ function PostViewPage(props){
                 <TxtBox>작성한글을 보여주는곳 </TxtBox>
                 <Line />
                 <CommentBox>
-                    <p>댓글 보여주는 곳</p>
-                    <p>예지 : 우리팀 화이팅~</p>
-                    <Comment />
+                    {/* <p>댓글 보여주는 곳</p> */}
+                    <Comment userid=""></Comment>
                 </CommentBox>
                 <MyComment>
                 <InputEmoji
