@@ -1,6 +1,6 @@
 import {React, useEffect, useState} from "react";
 import styled from "styled-components";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import Button from "../ui/Button";
 
@@ -84,6 +84,8 @@ function MemberList(props){
     const [member4, setMember4] = useState("");
     const [member5, setMember5] = useState("");
 
+    const {pathname} = useLocation();
+
     const retrieveCommunity = () => {
         CommunityService
         .get(params.communityid)
@@ -105,7 +107,7 @@ function MemberList(props){
             setMember4(community.member[3]);
             setMember5(community.member[4]);
         }
-    });
+    }, [pathname]);
 
     return(
         <Wrapper>

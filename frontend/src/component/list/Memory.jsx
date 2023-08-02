@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import moment from "moment";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import '../../style/Calendar.css';
 import styled from "styled-components";
 import PostWritePage from "../page/PostWritePage";
@@ -41,6 +41,8 @@ function Memory(props){
     const params = useParams();
     const [community, setCommunity] = useState("");
 
+    const {pathname} = useLocation();
+
     const retrieveCommunity = () => {
         CommunityService
         .get(params.communityid)
@@ -53,7 +55,7 @@ function Memory(props){
 
     useEffect(() => {
         retrieveCommunity();
-    }, );
+    }, [pathname]);
 
     const marks = [
         "230801",
