@@ -7,13 +7,20 @@ import Form from "react-validation/build/form";
 import Button from "../ui/Button";
 import exImg from "../img/ex-img.png";
 import Comment from '../ui/Comment';
-import InputEmoji from "react-input-emoji";
+import InputEmoji, { async } from "react-input-emoji";
+import Bookmark from "../ui/Bookmark";
 
 import DiaryService from "../../services/diary.service";
 
 const Wrapper = styled.div`
 `
-
+const Top = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-right : 3vw;
+`
+const DateTitle = styled.div`
+`
 const ContentText = styled.div`
     text-align : center;
     font-size : 2vh;
@@ -130,6 +137,12 @@ function PostViewPage(props){
 
     const [ text, setText ] = useState("");
 
+    const [ bm, setBm ] = useState(false);
+
+    const handleBm = async (e) => {
+        setBm(!bm);
+    }
+
     function handleOnEnter(text) {
         console.log("enter", text);
     }
@@ -180,8 +193,13 @@ function PostViewPage(props){
                 onRequestClose={() => setModalIsOpen(false)}
             >
             <ContentText>추억 확인</ContentText>
+            <Top>
+            <DateTitle>
             <DateText>Date :  {props.date}</DateText>
             <TitleText>제목제목제목</TitleText>
+            </DateTitle>
+            <Bookmark bm={bm} onClick={handleBm}/>
+            </Top>
             <PostBox>
                 <PhotoBox>
                     <Img src={exImg}></Img>
