@@ -21,9 +21,10 @@ function App() {
 	<Routes>
 		<Route index element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
-		<Route path="main" element={<MainPage />} />
+		<Route path="start" element={<CreateCommunityPage />} />
+		<Route path="main/:communityname" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
-		<Route path="main/post-write/:date" element={<PostWritePage />} />
+		{/* <Route path="main/post-write/:date" element={<PostWritePage />} /> */}
 		<Route path="main/post-view/:date" element={<PostViewPage />} />
 	</Routes>
   );

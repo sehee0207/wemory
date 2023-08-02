@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
-
+import { Link, useNavigate } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import AuthService from "../../services/auth.service";
 
@@ -32,7 +32,7 @@ const CommunityList = styled.div`
 
 `
 
-const ContentText = styled.div`
+const Community = styled.div`
     color: grey;
     font-size: 0.8em;
     // padding: 5px 15px;
@@ -45,6 +45,7 @@ const ContentText = styled.div`
 
 function MyCommunityList(props){
     const currentUser = AuthService.getCurrentUser();
+    const navigate = useNavigate();
 
     const [community, setCommunity] = useState([]);
     const [communityname, setCommunityname] = useState([]);
@@ -69,9 +70,10 @@ function MyCommunityList(props){
             <TitleText>나의 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                <ContentText>{communityname[0]}</ContentText>
-                <ContentText>{communityname[1]}</ContentText>
-                <ContentText>{communityname[2]}</ContentText>
+                
+                <Community onClick={()=> navigate(`/main/${community[0]}`)}>{communityname[0]}</Community>                  
+                <Community onClick={()=> navigate(`/main/${community[1]}`)}>{communityname[1]}</Community>
+                <Community onClick={()=> navigate(`/main/${community[2]}`)}>{communityname[2]}</Community>
             </CommunityList>
         </Wrapper>
     )
