@@ -34,23 +34,20 @@ function MainPage(props){
     const params = useParams();
     const currentUser = AuthService.getCurrentUser();
 
-    const [community, setCommunity] = useState([]);
-    const [communityname, setCommunityname] = useState([]);
+    const [community, setCommunity] = useState("");
 
-    const retrieveCommunities = () => {
+    const retrieveCommunity = () => {
         CommunityService
-        .getAll(currentUser.username)
+        .get(params.communityid)
         .then((response) => {
-            // setCommunity(community);
-            setCommunityname(response.data.communitynameList)
+            setCommunity(response.data.community);
         }).catch(e => {
             console.log(e);
         });
     }
 
     useEffect(() => {
-        setCommunity(params.communityname);
-        retrieveCommunities();
+        retrieveCommunity();
     }, );
 
     return(
@@ -69,7 +66,7 @@ function MainPage(props){
                 </MenuList>
 
                 <Memory
-                    comname={community}
+                    comname={community.communityname}
                     // name={props.communityname}
                     />
 
