@@ -126,7 +126,9 @@ const Loginpage = () => {
         if (checkBtn.current.context._errors.length === 0) { //rewrite
             AuthService.login(username, password).then(
             () => {
-                window.location.assign('/main');
+                window.location.assign('/start');
+                // 사용자의 communitylist 가 비어있다면 /start 으로,
+                // 비어있지 않다면 '/main/community[0]' 으로 이동
             },
             (error) => {
                 const resMessage =
