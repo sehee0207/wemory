@@ -6,7 +6,6 @@ import Button from "../ui/Button";
 import Select from 'react-select';
 import Form from "react-validation/build/form";
 import { isEmail } from "validator";
-
 import AuthService from "../../services/auth.service";
 
 

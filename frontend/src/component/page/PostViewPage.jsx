@@ -43,8 +43,8 @@ const PostBox = styled.div`
     display: flex;
 `
 const PhotoBox = styled.div`
-    width: 40%;
-    height: 100%;
+    width: 60%;
+    height: 80%;
     overflow-x: scroll;
     white-space: nowrap;
 `
@@ -62,7 +62,7 @@ const TxtBox = styled.div`
 `
 const VerticalBox = styled.div`
     width: 60%;
-    height: 100%;
+    height: 80%;
 `
 const CommentBox = styled.div`
     width: 100%;
