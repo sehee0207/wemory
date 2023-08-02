@@ -131,19 +131,17 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-    const id = req.params.id;
-  
-    Community.findById(id)
-      .then(data => {
-        if (!data) {
-          res.status(404).send({ message: "Not found community with id " + id });
+    Community.findOne({_id: req.params.communityid})
+      .then(community => {
+        if (!community) {
+          res.status(404).send({ message: "Not found community with id " + req.params.communityid });
           return;
         }
-        else res.send(data);
+        else res.status(200).send({community: community});
       })
       .catch(err => {
         res
           .status(500)
-          .send({ message: "Error retrieving community with id = " + id });
+          .send({ message: "Error retrieving community with id = " + req.params.communityid });
       });
 };

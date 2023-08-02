@@ -16,5 +16,5 @@ module.exports = function(app) {
   app.post("/api/community", controller.findAll);
 
   // Retrieve a single community with id
-  app.get("/api/community/:id", controller.findOne);
+  app.get("/api/community/:communityid", controller.findOne);
 };

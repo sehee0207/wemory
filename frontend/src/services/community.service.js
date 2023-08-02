@@ -14,16 +14,15 @@ const getAll = (username) => {
   return axios.post(API_URL, {username});
 };
 
-/*
-const get = (id) => {
-  return axios.get(API_URL + `/${id}`);
+const get = (communityid) => {
+  return axios.get(API_URL + `${communityid}`);
 };
-*/
+
 
 const CommunityService = {
   create,
   getAll,
-  //get
+  get
 }
 
 export default CommunityService;
