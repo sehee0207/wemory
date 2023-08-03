@@ -63,8 +63,8 @@ const StyledButtonConatiner = styled.div`
 
 const GreyBtn = styled.div`
     >Button{
-        width: 5vw;
-        margin: 5px;
+        width: 10vw;
+        margin: 3px;
         font-size: 0.5em;
         justify-content: center;
         // margin-left: 2vh;
@@ -78,6 +78,7 @@ function MemberList(props){
     const params = useParams();
     const [community, setCommunity] = useState("");
     const [memberlist, setMemberList] = useState([]);
+    const navigate = useNavigate();
 
     const {pathname} = useLocation();
 
@@ -115,8 +116,24 @@ function MemberList(props){
             </MemberContainer>
             
                 <StyledButtonConatiner>
-                    <GreyBtn><Button id="cancel-btn" title="멤버 초대" /></GreyBtn>
-                    <GreyBtn><Button id="cancel-btn" title="멤버 관리" /></GreyBtn>
+                    <GreyBtn>
+                        <Button
+                            id="cancel-btn"
+                            title="커뮤니티 관리"
+                            onClick={() => {
+                                navigate("invite");
+                            }}
+                        />
+                    </GreyBtn>
+                    {/* <GreyBtn>
+                        <Button
+                            id="cancel-btn"
+                            title="멤버 관리"
+                            onClick={() => {
+                                navigate("manage");
+                            }}  
+                        />
+                    </GreyBtn> */}
                 </StyledButtonConatiner>
             
         </Wrapper>

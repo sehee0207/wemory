@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
+import Select from 'react-select';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -25,8 +26,9 @@ const TitleText = styled.p`
     cursor: pointer;
 `
 
-const CommunityList = styled.div`
-
+const StyledSelect = styled.div`
+    margin: 10px 5px;
+    padding: 5px;
 `
 
 const ContentText = styled.div`
@@ -38,18 +40,41 @@ const ContentText = styled.div`
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
 `
-
+  
+  let districtoptions = [
+    { value: "Jongno-gu", label: "종로구" },
+    { value: "Jung-gu", label: "중구" },
+    { value: "Yongsan-gu", label: "용산구" },
+    { value: "Seongdong-gu", label: "성동구" },
+    { value: "Gwangjin-gu", label: "광진구" },
+  ]
 
 function LocalCommunityList(props){
+    const [district, setDistrict] = useState("종로구");
+
     return(
         <Wrapper>
             <TitleText>지역 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
-            <CommunityList>
-                <ContentText>첫 번째 커뮤니티 목록입니다</ContentText>
-                <ContentText>두 번째 커뮤니티 목록입니다</ContentText>
-                {/* <ContentText>세 번째 커뮤니티 목록입니다</ContentText> */}
-            </CommunityList>
+            <StyledSelect>
+                <Select
+                    className="react-select-container"
+                    placeholder="서울"
+                    components={{
+                        IndicatorSeparator: () => null
+                    }}
+                />
+
+                <Select
+                    className="react-select-container"
+                    options={districtoptions}
+                    onChange={(e) => {setDistrict(e.value)}}
+                    placeholder="지역을 선택해주세요"
+                    components={{
+                        IndicatorSeparator: () => null
+                    }}
+                />
+            </StyledSelect>
         </Wrapper>
     )
 }
