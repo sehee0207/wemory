@@ -6,7 +6,7 @@ import '../../style/Modal.css';
 import Form from "react-validation/build/form";
 import Button from "../ui/Button";
 import '../../style/PostWritePage.css'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import DiaryService from "../../services/diary.service";
 
@@ -209,7 +209,7 @@ const required = (value) => {
 
 function PostWritePage(props){
     const form = useRef();
-    // const params = useParams();
+    const params = useParams();
     ///const today = params.date;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
@@ -218,7 +218,6 @@ function PostWritePage(props){
     //const [date, setDate] = useState("");
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [photo, setPhoto] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
     const [image1, setImage1Src] = useState("");
@@ -285,9 +284,11 @@ function PostWritePage(props){
         form.current.validateAll();
 
         if (true) { //rewrite
-            DiaryService.create(props.date, title, content, photo).then(
+            const photos = [image1, image2, image3];
+
+            DiaryService.create(params.communityid, props.date, title, content, photos).then(
             () => {
-                window.location.assign('/main');
+                window.location.assign('/main/post-view/:date');
             },
             (error) => {
                 const resMessage =
@@ -411,7 +412,7 @@ function PostWritePage(props){
                         <Button
                                 title="등록하기"
                                 onClick={() => {
-                                    navigate("/main/post-view/:date");
+                                    //navigate("/main/post-view/:date");
                                 }}
                                 /* 임시 연결 */
                             />
