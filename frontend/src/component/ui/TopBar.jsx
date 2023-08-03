@@ -12,7 +12,7 @@ import CommunityService from "../../services/community.service";
 import logo from "../img/wemory-logo.svg";
 
 const Wrapper = styled.div`
-  height: 8vh;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
   align-items: center;

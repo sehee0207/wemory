@@ -13,6 +13,7 @@ import CreateCommunityPage from "./component/page/CreateCommunityPage";
 import LoginPage from "./component/page/LoginPage";
 import SignupPage from "./component/page/SignupPage";
 import PostWritePage from "./component/page/PostWritePage";
+import InviteCommunityPage from "./component/page/InviteCommunityPage";
 import PostViewPage from "./component/page/PostViewPage";
 import FirstPage from "./component/page/FirstPage";
 
@@ -24,6 +25,8 @@ function App() {
 		<Route path="login" element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
 		<Route path="start" element={<CreateCommunityPage />} />
+		<Route path="main/:communityid" element={<MainPage />} />
+		<Route path="main/:communityid/invite" element={<InviteCommunityPage />} />
 		<Route path="main/:communityid" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
 		{/* <Route path="main/post-write/:date" element={<PostWritePage />} /> */}

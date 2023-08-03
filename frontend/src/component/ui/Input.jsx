@@ -14,9 +14,9 @@ const StyledInput = styled.input`
 `
 
 function Input(props){
-    const { type, name, onChange } = props;
+    const { type, name, defaultValue, value, onChange, readOnly } = props;
 
-    return <StyledInput type={type} name={name} onChange={onChange} />
+    return <StyledInput type={type} defaultValue={defaultValue} name={name} value={value} onChange={onChange} readOnly={readOnly}/>
 }
 
 export default Input;

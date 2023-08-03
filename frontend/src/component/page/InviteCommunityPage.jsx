@@ -1,5 +1,5 @@
-import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import TopBar from "../ui/TopBar";
 import Input from "../ui/Input";
@@ -156,22 +156,52 @@ function CreateCommunityPage(props){
     }
   };
 
+  const params = useParams();
+  const navigate = useNavigate();
+  const [community, setCommunity] = useState("");
+  const [memberlist, setMemberList] = useState([]);
+  const [read, setRead] = useState([false, false, false, false, false]);
+
+  const retrieveMember = () => {
+        CommunityService
+        .get(params.communityid)
+        .then((response) => {
+            setCommunity(response.data.community);
+            setMemberList(response.data.community.member);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    function CanEdit(){
+        for(let i=0;i<5;i++){
+            if(memberlist[i] && memberlist[i].length>0){
+                read[i] = true;
+            }
+        }
+    }
+
+    useEffect(() => {
+        retrieveMember();
+        CanEdit();
+    });
+
 
   return(
       <Wrapper>
           <TopBar />
           <Container>
-              <SubTitle>커뮤니티 생성하기</SubTitle>
               <Form method="post" onSubmit={handleCreate} ref={form}>
                 <StyledInputContainer>
+                    <SubTitle></SubTitle>
                     <StyledInputForm>
                       <Text>커뮤니티 이름<Highlight>*</Highlight></Text>
                       <Input
                         type="text"
                         name="communityname"
-                        value={communityname}
-                        onChange={onChangeCommunityname}
-                        validations={[required]}/>
+                        defaultValue={community.communityname}
+                        readOnly={true}
+                        />
                         <br />
                     </StyledInputForm>
                 </StyledInputContainer>
@@ -182,17 +212,20 @@ function CreateCommunityPage(props){
                       <Input
                         type="text"
                         name="m1username"
-                        value={m1username}
+                        defaultValue={memberlist[0]}
                         onChange={onChangeM1username}
-                        validations={[required]}/><br />
+                        validations={[required]}
+                        readOnly={read[0]}
+                        /><br />
                     </StyledInputForm>
                     <StyledInputForm>
                       <Text>멤버2<Highlight>*</Highlight></Text>
                       <Input
                         type="text"
                         name="m2username"
-                        value={m2username}
+                        defaultValue={memberlist[1] || ""}
                         onChange={onChangeM2username}
+                        readOnly={read[1]}
                         /><br />
                     </StyledInputForm>
                     <StyledInputForm>
@@ -200,8 +233,9 @@ function CreateCommunityPage(props){
                       <Input
                         type="text"
                         name="m3username"
-                        value={m3username}
+                        defaultValue={memberlist[2] || ""}
                         onChange={onChangeM3username}
+                        readOnly={read[2]}
                         /><br />
                     </StyledInputForm>
                     <StyledInputForm>
@@ -209,8 +243,9 @@ function CreateCommunityPage(props){
                       <Input
                         type="text"
                         name="m4username"
-                        value={m4username}
-                        onChange={onChangeM4username}
+                        defaultValue={memberlist[3] || ""}
+                        onChange={onChangeM4username[3]}
+                        readOnly={read[3]}
                         /><br />
                     </StyledInputForm>
                     <StyledInputForm>
@@ -218,15 +253,16 @@ function CreateCommunityPage(props){
                       <Input
                         type="text"
                         name="m5username"
-                        value={m5username}
-                        onChange={onChangeM5username}
+                        value={memberlist[4] || ""}
+                        onChange={onChangeM5username[4]}
+                        readOnly={read[4]}
                         /><br />
                     </StyledInputForm>
                 </StyledInputContainer>
 
                 <StyledButtonContainer>
                     <Button
-                    title="초대 및 생성하기"
+                    title="초대하기"
                     />
                 </StyledButtonContainer>
               </Form>

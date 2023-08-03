@@ -93,16 +93,6 @@ const Under_text = styled.div`
   cursor: pointer;
 `
 
-const required = (value) => {
-  if (!value) {
-    return (
-      <div className="invalid-feedback d-block">
-        This field is required!
-      </div>
-    );
-  }
-};
-
 let genderoptions = [
   { value: "male", label: "남" },
   { value: "female", label: "여" },

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
     height: 92vh;
+    // width: 100vw;
 `
 const LogoContainer = styled(motion.div)`
     margin-left: 5%;
