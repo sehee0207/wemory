@@ -14,12 +14,14 @@ import LoginPage from "./component/page/LoginPage";
 import SignupPage from "./component/page/SignupPage";
 import PostWritePage from "./component/page/PostWritePage";
 import PostViewPage from "./component/page/PostViewPage";
+import FirstPage from "./component/page/FirstPage";
 
 function App() {
   return (
 	
 	<Routes>
-		<Route index element={<LoginPage />} />
+		<Route index element={<FirstPage />} />
+		<Route path="login" element={<LoginPage />} />
 		<Route path="signup" element={<SignupPage />} />
 		<Route path="start" element={<CreateCommunityPage />} />
 		<Route path="main/:communityid" element={<MainPage />} />
