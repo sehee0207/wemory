@@ -15,8 +15,7 @@ db.ROLES = ["user", "admin"];
 
 // community
 db.community = require("./community.model");
-
-// post
 db.diary = require("./diary.model");
+db.bookmark = require("./bookmark.model");
 
 module.exports = db;

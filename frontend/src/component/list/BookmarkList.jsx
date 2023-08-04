@@ -1,5 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useLocation, useParams } from "react-router-dom";
+
+import BookmarkService from "../../services/bookmark.service";
+import AuthService from "../../services/auth.service";
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -41,15 +45,35 @@ const ContentText = styled.div`
 
 
 function BookmarkList(props){
+    const params = useParams();
+    const {pathname} = useLocation();
+
+    const [bookmark, setBookmark] = useState([]);
+
+    const retrieveBookmark = () => {
+        setBookmark([]);
+
+        BookmarkService
+        .getAll(params.communityid, AuthService.getCurrentUser().username)
+        .then((response) => {
+            setBookmark(response.data.bookmarklist);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    useEffect(() => {
+        retrieveBookmark();
+    }, [pathname]);
 
     return(
         <Wrapper>
             <TitleText>북마크</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                {/* <ContentText>첫 번째 커뮤니티 목록입니다</ContentText>
-                <ContentText>두 번째 커뮤니티 목록입니다</ContentText>
-                <ContentText>세 번째 커뮤니티 목록입니다</ContentText> */}
+                <ContentText>{bookmark[0]}</ContentText>
+                <ContentText>{bookmark[1]}</ContentText>
+                <ContentText>{bookmark[2]}</ContentText>
             </CommunityList>
         </Wrapper>
     )
