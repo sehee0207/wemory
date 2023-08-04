@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { motion } from 'framer-motion';
 
-const StyleButton = styled.button`
+const StyleButton = styled(motion.button)`
     font-size: 1em;
     font-weight: 800;
     border-radius: 50px;
@@ -12,12 +13,18 @@ const StyleButton = styled.button`
     margin: 15px 0px;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
 `
+const hoverVariants = {
+    grow: {
+      scale: 1.1
+    },
+};
 
 function Button(props){
     const { title, onClick } = props;
 
     return(
-        <StyleButton onClick={onClick}>
+        <StyleButton onClick={onClick} animate={["initial"]}
+        whileHover={["grow"]} variants={hoverVariants}>
             { title || "버튼"}
         </StyleButton>
     );

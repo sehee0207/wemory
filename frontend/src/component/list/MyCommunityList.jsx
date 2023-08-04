@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import AuthService from "../../services/auth.service";
+import { motion } from 'framer-motion';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -32,16 +33,26 @@ const CommunityList = styled.div`
 
 `
 
-const Community = styled.div`
+const Community = styled(motion.div)`
     color: grey;
     font-size: 0.8em;
-    // padding: 5px 15px;
+    padding: 5px 15px;
     margin-block-start: 0.5em;
     // margin-block-end: 0.5em;
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
     cursor: pointer;
+    font-weight: 600;
+
+    &:hover {
+        color: #9DD363;
+    }
 `
+const hoverVariants = {
+    grow: {
+      scale: 1.1
+    },
+};
 
 
 function MyCommunityList(props){
@@ -72,9 +83,9 @@ function MyCommunityList(props){
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
                 
-                <Community onClick={()=> navigate(`/main/${community[0]}`)}>{communityname[0]}</Community>                  
-                <Community onClick={()=> navigate(`/main/${community[1]}`)}>{communityname[1]}</Community>
-                <Community onClick={()=> navigate(`/main/${community[2]}`)}>{communityname[2]}</Community>
+                <Community onClick={()=> navigate(`/main/${community[0]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[0]}</Community>                  
+                <Community onClick={()=> navigate(`/main/${community[1]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[1]}</Community>
+                <Community onClick={()=> navigate(`/main/${community[2]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[2]}</Community>
             </CommunityList>
         </Wrapper>
     )
