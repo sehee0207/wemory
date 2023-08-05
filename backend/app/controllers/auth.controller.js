@@ -108,8 +108,14 @@ exports.signin = (req, res) => {
         id: user._id,
         username: user.username,
         email: user.email,
+        gender: user.gender,
+        age: user.age,
         roles: authorities,
         accessToken: token
       });
     });
 };
+
+exports.signout = (req, res) => {
+  res.status(200).send(undefined);
+}

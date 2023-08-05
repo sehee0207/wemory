@@ -81,8 +81,6 @@ function TopBar(props){
     const currentUser = AuthService.getCurrentUser();
     const [OpenNotification, SetOpenNotification] = useState(false);
 
-    const [community, setCommunity] = useState([]);
-
     // const retrieveCommunities = () => {
     //     CommunityService
     //     .then((response) => {
@@ -95,6 +93,10 @@ function TopBar(props){
     // useEffect(() => {
     //     retrieveCommunities();
     // }, []);
+
+    const logout = () => {
+      AuthService.logout();
+    }
 
     return(
         <Wrapper>
@@ -111,7 +113,7 @@ function TopBar(props){
                 <BiSolidBellRing />
               </NotificationButton>
 
-                <Logout onClick={() => navigate("/")}>
+                <Logout onClick={() => {logout(); navigate("/");}}>
                   <FaUserCircle/> {currentUser.username}/로그아웃
                 </Logout>
 

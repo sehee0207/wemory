@@ -19,7 +19,7 @@ const User = mongoose.model(
       type: String
     },
     age: {
-      type: Number
+      type: String
     },
     commulist: [{
       type: mongoose.Schema.Types.ObjectId,

@@ -40,7 +40,6 @@ db.mongoose
 
 // routes
 require('./app/routes/auth.routes')(app);
-require('./app/routes/user.routes')(app);
 
 require("./app/routes/community.routes")(app);
 require("./app/routes/diary.routes")(app);
