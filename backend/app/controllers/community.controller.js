@@ -102,6 +102,13 @@ exports.findAll = (req, res) => {
             return;
         }
 
+        if (user.commulist.length === 0) {
+            res.status(200).send({
+                communityList: user.commulist,
+            });
+            return;
+        }
+
         var communitynameList = [];
         
         for (let i=0; i<user.commulist.length; i++) {
@@ -122,11 +129,10 @@ exports.findAll = (req, res) => {
                         communityList: user.commulist,
                         communitynameList: communitynameList
                     });
+                    return;
                 }
             });
         }
-
-        return;
     });
 };
 

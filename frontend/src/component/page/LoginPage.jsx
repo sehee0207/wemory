@@ -9,6 +9,7 @@ import Form from "react-validation/build/form";
 import CheckButton from "react-validation/build/button";
 
 import AuthService from "../../services/auth.service";
+import CommunityService from "../../services/community.service";
 
 const Wrapper = styled.div`
     height: 92vh;
@@ -126,9 +127,16 @@ const Loginpage = () => {
         if (checkBtn.current.context._errors.length === 0) { //rewrite
             AuthService.login(username, password).then(
             () => {
-                window.location.assign('/start');
-                // 사용자의 communitylist 가 비어있다면 /start 으로,
-                // 비어있지 않다면 '/main/community[0]' 으로 이동
+              CommunityService
+              .getAll(username)
+              .then((response) => {
+                if (response.data.communityList.length === 0) { // 사용자의 communitylist 가 비어있다면 /start 으로,
+                  window.location.assign('/start');
+                }
+                else { // 비어있지 않다면 '/main/community[0]' 으로 이동
+                  window.location.assign(`/main/${response.data.communityList[0]}`);
+                }
+              });
             },
             (error) => {
                 const resMessage =
