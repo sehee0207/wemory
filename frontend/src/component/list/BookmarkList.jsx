@@ -26,7 +26,6 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
-    cursor: pointer;
 `
 
 const CommunityList = styled.div`

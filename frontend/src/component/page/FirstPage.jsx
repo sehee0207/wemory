@@ -1,13 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import logo from '../img/wemory-logo.svg';
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const Wrapper = styled.div`
-    height: 92vh;
-    // width: 100vw;
+  display: flex;
+  flex-direction: column;
 `
+
 const LogoContainer = styled(motion.div)`
     margin-left: 5%;
     display: flex;
@@ -136,6 +137,23 @@ const boxVariants = {
 
 const FirstPage = () => {
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const preventGoBack = () => {
+        // change start
+        // eslint-disable-next-line no-restricted-globals
+        history.pushState(null, '', location.href);
+        // change end
+        // console.log('prevent go back!');
+      };
+      
+      // eslint-disable-next-line no-restricted-globals
+      history.pushState(null, '', location.href);
+      window.addEventListener('popstate', preventGoBack); 
+      
+      return () => window.removeEventListener('popstate', preventGoBack);
+    }, []);
+
     return (
         <Wrapper>
             <LogoContainer>

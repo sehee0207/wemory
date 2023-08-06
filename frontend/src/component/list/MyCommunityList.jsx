@@ -26,7 +26,6 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
-    cursor: pointer;
 `
 
 const CommunityList = styled.div`
@@ -35,9 +34,9 @@ const CommunityList = styled.div`
 
 const Community = styled(motion.div)`
     color: grey;
-    font-size: 0.8em;
+    font-size: 0.6em;
     padding: 5px 15px;
-    margin-block-start: 0.5em;
+    margin-block-start: 0.3em;
     // margin-block-end: 0.5em;
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
@@ -82,7 +81,6 @@ function MyCommunityList(props){
             <TitleText>나의 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                
                 <Community onClick={()=> navigate(`/main/${community[0]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[0]}</Community>                  
                 <Community onClick={()=> navigate(`/main/${community[1]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[1]}</Community>
                 <Community onClick={()=> navigate(`/main/${community[2]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[2]}</Community>
