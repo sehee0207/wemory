@@ -62,14 +62,17 @@ const StyledInputForm = styled.div`
     justify-content: center;
     width: 30vw;
   }
-  >Button{
-    padding: 1vw;
-    margin-left: 1.5vw;
-    font-weight: 400;
-    font-size: 10px;
-  }
-  >.react-select-container{
-    width: 30vw;
+`
+
+const StyledSelectBoxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1vw;
+  padding-right: 5vw;
+  
+  .react-select-container{
+    width: 15vw;
   }
 `
 
@@ -141,7 +144,7 @@ const SignupPage = (props) => {
       setUsernameMessage('4글자 이상 10글자 이하의 영문 대소문자와 숫자만 입력 가능합니다.');
       setIsUserName(false);
     } else {
-      setUsernameMessage();
+      setUsernameMessage("");
       setIsUserName(true);
     }
   }
@@ -235,7 +238,7 @@ const SignupPage = (props) => {
                     <MainTitle>회원가입</MainTitle>
                     <StyledInputContainer>
                       <label>
-                        <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" className="idinput" value={username} onChange={onChangeId}/><br /><Button title="아이디 중복 확인" /></StyledInputForm>                        
+                        <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" className="idinput" value={username} onChange={onChangeId}/><br /></StyledInputForm>                        
                         {username.length > 0 && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
 
                         <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
@@ -247,7 +250,9 @@ const SignupPage = (props) => {
                         <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
                         {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
                       </label>
-                      <StyledInputForm>
+                    </StyledInputContainer>
+
+                    <StyledSelectBoxContainer>
                         <Text>성별</Text>
                         <Select
                           className="react-select-container"
@@ -258,8 +263,7 @@ const SignupPage = (props) => {
                             IndicatorSeparator: () => null
                           }}
                         />
-                      </StyledInputForm>
-                      <StyledInputForm>
+
                         <Text>나이</Text>
                         <Select
                             className="react-select-container"
@@ -270,8 +274,8 @@ const SignupPage = (props) => {
                               IndicatorSeparator: () => null
                             }}
                           />
-                      </StyledInputForm>
-                    </StyledInputContainer>
+                      </StyledSelectBoxContainer>
+
 
                     <StyledButtonContainer>
                       <Button
@@ -279,7 +283,7 @@ const SignupPage = (props) => {
                           />
                       <Under_text
                       onClick={() => {
-                        navigate("/");
+                        navigate("/login");
                         }}>
                         이미 계정이 있나요?
                       </Under_text>
@@ -293,7 +297,7 @@ const SignupPage = (props) => {
                       <Button
                       title="로그인하러 가기"
                       onClick={() => {
-                        navigate("/");
+                        navigate("/login");
                       }}
                     />
                     </div>

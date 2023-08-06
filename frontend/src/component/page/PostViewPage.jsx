@@ -12,13 +12,20 @@ import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
 import {FaTrash} from 'react-icons/fa';
+import {AiOutlineArrowLeft} from 'react-icons/ai';
+import {AiOutlineArrowRight} from 'react-icons/ai';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 import DiaryService from "../../services/diary.service";
 
 const Wrapper = styled.div`
 `
+
 const Top = styled.div`
     display: flex;
+    height: 10vh;
     justify-content: space-between;
     margin-right : 3vw;
 `
@@ -45,7 +52,7 @@ const TitleText = styled.div`
 `
 const PostBox = styled.div`
     background-color: #fff;
-    height: 100%;
+    height: 65vh;
     margin-left : 3vw;
     margin-right : 3vw;
     margin-top: 2vh;
@@ -53,14 +60,12 @@ const PostBox = styled.div`
     display: flex;
 `
 const PhotoBox = styled.div`
-    width: 60%;
-    height: 80%;
-    overflow-x: scroll;
-    white-space: nowrap;
+    width: 20vw;
+    padding-right: 10px;
 `
 const Img = styled.img`
-    width: 100%;
-    height: 100%;
+    width: 300px;
+    height: 400px;
 `
 const TxtBox = styled.div`
     background-color: #fff;
@@ -68,11 +73,11 @@ const TxtBox = styled.div`
     height: 33%;
     max-height: 33%;
     padding: 3%;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 `
 const VerticalBox = styled.div`
     width: 60%;
-    height: 80%;
+    height: 100%;
 `
 const CommentBox = styled.div`
     width: 100%;
@@ -87,7 +92,7 @@ const Line = styled.hr`
     width : 95%;
     height: 0.1vh;
     background-color : #D9D9D9;
-    border : 0;
+    // border : 1px;
     margin: auto;
 `
 
@@ -102,7 +107,7 @@ const StyledModal = {
 		zIndex: 1,
 	},
  	content: {
-         flexDirection: "column",
+        flexDirection: "column",
  		background: "#fff",
  		overflow: "auto",
  		WebkitOverflowScrolling: "touch",
@@ -193,6 +198,14 @@ function PostViewPage(props){
         }
     };
 
+    var settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        arrow: false,
+    };
     return(
         <Wrapper>
             {bm && toast && <Toast setToast={setToast} icon={<BsFillBookmarkFill/>} text="북마크 추가" />}
@@ -205,34 +218,37 @@ function PostViewPage(props){
             >
             <ContentText>추억 확인</ContentText>
             <Top>
-            <DateTitle>
-            <DateText>Date :  {props.date}</DateText>
-            <TitleText>제목제목제목</TitleText>
-            </DateTitle>
-            <Bookmark bm={bm} onClick={handleBm}/>
+                <DateTitle>
+                    <DateText>Date :  {props.date}</DateText>
+                    <TitleText>제목제목제목</TitleText>
+                </DateTitle>
+                <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
             <PostBox>
                 <PhotoBox>
-                    <Img src={exImg}></Img>
-                    <Img src={exImg}></Img>
-                    <Img src={exImg}></Img>
+                    <Slider {...settings}>
+                        <Img src={exImg}></Img>
+                        <Img src={exImg}></Img>
+                        <Img src={exImg}></Img>
+                    </Slider>
                 </PhotoBox>
                 <VerticalBox>
-                <TxtBox>작성한글을 보여주는곳 </TxtBox>
-                <Line />
-                <CommentBox>
-                    {/* <p>댓글 보여주는 곳</p> */}
-                    <Comment userid=""></Comment>
-                </CommentBox>
-                <MyComment>
-                <InputEmoji
-                    value={text}
-                    onChange={setText}
-                    cleanOnEnter
-                    onEnter={handleOnEnter}
-                    placeholder="댓글을 달아보세요"
-                />
-                </MyComment>
+                    <TxtBox>작성한글을 보여주는곳 </TxtBox>
+                    {/* <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} /> */}
+                    <Line />
+                    <CommentBox>
+                        {/* <p>댓글 보여주는 곳</p> */}
+                        <Comment userid=""></Comment>
+                    </CommentBox>
+                    <MyComment>
+                    <InputEmoji
+                        value={text}
+                        onChange={setText}
+                        cleanOnEnter
+                        onEnter={handleOnEnter}
+                        placeholder="댓글을 달아보세요"
+                    />
+                    </MyComment>
                 </VerticalBox>
             </PostBox>
                     {/*<input

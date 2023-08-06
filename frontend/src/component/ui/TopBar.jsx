@@ -2,9 +2,7 @@ import { React, useState, useEffect } from "react";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
-import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
-import {FaUserCircle} from 'react-icons/fa';
 import AuthService from "../../services/auth.service";
 import { BiSolidBellRing } from "react-icons/bi";
 import Notification from "./Notification";
@@ -108,13 +106,14 @@ function TopBar(props){
 
             <UserInform>
               <NotificationButton onClick={() => {
-                SetOpenNotification(true);
+                SetOpenNotification(false);
+                // SetOpenNotification(true);
               }}>
                 <BiSolidBellRing />
               </NotificationButton>
 
                 <Logout onClick={() => {logout(); navigate("/");}}>
-                  <FaUserCircle/> {currentUser.username}/로그아웃
+                  {currentUser.username}/로그아웃
                 </Logout>
 
                 {OpenNotification && 

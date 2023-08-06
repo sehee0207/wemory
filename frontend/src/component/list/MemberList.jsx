@@ -7,7 +7,7 @@ import Button from "../ui/Button";
 const Wrapper = styled.div`
     border-radius: 30px;
     margin: 15px 0px;
-    // display: flex;
+    display: flex;
     flex-direction: column;
     height: 25vh;
     box-shadow: 3px 5px 10px 2px rgb(150,150,150,0.2);
@@ -25,7 +25,6 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
-    cursor: pointer;
 `
 
 const CommunityList = styled.div`

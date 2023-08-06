@@ -11,6 +11,21 @@ const StyledInput = styled.input`
     &:focus{
         outline: none;
     }
+    &:-webkit-autofill,
+    &:-webkit-autofill:hover,
+    &:-webkit-autofill:focus,
+    &:-webkit-autofill:active {
+	-webkit-text-fill-color: #000;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+    &:autofill,
+    &:autofill:hover,
+    &:autofill:focus,
+    &:autofill:active {
+	-webkit-text-fill-color: #000;
+    transition: background-color 5000s ease-in-out 0s;
+}
 `
 
 function Input(props){
