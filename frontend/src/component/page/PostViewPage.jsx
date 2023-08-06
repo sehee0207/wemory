@@ -11,9 +11,9 @@ import InputEmoji, { async } from "react-input-emoji";
 import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
+import AuthService from "../../services/auth.service";
 import {FaTrash} from 'react-icons/fa';
-import {AiOutlineArrowLeft} from 'react-icons/ai';
-import {AiOutlineArrowRight} from 'react-icons/ai';
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -84,6 +84,7 @@ const CommentBox = styled.div`
     background-color: #fff;
     height: 57%;
     padding: 3%;    
+    overflow-y: scroll;
 `
 const MyComment = styled.div`
 
@@ -133,18 +134,20 @@ const required = (value) => {
 
 function PostViewPage(props){
     const form = useRef();
+    const currentUser = AuthService.getCurrentUser();
     // const params = useParams();
     ///const today = params.date;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     //const [date, setDate] = useState("");
     const [content, setContent] = useState("");
+
     const [photo, setPhoto] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
     const [ text, setText ] = useState("");
-
+    // const [ comment, setComment ] = useState("");
     const [ bm, setBm ] = useState(false);
     const [toast, setToast] = useState(false);
 
@@ -156,14 +159,43 @@ function PostViewPage(props){
     const handleToast = async (e) => {
         setToast(true);
     };
-
-    function handleOnEnter(text) {
-        console.log("enter", text);
-    }
     
+    const [inputs, setInputs] = useState({
+        username: '',
+        comment: '',
+    })
+
+    const [comments, setComments] = useState([
+        {
+            username: 'paboke22',
+            comment: '왜안돼'
+        },
+        {
+            username: 'tester',
+            comment: '어?????'
+        },
+        {
+            username: 'guest',
+            comment: '말좀해봐'
+        }
+        ]);
+        
+    function handleOnEnter(text){
+        const name = currentUser.username;
+        
+        if(text.length >0){
+            const comment = {
+                username: name,
+                comment: text,
+            }  
+            setComments([...comments, comment])
+        }
+    }
+
     useEffect(() => {
         setModalIsOpen(true);
     }, [props.date]);
+
 
     const onChangeContent = (e) => {
         const content = e.target.value;
@@ -234,16 +266,15 @@ function PostViewPage(props){
                 </PhotoBox>
                 <VerticalBox>
                     <TxtBox>작성한글을 보여주는곳 </TxtBox>
-                    {/* <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} /> */}
                     <Line />
                     <CommentBox>
-                        {/* <p>댓글 보여주는 곳</p> */}
-                        <Comment userid=""></Comment>
+                        {comments.map(comment => {
+                            return <Comment userid={comment.username} comment={comment.comment} />
+                        })}
                     </CommentBox>
                     <MyComment>
                     <InputEmoji
                         value={text}
-                        onChange={setText}
                         cleanOnEnter
                         onEnter={handleOnEnter}
                         placeholder="댓글을 달아보세요"
