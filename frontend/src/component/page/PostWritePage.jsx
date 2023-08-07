@@ -190,10 +190,10 @@ const StyledModal = {
  		borderRadius: "30px",
  		outline: "none",
  		zIndex: 10,
-        top: '6vh',
+        top: '5vh',
         left: '25vw',
         right: '25vw',
-        bottom: '6vh',
+        bottom: '5vh',
  	},
 }
 
@@ -271,6 +271,7 @@ function PostWritePage(props){
         const content = e.target.value;
         setContent(content);
     };
+
     const onChangeTitle = (e) => {
         const title = e.target.value;
         setTitle(title);
@@ -322,7 +323,7 @@ function PostWritePage(props){
 
             DiaryService.create(params.communityid, props.date, title, content, photos).then(
             () => {
-                window.location.assign('/main/post-view/:date');
+                window.location.assign("");
             },
             (error) => {
                 const resMessage =
@@ -382,6 +383,7 @@ function PostWritePage(props){
                         id="content"
                         maxLength={200}
                         value={content}
+                        required
                         onChange={onChangeContent}
                         validations={[required]}
                         placeholder="200글자 이내로 게시물 내용을 작성해주세요 :)"
@@ -456,7 +458,7 @@ function PostWritePage(props){
                         <Button
                                 title="등록하기"
                                 onClick={() => {
-                                    //navigate("/main/post-view/:date");
+                                    navigate("");
                                 }}
                                 /* 임시 연결 */
                             />
