@@ -283,6 +283,15 @@ function PostViewPage(props){
             console.log(e);
         });
     }
+
+    const confirmDelete = () => {
+        if (window.confirm("정말 삭제합니까?")) {
+            alert("삭제되었습니다.");
+            deleteDiary();
+          } else {
+            //alert("취소합니다.");
+          }
+    }
     const deleteDiary = () => {
         DiaryService
         .deleteOne(params.communityid, props.date)
@@ -332,7 +341,7 @@ function PostViewPage(props){
             <Top>
                 <TitleDelete>
                 <TitleText>{diary.title}</TitleText>
-                <StyledButton onClick={deleteDiary}><img src={deleteIcon}/></StyledButton>
+                <StyledButton onClick={confirmDelete}><img src={deleteIcon}/></StyledButton>
                 </TitleDelete>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
