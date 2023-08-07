@@ -79,18 +79,21 @@ function TopBar(props){
     const currentUser = AuthService.getCurrentUser();
     const [OpenNotification, SetOpenNotification] = useState(false);
 
-    // const retrieveCommunities = () => {
-    //     CommunityService
-    //     .then((response) => {
-    //         setCommunity(response.data.communityList);
-    //     }).catch(e => {
-    //         console.log(e);
-    //     });
-    // }
+    const [community, setCommunity] = useState([]);
 
-    // useEffect(() => {
-    //     retrieveCommunities();
-    // }, []);
+    const retrieveCommunities = () => {
+        CommunityService
+        .getAll(currentUser.username)
+        .then((response) => {
+            setCommunity(response.data.communityList);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
+    useEffect(() => {
+        retrieveCommunities();
+    }, []);
 
     const logout = () => {
       AuthService.logout();
@@ -100,7 +103,7 @@ function TopBar(props){
         <Wrapper>
             <MainTitle>
               <LogoImg src={logo}/>
-              <MainTitleText onClick={() => navigate("/start")}>Wemory</MainTitleText>
+              <MainTitleText onClick={()=> navigate(`/main/${community[0]}`)}>Wemory</MainTitleText>
               {/* navigate(`/main/${community[0]}` */}
             </MainTitle>
 
