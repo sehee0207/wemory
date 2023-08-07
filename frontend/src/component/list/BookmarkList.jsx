@@ -5,6 +5,7 @@ import { useLocation, useParams } from "react-router-dom";
 import BookmarkService from "../../services/bookmark.service";
 import AuthService from "../../services/auth.service";
 import PostViewPage from "../page/PostViewPage";
+import {motion} from 'framer-motion';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -35,7 +36,7 @@ const CommunityList = styled.div`
     padding-bottom: 2vh;
 `
 
-const ContentText = styled.div`
+const ContentText = styled(motion.div)`
     color: grey;
     font-size: 0.8em;
     // padding: 5px 15px;
@@ -44,6 +45,9 @@ const ContentText = styled.div`
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
     cursor: pointer;
+    &:hover {
+        color: #9DD363;
+    }
 `
 
 
@@ -66,15 +70,18 @@ function BookmarkList(props){
             console.log(e);
         });
     }
-    function getInnerText() {
-        const element = document.getElementById('bmid');
-        setBmid(element.innerText);
+    // function getInnerText() {
+    //     const element = document.getElementById('bmid');
+    //     setBmid(element.innerText);
+    //     setViewPageOpen(true);
+    // }
+    // function ViewPageHandler() {
+    //     setViewPageOpen(true);
+    // }
+    function handleBookmarkBtn(index) {
+        setBmid(bookmark[index]);
         setViewPageOpen(true);
     }
-    function ViewPageHandler() {
-        setViewPageOpen(true);
-    }
-
     useEffect(() => {
         retrieveBookmark();
     }, [pathname]);
@@ -84,8 +91,8 @@ function BookmarkList(props){
             <TitleText>북마크</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                {bookmark.map((bookmark) => 
-                    <ContentText id='bmid' onClick={getInnerText}>{bookmark}</ContentText>
+                {bookmark.map((bookmark, index, source) => 
+                    <ContentText onClick={() => {handleBookmarkBtn(`${index}`)}}>{bookmark}</ContentText>
                     )}{ViewPageOpen && <PostViewPage date = {bmid} />}
                 {/* <ContentText>{bookmark[0]}</ContentText>
                 <ContentText>{bookmark[1]}</ContentText>
