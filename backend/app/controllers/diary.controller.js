@@ -20,29 +20,29 @@ exports.create = (req, res) => {
             res.status(404).send({ message: "Cannot find community" });
             return;
         }
-      });
 
-    // Create a community
-    const diary = new Diary({
-      communityid: req.body.communityid,
-      date: req.body.date,
-      title: req.body.title,
-      content: req.body.content,
-      photo: req.body.photo
-    });
-
-    // Save community in the database
-    diary
-    .save(diary)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while posting the diary."
+        // Create a community
+        const diary = new Diary({
+          communityid: req.body.communityid,
+          date: req.body.date,
+          title: req.body.title,
+          content: req.body.content,
+          photo: req.body.photo
         });
-    });
+
+        // Save community in the database
+        diary
+        .save(diary)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                err.message || "Some error occurred while posting the diary."
+            });
+        });
+      });
 };
 
 // List of diary
