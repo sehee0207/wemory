@@ -1,6 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Select from 'react-select';
+
+import PydataService from "../../services/pydata.service";
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -40,16 +42,42 @@ const ContentText = styled.div`
     // margin-inline-end: 1em;
 `
   
-  let districtoptions = [
+let districtoptions = [
     { value: "Jongno-gu", label: "종로구" },
     { value: "Jung-gu", label: "중구" },
     { value: "Yongsan-gu", label: "용산구" },
     { value: "Seongdong-gu", label: "성동구" },
     { value: "Gwangjin-gu", label: "광진구" },
-  ]
+]
 
 function LocalCommunityList(props){
+    const [storeInfo, setStoreInfo] = useState([]);
     const [district, setDistrict] = useState("종로구");
+
+    const retrieveLocalData = () => {
+        PydataService
+        .findAll()
+        .then((response) => {
+            let line = response.data.split('\n');
+            let stores = [];
+
+            for (let i=1; i<line.length-3; i++) {
+                let word = line[i].split(/\s+/g);
+                stores.push({
+                    location: word[1],
+                    storeName: word[2],
+                    visitor: word[4],
+                    score: word[5]
+                });
+
+                if (i === line.length-4)    setStoreInfo(stores);
+            }
+        });
+    }
+
+    useEffect(() => {
+        retrieveLocalData();
+    }, []);
 
     return(
         <Wrapper>

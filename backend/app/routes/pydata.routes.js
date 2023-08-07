@@ -13,7 +13,7 @@ module.exports = function(app) {
     let dataToSend;
 
     // spawn new child process to call the python script
-    const python = spawn('python', ['app/pydata/movie_recommend.py']);
+    const python = spawn('python', ['app/pydata/restaurant_recom2.py']);
 
     // collect data from script
     python.stdout.on('data', function (data) {
