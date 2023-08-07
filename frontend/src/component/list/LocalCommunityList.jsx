@@ -29,63 +29,43 @@ const TitleText = styled.p`
 
 const StyledSelect = styled.div`
     margin: 10px 5px;
-    padding: 5px;
+    padding: 10px;
 `
-
-const ContentText = styled.div`
-    color: grey;
-    font-size: 0.8em;
-    // padding: 5px 15px;
-    margin-block-start: 0.5em;
-    // margin-block-end: 0.5em;
-    margin-inline-start: 1.5em;
-    // margin-inline-end: 1em;
-`
-  
 let districtoptions = [
-    { value: "Jongno-gu", label: "종로구" },
-    { value: "Jung-gu", label: "중구" },
-    { value: "Yongsan-gu", label: "용산구" },
-    { value: "Seongdong-gu", label: "성동구" },
-    { value: "Gwangjin-gu", label: "광진구" },
+    { value: "강남구", label: "강남구" },
 ]
 
-function LocalCommunityList(props){
-    const [storeInfo, setStoreInfo] = useState([]);
-    const [district, setDistrict] = useState("종로구");
 
+function LocalCommunityList(props){
+    const [district, setDistrict] = useState("강남구");
+    const [store, setStore] = useState("");
+    let storeoptions = [];
     const retrieveLocalData = () => {
         PydataService
         .findAll()
         .then((response) => {
             let line = response.data.split('\n');
-            let stores = [];
-
-            for (let i=1; i<line.length-3; i++) {
+            for (let i=1; i<6; i++) {
                 let word = line[i].split(/\s+/g);
 
                 if (word[3] === "...") {
-                    stores.push({
-                        location: word[1],
-                        storeName: word[2],
-                        visitor: word[4],
-                        score: word[5]
-                    });
+                    const stores = {
+                        value: word[2],
+                        label: word[2] + " / " + word[4] + "명 방문, \n" + word[5] + " 점",
+                    }
+                    storeoptions.push(stores);
                 }
                 else {
-                    stores.push({
-                        location: word[1],
-                        storeName: word[2] + " " + word[3],
-                        visitor: word[5],
-                        score: word[6]
-                    });
+                    const stores = {
+                        value: word[2] + " " + word[3],
+                        label: word[2] + " " + word[3] + " / " + word[5] + "명 방문, " + word[6] + " 점",
+                    }
+                    storeoptions.push(stores);
                 }
-
-                if (i === line.length-4)    {setStoreInfo(stores); console.log(stores)}
             }
         });
     }
-
+    
     useEffect(() => {
         retrieveLocalData();
     }, []);
@@ -97,7 +77,9 @@ function LocalCommunityList(props){
             <StyledSelect>
                 <Select
                     className="react-select-container"
-                    placeholder="서울"
+                    options={districtoptions}
+                    onChange={(e) => {setDistrict(e.value)}}
+                    placeholder="지역을 선택하세요!"
                     components={{
                         IndicatorSeparator: () => null
                     }}
@@ -105,9 +87,9 @@ function LocalCommunityList(props){
 
                 <Select
                     className="react-select-container"
-                    options={districtoptions}
-                    onChange={(e) => {setDistrict(e.value)}}
-                    placeholder="지역을 선택해주세요"
+                    options={storeoptions}
+                    onChange={(e) => {setStore(e.value)}}
+                    placeholder= "강남구 음식점"
                     components={{
                         IndicatorSeparator: () => null
                     }}

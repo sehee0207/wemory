@@ -5,7 +5,7 @@ import TopBar from "../ui/TopBar";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Form from "react-validation/build/form";
-
+import "../../style/Validation.css"
 import CommunityService from "../../services/community.service";
 import AuthService from "../../services/auth.service";
 
@@ -95,6 +95,9 @@ function CreateCommunityPage(props){
   const [m4username, setM4username] = useState("");
   const [m5username, setM5username] = useState("");
 
+  const [isinvite, setIsInvite] = useState(false);
+  const [memberinviteMessage, setMemberinviteMessage] = useState('');
+
   const onChangeCommunityname = (e) => {
       const communityname = e.target.value;
       setCommunityname(communityname);
@@ -144,13 +147,16 @@ function CreateCommunityPage(props){
             window.location.assign('/main');
         },
         (error) => {
-          // check community name
-          if (error.response.data.message === "Community name can not be empty!") {
-
+          // check host's community number
+          if (error.response.data.message === "host's communities are too many.") {
+            setMemberinviteMessage("초대하려고 하는 사용자의 커뮤니티 수가 3개가 넘어 초대할 수 없습니다.");
+            setIsInvite(false);
           }
-          // check member
-          if (error.response.data.message === "Community members must be at least 2 people.") {
 
+          // check member's community number
+          if (error.response.data.message === "member's ommunities are too many.") {
+            setMemberinviteMessage("초대하려고 하는 사용자의 커뮤니티 수가 3개가 넘어 초대할 수 없습니다.");
+            setIsInvite(false);
           }
         });
     }
@@ -261,9 +267,9 @@ function CreateCommunityPage(props){
                 </StyledInputContainer>
 
                 <StyledButtonContainer>
+                {memberinviteMessage && (<span className={`message ${isinvite ? 'success' : 'error'}`}>{memberinviteMessage}</span>)}
                     <Button
                     title="초대하기"
-                    onClick={()=> navigate(`/main/${params.communityid}`)}
                     />
                 </StyledButtonContainer>
               </Form>
