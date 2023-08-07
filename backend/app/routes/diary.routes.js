@@ -9,12 +9,12 @@ module.exports = function(app) {
     next();
   });
 
-  // Create a new community
+  // Create a new diary
   app.post("/api/diary/create", controller.create);
 
-  // Retrieve all community
+  // Retrieve all diary
   app.post("/api/diary", controller.findAll);
 
-  // Retrieve a single community with id
-  app.get("/api/diary/:id", controller.findOne);
+  // Retrieve a single diary with communityid, date
+  app.post("/api/diary/date", controller.findOne);
 };

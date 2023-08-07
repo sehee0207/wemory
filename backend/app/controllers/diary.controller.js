@@ -1,20 +1,6 @@
 const db = require("../models");
-//const multer = require("multer");
 const Diary = db.diary;
 const Community = db.community;
-
-/*
-const storage = multer.diskStorage({
-  destination: "../public/img/",
-  filename: function(req, file, cb) {
-    cb(null, "imgfile" + Date.now() + path.extname(file.originalname));
-  }
-});
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1000000 }
-});
-*/
 
 // Create a new diary
 exports.create = (req, res) => {
@@ -24,7 +10,16 @@ exports.create = (req, res) => {
       return;
     }
 
-    //upload.single("img")
+    Community
+    .findOneAndUpdate(
+      {_id: req.body.communityid},
+      {$push: {postlist: req.body.date}}
+    ).then(data => {
+        if (!data) {
+            res.status(404).send({ message: "Cannot find community" });
+            return;
+        }
+      });
 
     // Create a community
     const diary = new Diary({
@@ -32,8 +27,7 @@ exports.create = (req, res) => {
       date: req.body.date,
       title: req.body.title,
       content: req.body.content,
-      photo: req.body.photo,
-      //hashtag: req.body.hashtag
+      photo: req.body.photo
     });
 
     // Save community in the database
@@ -66,14 +60,16 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  Diary.findOne({date: req.body.date})
-    .exec((err, diary) => {
+  Diary.findOne({
+    communityid: req.body.communityid,
+    date: req.body.date
+  }).exec((err, diary) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-      if (diary) {
-        
-      }
+      
+      res.status(200).send({diary: diary});
+      return;
     });
 };

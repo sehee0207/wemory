@@ -12,8 +12,11 @@ const create = (communityid, date, title, content, photo) => {
   });
 };
 
-const get = (id) => {
-  return axios.get(API_URL + `/${id}`);
+const get = (communityid, date) => {
+  return axios.post(API_URL + "date", {
+    communityid,
+    date
+  });
 };
 
 const DiaryService = {

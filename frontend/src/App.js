@@ -30,7 +30,7 @@ function App() {
 		<Route path="main/:communityid" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
 		{/* <Route path="main/post-write/:date" element={<PostWritePage />} /> */}
-		<Route path="main/post-view/:date" element={<PostViewPage />} />
+		<Route path="main/:communityid/:date" element={<PostViewPage />} />
 	</Routes>
   );
 }

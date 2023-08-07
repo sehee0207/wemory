@@ -3,7 +3,6 @@ import {React, useState, useEffect, useRef} from "react";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
-import Form from "react-validation/build/form";
 import Button from "../ui/Button";
 import exImg from "../img/ex-img.png";
 import Comment from '../ui/Comment';
@@ -19,6 +18,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import DiaryService from "../../services/diary.service";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
 `
@@ -122,27 +122,27 @@ const StyledModal = {
  	},
 }
 
-const required = (value) => {
-    if (!value) {
-        return (
-        <div className="invalid-feedback d-block">
-            This field is required!
-        </div>
-        );
-    }
-};
+const PreviewContainer = styled.div`
+    display: inline;
+    width: 230px;
+    height: 120px;
+    border-radius: 10px;
+    text-align:center;
+    padding-top: 5vh;
+    font-size: 3vh;
+    margin-right: 5%;
+    cursor: pointer;
+`
 
 function PostViewPage(props){
-    const form = useRef();
     const currentUser = AuthService.getCurrentUser();
-    // const params = useParams();
+    const params = useParams();
     ///const today = params.date;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
-    //const [date, setDate] = useState("");
-    const [content, setContent] = useState("");
+    const [diary, setDiary] = useState("");
+    const [photo, setPhoto] = useState([]);
 
-    const [photo, setPhoto] = useState("");
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -192,43 +192,21 @@ function PostViewPage(props){
         }
     }
 
+    const retrieveDiary = () => {
+        DiaryService
+        .get(params.communityid, params.date)   //모달 구현 이후 props.date
+        .then((response) => {
+            setDiary(response.data.diary);
+            setPhoto(response.data.diary.photo);
+        }).catch(e => {
+            console.log(e);
+        });
+    }
+
     useEffect(() => {
+        retrieveDiary();
         setModalIsOpen(true);
     }, [props.date]);
-
-
-    const onChangeContent = (e) => {
-        const content = e.target.value;
-        setContent(content);
-    };
-
-    const handleCreate = (e) => {
-        e.preventDefault();
-
-        setMessage("");
-        setSuccessful(false);
-
-        form.current.validateAll();
-
-        if (true) { //rewrite
-            DiaryService.create(props.date, content, photo).then(
-            () => {
-                window.location.assign('/main');
-            },
-            (error) => {
-                const resMessage =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-
-                setMessage(resMessage);
-                setSuccessful(false);
-            }
-            );
-        }
-    };
 
     var settings = {
         dots: true,
@@ -238,6 +216,7 @@ function PostViewPage(props){
         slidesToScroll: 1,
         arrow: false,
     };
+
     return(
         <Wrapper>
             {bm && toast && <Toast setToast={setToast} icon={<BsFillBookmarkFill/>} text="북마크 추가" />}
@@ -252,20 +231,20 @@ function PostViewPage(props){
             <Top>
                 <DateTitle>
                     <DateText>Date :  {props.date}</DateText>
-                    <TitleText>제목제목제목</TitleText>
+                    <TitleText>{diary.title}</TitleText>
                 </DateTitle>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
             <PostBox>
                 <PhotoBox>
                     <Slider {...settings}>
-                        <Img src={exImg}></Img>
-                        <Img src={exImg}></Img>
-                        <Img src={exImg}></Img>
+                        {photo[0] !== "" && <Img src={photo[0]}></Img>}
+                        {photo[1] !== "" && <Img src={photo[1]}></Img>}
+                        {photo[2] !== "" && <Img src={photo[2]}></Img>}
                     </Slider>
                 </PhotoBox>
                 <VerticalBox>
-                    <TxtBox>작성한글을 보여주는곳 </TxtBox>
+                    <TxtBox>{diary.content}</TxtBox>
                     <Line />
                     <CommentBox>
                         {comments.map(comment => {
