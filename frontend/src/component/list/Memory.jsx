@@ -40,6 +40,7 @@ function Memory(props){
     // const navigate = useNavigate();
     const params = useParams();
     const [community, setCommunity] = useState("");
+    const [marks, setMarks] = useState([]);
 
     const {pathname} = useLocation();
 
@@ -48,6 +49,7 @@ function Memory(props){
         .get(params.communityid)
         .then((response) => {
             setCommunity(response.data.community);
+            setMarks(response.data.community.postlist);
         }).catch(e => {
             console.log(e);
         });
@@ -57,11 +59,6 @@ function Memory(props){
         retrieveCommunity();
     }, [pathname]);
 
-    const marks = [
-        "230801",
-        "230815",
-    ];
-    
     function Handler() {
         setWritePageOpen(true);
     }
@@ -76,7 +73,7 @@ function Memory(props){
                     onChange={onChange}
                     value={value}
                     tileClassName={({ date, view }) => {
-                        if (marks.find((x) => x === moment(date).format("YYMMDD"))) {
+                        if (marks && marks.find((x) => x === moment(date).format("YYMMDD"))) {
                           return "highlight";
                         }
                       }}
