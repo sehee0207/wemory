@@ -34,7 +34,7 @@ const CommunityList = styled.div`
 
 const Community = styled(motion.div)`
     color: grey;
-    font-size: 0.6em;
+    font-size: 0.8em;
     padding: 5px 15px;
     margin-block-start: 0.3em;
     // margin-block-end: 0.5em;

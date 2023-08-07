@@ -53,6 +53,7 @@ const Member = styled.div`
     // margin-block-end: 0.5em;
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
+    font-weight: 600;
 `
 
 const StyledButtonConatiner = styled.div`
@@ -103,7 +104,7 @@ function MemberList(props){
 
             <MemberContainer>
                 <StyledMemberList>
-                    <Member>{community.commuhost}</Member>
+                    <Member style={{color: "#9DD363"}}>{community.commuhost} *</Member>
                     <Member>{memberlist[0]}</Member>
                     <Member>{memberlist[1]}</Member>
                 </StyledMemberList>
