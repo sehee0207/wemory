@@ -1,6 +1,7 @@
 const db = require("../models");
 const Diary = db.diary;
 const Community = db.community;
+const Comment = db.comment;
 
 // Create a new diary
 exports.create = (req, res) => {
@@ -73,3 +74,54 @@ exports.findOne = (req, res) => {
       return;
     });
 };
+
+exports.addComment = (req, res) => {
+  const comment = new Comment({
+    username: req.body.username,
+    content: req.body.comment
+  });
+
+  Diary
+  .findOneAndUpdate({
+    communityid: req.body.communityid,
+    date: req.body.date
+  }, {$push: {comments: comment._id}})
+  .then((diary) => {
+    if (!diary) {
+      res.status(404).send({ message: "Cannot find diary" });
+      return;
+    }
+    else {
+      comment
+      .save(comment)
+      .catch(err => {
+          res.status(500).send({
+              message:
+              err.message || "Some error occurred while commenting."
+          });
+          return;
+      });
+      
+      res.send(diary);
+      return;
+    }
+  })
+  .catch((err) => {
+    res.status(500).send({ message: "err" });
+    return;
+  })
+}
+
+exports.retrieveComment = (req, res) => {
+  Comment
+  .findOne({_id: req.params.commentid})
+  .exec((err, comment) => {
+    if (err) {
+      res.status(500).send({ message: err });
+      return;
+    }
+    
+    res.status(200).send({comment: comment});
+    return;
+  });
+}

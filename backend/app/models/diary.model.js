@@ -5,7 +5,7 @@ const Diary = mongoose.model(
   new mongoose.Schema({
     communityid: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Community",
+      ref: "Community"
     },
     date: {
       type: String,
@@ -21,11 +21,10 @@ const Diary = mongoose.model(
     photo: [{
       type: String
     }],
-    /*
-    hashtag: [{
-      type: String
+    comments: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
     }]
-    */
   })
 );
 

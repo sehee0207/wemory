@@ -17,4 +17,9 @@ module.exports = function(app) {
 
   // Retrieve a single diary with communityid, date
   app.post("/api/diary/date", controller.findOne);
+
+  // add Comment
+  app.post("/api/diary/comment", controller.addComment);
+
+  app.get("/api/diary/comment/:commentid", controller.retrieveComment);
 };
