@@ -104,9 +104,10 @@ const TxtBox = styled.div`
     background-color: #fff;
     width: 100%;
     height: 20vh;
-    max-height: 33%;
-    padding: 3%;
+    margin: 10px;
+    padding-right: 10px;
     overflow-y: auto;
+    border-bottom: 1px solid #D9D9D9;
 `
 const VerticalBox = styled.div`
     width: 40vw;
@@ -116,18 +117,11 @@ const CommentBox = styled.div`
     width: 100%;
     background-color: #fff;
     height: 40vh;
-    padding: 1vw;
+    padding: 1.5vw;
     // margin: 10px 0px;
     overflow-y: auto;
 `
 const MyComment = styled.div`
-`
-const Line = styled.hr`
-    position: fixed;
-    width : 17vw;
-    height: 0.1vh;
-    background-color : #D9D9D9;
-    margin: 3px;
 `
 const StyledButton = styled.button`
     background: #fff;
@@ -362,7 +356,7 @@ function PostViewPage(props){
 
                 <VerticalBox>
                     <TxtBox style={{whiteSpace: 'pre'}}>{diary.content}</TxtBox>
-                    <Line />
+                    {/* <Line /> */}
                     {comments !== undefined && (
                     <CommentBox>
                         {comments.map(comment => {
