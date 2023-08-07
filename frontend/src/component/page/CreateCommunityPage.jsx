@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import TopBar from "../ui/TopBar";
@@ -89,11 +89,27 @@ function CreateCommunityPage(props){
   const currentUser = AuthService.getCurrentUser();
 
   const [communityname, setCommunityname] = useState("");
+  const [communitylist, setCommunityList] = useState([]);
   const [m1username, setM1username] = useState("");
   const [m2username, setM2username] = useState("");
   const [m3username, setM3username] = useState("");
   const [m4username, setM4username] = useState("");
   const [m5username, setM5username] = useState("");
+
+  const retrieveCommunities = () => {
+    CommunityService
+    .getAll(currentUser.username)
+    .then((response) => {
+        setCommunityList(response.data.communityList);
+    }).catch(e => {
+        console.log(e);
+    });
+  }
+
+  useEffect(() => {
+      retrieveCommunities();
+  }, []);
+
 
   const onChangeCommunityname = (e) => {
       const communityname = e.target.value;
@@ -141,7 +157,7 @@ function CreateCommunityPage(props){
     if (true) { //rewrite
         CommunityService.create(communityname, currentUser.username, member).then(
         () => {
-            window.location.assign('/main');
+            window.location.assign(`/main/${communitylist[0]}`);
         },
         (error) => {
           // check community name
