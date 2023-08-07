@@ -170,7 +170,7 @@ function CreateCommunityPage(props){
 
           // check member
           if (error.response.data.message === "Community members must be at least 2 people.") {
-            setMemberinviteMessage("최소 1명의 멤버를 더 초대해야합니다.");
+            setMemberinviteMessage("최소 1명의 멤버를 초대해야합니다.");
             setIsInvite(false);
           }
 
