@@ -40,11 +40,11 @@ let districtoptions = [
     { value: "강남구", label: "강남구" },
 ]
 
-
+let storeoptions = [];
 function LocalCommunityList(props){
     const [district, setDistrict] = useState("강남구");
     const [store, setStore] = useState("");
-    let storeoptions = [];
+    
     const retrieveLocalData = () => {
         PydataService
         .findAll()
