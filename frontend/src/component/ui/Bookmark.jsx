@@ -5,7 +5,6 @@ import YesBM from "../img/yes-bookmark.svg";
 
 const Bm = styled.img`
     width: 35px;
-    padding-top: 25px;
     cursor: pointer;
 `
 

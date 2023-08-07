@@ -9,6 +9,7 @@ import '../../style/Modal.css';
 import AuthService from "../../services/auth.service";
 import CommunityService from "../../services/community.service";
 import PostViewPage from "../page/PostViewPage";
+import YesBM from "../img/yes-bookmark.svg";
 import { mark } from "react-input-emoji";
 
 const Wrapper = styled.div`
@@ -32,6 +33,10 @@ const StyledComname = styled.div`
     font-weight: 700;
     padding: 10px;
     margin: 0px 15px;
+`
+
+const Clover = styled.img`
+    width: 20%;
 `
 /* https://velog.io/@pikadev1771/react-calendar-%EC%BB%A4%EC%8A%A4%ED%85%80%ED%95%98%EA%B8%B0-%EB%82%A0%EC%A7%9C-%EB%B3%80%ED%99%98-%ED%98%84%EC%9E%AC-%EB%8B%AC-%EA%B5%AC%ED%95%98%EA%B8%B0-%EC%BD%98%ED%85%90%EC%B8%A0-%EC%B6%94%EA%B0%80%ED%95%98%EA%B8%B0*/
 // https://ui.toast.com/tui-calendar
@@ -70,6 +75,7 @@ function Memory(props){
         setViewPageOpen(true);
     }
 
+
     return(
         <Wrapper>
             <StyledComname>{community.communityname}</StyledComname>
@@ -84,6 +90,17 @@ function Memory(props){
                           return "highlight";
                         }
                     }}
+                    // tileContent={({ date, view }) => {
+                    //     if (marks && marks.find((x) => x === moment(date).format("YYMMDD"))) {
+                    //       return (
+                    //        <>   
+                    //             {/* <div className="flex justify-center items-center absolute"> */}
+                    //                 <Clover src={YesBM}></Clover>
+                    //             {/* </div> */}
+                    //        </>
+                    //      );
+                    //     }
+                    // }}
                     next2Label={null}
                     prev2Label={null}
                     onClickDay={(date) =>
@@ -99,7 +116,6 @@ function Memory(props){
                     }}
                     // onClickDay={WritePageHandler}
                 />
-                
                 {/* { createIsOpen && <Link to={`post-write/${moment(value).format('YYMMDD')}`}><p>눌러</p></Link> } */}
                 {/* { createIsOpen && navigate(`post-write/${moment(value).format('YYMMDD')}`)} */}
                 {/* 위에 주석은 지우지 말아주세요!~! */}
