@@ -63,14 +63,25 @@ function LocalCommunityList(props){
 
             for (let i=1; i<line.length-3; i++) {
                 let word = line[i].split(/\s+/g);
-                stores.push({
-                    location: word[1],
-                    storeName: word[2],
-                    visitor: word[4],
-                    score: word[5]
-                });
 
-                if (i === line.length-4)    setStoreInfo(stores);
+                if (word[3] === "...") {
+                    stores.push({
+                        location: word[1],
+                        storeName: word[2],
+                        visitor: word[4],
+                        score: word[5]
+                    });
+                }
+                else {
+                    stores.push({
+                        location: word[1],
+                        storeName: word[2] + " " + word[3],
+                        visitor: word[5],
+                        score: word[6]
+                    });
+                }
+
+                if (i === line.length-4)    {setStoreInfo(stores); console.log(stores)}
             }
         });
     }
