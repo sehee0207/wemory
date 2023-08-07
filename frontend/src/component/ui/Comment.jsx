@@ -2,11 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const StyledComment = styled.div`
-    
+    display: flex;
+    align-items: center;
 `
 const Id = styled.div`
     font-size: 12px;
     font-weight: 600;
+    padding: 5px;
 `
 const CommentContent = styled.div`
     font-size: 12px;

@@ -83,18 +83,29 @@ const CommentBox = styled.div`
     width: 100%;
     background-color: #fff;
     height: 57%;
-    padding: 3%;    
-    overflow-y: scroll;
+    padding: 3%;
+    // margin: 10px 0px;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+        width: 4px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background: #ccc;
+      }
 `
 const MyComment = styled.div`
-
+    .&>input{
+        border: 1px solid red;
+    }
 `
 const Line = styled.hr`
-    width : 95%;
+    position: fixed;
+    width : 310px;
     height: 0.1vh;
     background-color : #D9D9D9;
     // border : 1px;
-    margin: auto;
+    margin: 3px;
 `
 
 const StyledModal = {
@@ -166,29 +177,21 @@ function PostViewPage(props){
     })
 
     const [comments, setComments] = useState([
-        {
-            username: 'paboke22',
-            comment: '왜안돼'
-        },
-        {
-            username: 'tester',
-            comment: '어?????'
-        },
-        {
-            username: 'guest',
-            comment: '말좀해봐'
-        }
-        ]);
-        
+    ]);
+    
+    const nextId = useRef(1);
+
     function handleOnEnter(text){
         const name = currentUser.username;
         
         if(text.length >0){
             const comment = {
+                id: nextId.current,
                 username: name,
                 comment: text,
             }  
             setComments([...comments, comment])
+            nextId.current += 1;
         }
     }
 
@@ -231,7 +234,7 @@ function PostViewPage(props){
             <Top>
                 <DateTitle>
                     <DateText>Date :  {props.date}</DateText>
-                    <TitleText>{diary.title}</TitleText>
+                    <TitleText>{"제목제목제목" || diary.title}</TitleText>
                 </DateTitle>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
@@ -244,11 +247,11 @@ function PostViewPage(props){
                     </Slider>
                 </PhotoBox>
                 <VerticalBox>
-                    <TxtBox>{diary.content}</TxtBox>
+                    <TxtBox>{ "본문이에요" ||diary.content}</TxtBox>
                     <Line />
                     <CommentBox>
                         {comments.map(comment => {
-                            return <Comment userid={comment.username} comment={comment.comment} />
+                            return <Comment userid={comment.username} comment={comment.comment} key={comment.id} />
                         })}
                     </CommentBox>
                     <MyComment>
