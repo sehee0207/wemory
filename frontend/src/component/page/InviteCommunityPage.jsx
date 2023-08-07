@@ -263,6 +263,7 @@ function CreateCommunityPage(props){
                 <StyledButtonContainer>
                     <Button
                     title="초대하기"
+                    onClick={()=> navigate(`/main/${params.communityid}`)}
                     />
                 </StyledButtonContainer>
               </Form>
