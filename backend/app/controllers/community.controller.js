@@ -60,45 +60,43 @@ exports.create = (req, res) => {
                     return;
                 }
 
-                // Save community in the User info
-                User.findOneAndUpdate(
-                    {username: req.body.commuhost},
-                    {$push: {commulist: community._id}}
-                )
-                .then(data => {
-                    if (!data) {
-                        res.status(404).send({ message: "Cannot find user" });
-                        return;
-                    }
+                if (i === req.body.member.length-1) {
+                    // Save community in the User info
+                    User.findOneAndUpdate(
+                        {username: req.body.commuhost},
+                        {$push: {commulist: community._id}}
+                    ).then(data => {
+                        if (!data) {
+                            res.status(404).send({ message: "Cannot find user" });
+                            return;
+                        }
 
-                    for (let i = 0; i < req.body.member.length; i++) {
-                        if (req.body.member[i] === "")  continue;
-    
-                        User.findOneAndUpdate(
-                            {username: req.body.member[i]},
-                            {$push: {commulist: community._id}}
-                        )
-                        .then(data => {
-                            if (!data) {
-                                res.status(404).send({ message: "Cannot find user" });
-                                return;
-                            }
-
-                            // Save community in the database
-                            community
-                            .save(community)
+                        for (let i = 0; i < req.body.member.length; i++) {
+                            if (req.body.member[i] === "")  continue;
+        
+                            User.findOneAndUpdate(
+                                {username: req.body.member[i]},
+                                {$push: {commulist: community._id}}
+                            )
                             .then(data => {
-                                res.send(data);
-                            })
-                            .catch(err => {
-                                res.status(500).send({
-                                    message:
-                                    err.message || "Some error occurred while creating the community."
+                                if (!data) {
+                                    res.status(404).send({ message: "Cannot find user" });
+                                    return;
+                                }
+
+                                // Save community in the database
+                                community
+                                .save(community)
+                                .then(data => {
+                                    res.send(data);
+                                })
+                                .catch(err => {
+                                    
                                 });
                             });
-                        });
-                    };
-                });
+                        };
+                    });
+                }
             });
         };
     });
