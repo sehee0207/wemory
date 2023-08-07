@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useRef} from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
 import exImg from "../img/ex-img.png";
@@ -154,6 +154,36 @@ const StyledModal = {
  	},
 }
 
+const fadeIn = keyframes `
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+const fadeOut = keyframes `
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+const ModalStyle = styled.div `
+  animation: ${(prop) => (prop.isOpen ? fadeIn : fadeOut)}
+    0.4s ease-in;
+    visibility: ${(prop) => prop.isOpen ? "visible" : "hidden"}
+    transition: visibility 0.2s ease-out;
+  
+`;
+const OverlayStyle = styled.div `
+  animation: ${(prop) => (prop.isOpen ? fadeIn : fadeOut)}
+    0.2s ease-in;
+  visibility: ${(prop) => prop.isOpen ? "visible" : "hidden"};
+  transition: visibility 0.2s ease-out;
+`;
+
 function PostViewPage(props){
     const currentUser = AuthService.getCurrentUser();
     const params = useParams();
@@ -267,6 +297,16 @@ function PostViewPage(props){
                 ariaHideApp={false}
                 style={StyledModal}
                 onRequestClose={() => setModalIsOpen(false)}
+                contentElement={(props, children) => (
+                    <ModalStyle isOpen={modalIsOpen} {...props}>
+                      {children}
+                    </ModalStyle>
+                  )}
+                  overlayElement={(props, contentElement) => (
+                    <OverlayStyle isOpen={modalIsOpen} {...props}>
+                      {contentElement}
+                    </OverlayStyle>
+                  )}
             >
             <ContentText>추억 확인하기</ContentText>
             <DateText>Date :  {props.date}</DateText>

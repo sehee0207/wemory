@@ -105,7 +105,7 @@ function LocalCommunityList(props){
 
                 <Select
                     className="react-select-container"
-                    options={districtoptions}
+                    options={storeInfo}
                     onChange={(e) => {setDistrict(e.value)}}
                     placeholder="지역을 선택해주세요"
                     components={{
