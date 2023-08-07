@@ -44,6 +44,7 @@ exports.findAll = (req, res) => {
         datelist.push(bookmarks[i].date);
 
         if (i === bookmarks.length-1) {
+          datelist.sort();
           res.status(200).send({ bookmarklist: datelist });
         }
       }
@@ -51,14 +52,31 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
-  Diary.findOne({date: req.body.date})
-    .exec((err, diary) => {
+  Bookmark.findOne({
+    communityid: req.params.communityid,
+    date: req.params.date
+  }).exec((err, bookmark) => {
       if (err) {
         res.status(500).send({ message: err });
         return;
       }
-      if (diary) {
-        
+      if (bookmark) {
+        res.status(200).send({ bookmark: bookmark });
+        return;
       }
+    });
+};
+
+exports.deleteOne = (req, res) => {
+  Bookmark.findOneAndRemove({
+    communityid: req.params.communityid,
+    date: req.params.date
+  }).exec((err, data) => {
+      if (err) {
+        res.status(500).send({ message: err });
+        return;
+      }
+      res.send(data);
+      return;
     });
 };

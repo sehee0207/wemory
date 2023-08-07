@@ -1,5 +1,5 @@
 import {React, useState, useEffect, useRef} from "react";
-// import { useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
@@ -10,15 +10,15 @@ import InputEmoji, { async } from "react-input-emoji";
 import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
-import AuthService from "../../services/auth.service";
 import {FaTrash} from 'react-icons/fa';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import AuthService from "../../services/auth.service";
 import DiaryService from "../../services/diary.service";
-import { useParams } from "react-router-dom";
+import BookmarkService from "../../services/bookmark.service";
 
 const Wrapper = styled.div`
 `
@@ -164,6 +164,12 @@ function PostViewPage(props){
     const [toast, setToast] = useState(false);
 
     const handleBm = async (e) => {
+        if (bm === false) {
+            BookmarkService.create(params.communityid, props.date, currentUser.username);
+        }
+        if (bm === true) {
+            BookmarkService.deleteOne(params.communityid, props.date, currentUser.username);
+        }
         setBm(!bm);
         handleToast();
     };
@@ -221,6 +227,14 @@ function PostViewPage(props){
                     }
                 })
             }
+
+            // check bookmark
+            BookmarkService
+            .get(params.communityid, props.date)
+            .then((bookmark) => {
+                if (bookmark)  setBm(true);
+                else            setBm(false);
+            });
         }).catch(e => {
             console.log(e);
         });
@@ -228,6 +242,8 @@ function PostViewPage(props){
 
     useEffect(() => {
         retrieveDiary();
+        setBm(false);
+        setComments([]);
         setModalIsOpen(true);
     }, [props.date]);
 

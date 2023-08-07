@@ -15,8 +15,7 @@ module.exports = function(app) {
   // Retrieve all bookmark
   app.post("/api/bookmark", controller.findAll);
 
-  /*
-  // Retrieve a single bookmark with id
-  app.get("/api/bookmark/:id", controller.findOne);
-  */
+  // Retrieve a single bookmark with date
+  app.get("/api/bookmark/:communityid/:date", controller.findOne);
+  app.delete("/api/bookmark/:communityid/:date", controller.deleteOne);
 };

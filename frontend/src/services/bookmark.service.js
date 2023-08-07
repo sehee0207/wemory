@@ -2,10 +2,10 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8090/api/bookmark/";
 
-const create = (communityid, diaryid, username) => {
+const create = (communityid, date, username) => {
   return axios.post(API_URL + "create", {
     communityid,
-    diaryid,
+    date,
     username
   });
 };
@@ -17,14 +17,19 @@ const getAll = (communityid, username) => {
   });
 };
 
-const get = (id) => {
-  return axios.get(API_URL + `/${id}`);
+const get = (communityid, date) => {
+  return axios.get(API_URL + `${communityid}/${date}`);
+};
+
+const deleteOne = (communityid, date) => {
+  return axios.delete(API_URL + `${communityid}/${date}`);
 };
 
 const DiaryService = {
   create,
   getAll,
-  get
+  get,
+  deleteOne
 }
 
 export default DiaryService;
