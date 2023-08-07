@@ -1,6 +1,18 @@
 import { useEffect } from "react";
 import { displayName } from "react-input-emoji";
-import styled from 'styled-components';
+import styled,{keyframes} from 'styled-components';
+
+const fadeInDown = keyframes`
+0% {
+  opacity: 0;
+  transform: translate3d(0, -100%, 0);
+}
+to {
+  opacity: 1;
+  transform: translateZ(0);
+}
+`
+
 
 const ToastContainer = styled.div`
     z-index: 99;
@@ -13,6 +25,7 @@ const ToastContainer = styled.div`
     text-align: center;
     left: 40%;
     top: 2%;
+    animation: ${fadeInDown} 0.4s ease-in;;
 `
 const Icon = styled.div`
     color: #73CC81;
