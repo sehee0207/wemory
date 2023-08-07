@@ -20,11 +20,11 @@ const hoverVariants = {
 };
 
 function Button(props){
-    const { title, onClick } = props;
+    const { title, onClick, disabled } = props;
 
     return(
         <StyleButton onClick={onClick} animate={["initial"]}
-        whileHover={["grow"]} variants={hoverVariants}>
+        whileHover={["grow"]} variants={hoverVariants} disabled={disabled}>
             { title || "버튼"}
         </StyleButton>
     );
