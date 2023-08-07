@@ -1,9 +1,8 @@
 span{
-    display: block;
     height: 3vh;
-    width: 40vw;
-    text-align: left;
-    padding-left: 110px;
+    width: 45vwW;
+    display: flex;
+    justify-content: flex-end;
 }
 
 .error{

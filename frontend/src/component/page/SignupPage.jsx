@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import "../../style/Validation.css"
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Select from 'react-select';
@@ -49,8 +50,9 @@ const Text = styled.div`
 
 const StyledInputContainer = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   flex-direction: column;
-  padding: 0vw 30vw;
 `
 
 const StyledInputForm = styled.div`
@@ -58,6 +60,7 @@ const StyledInputForm = styled.div`
   width: 50vw;
   display: flex;
   align-items: center;
+  justify-content: center;
   >Input{
     justify-content: center;
     width: 30vw;
@@ -239,16 +242,16 @@ const SignupPage = (props) => {
                     <StyledInputContainer>
                       <label>
                         <StyledInputForm><Text>아이디</Text><Input type="text" name="id" id="userId" className="idinput" value={username} onChange={onChangeId}/><br /></StyledInputForm>                        
-                        {username.length > 0 && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
+                        {usernameMessage && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
 
                         <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" autocomplete="off" value={password} onChange={onChangePassword}/><br /></StyledInputForm>
-                        {password.length > 0 && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
+                        {passwordMessage && (<span className={`message ${isPassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
 
                         <StyledInputForm><Text>비밀번호 확인</Text><Input type="password" name="pw2" id="pw2" autocomplete="off" value={pw2} onChange={onChangePw2}/><br /></StyledInputForm>
-                        {pw2.length > 0 && (<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
+                        {passwordConfirmMessage &&(<span className={`message ${isPasswordConfirm ? 'success' : 'error'}`}>{passwordConfirmMessage}</span>)}
 
                         <StyledInputForm><Text>이메일</Text><Input type="text" id="email" value={email} onChange={onChangeEmail}/><br /></StyledInputForm>
-                        {email.length > 0 && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
+                        {emailMessage && (<span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
                       </label>
                     </StyledInputContainer>
 

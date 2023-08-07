@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import "../../style/LoginPage.css"
+import "../../style/Validation.css"
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 
@@ -37,10 +37,6 @@ const MainTitle = styled.p`
   margin-bottom: 25px;
 `
 
-//const Form = styled.form`
-
-//`
-
 const Text = styled.div`
   width: 100px;
   text-align: right;
@@ -53,16 +49,20 @@ const Text = styled.div`
 
 const StyledInputContainer = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
 `
 
 const StyledInputForm = styled.div`
-  height: 8vh;
-  margin-top: 20px;
+  height: 10vh;
+  width: 50vw;
   display: flex;
+  align-items: center;
+  justify-content: center;
   >Input{
     justify-content: center;
+    width: 30vw;
   }
 `
 
@@ -101,8 +101,14 @@ const Loginpage = () => {
     const checkBtn = useRef();
 
     const [username, setUsername] = useState("");
+    const [isusername, setIsUsername] = useState(false);
+
     const [password, setPassword] = useState("");
+    const [ispassword, setIsPassword] = useState(false);
+    
     const [message, setMessage] = useState("");
+    const [usernameMessage, setUsernameMessage] = useState('');
+    const [passwordMessage, setPasswordMessage] = useState('');
     const navigate = useNavigate();
 
     const onChangeUsername = (e) => {
@@ -143,6 +149,17 @@ const Loginpage = () => {
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
+
+                if (error.response.data.message === "User Not found.") {
+                  setUsernameMessage("아이디가 존재하지 않습니다.");
+                  setIsUsername(false);
+                }
+
+                if (error.response.data.message === "Invalid Password!") {
+                  setPasswordMessage("비밀번호가 틀렸습니다.");
+                  setIsPassword(false);
+                }
+                
                 setMessage(resMessage);
             }
             );
@@ -157,7 +174,9 @@ const Loginpage = () => {
                 <Form method="post" action="./login" onSubmit={handleLogin} ref={form}>
                     <StyledInputContainer>
                         <StyledInputForm><Text>아이디</Text><Input type="text" name="id" value={username} onChange={onChangeUsername} validations={[required]}/><br /></StyledInputForm>
+                        {usernameMessage && (<span className={`message ${isusername ? 'success' : 'error'}`}>{usernameMessage}</span>)}
                         <StyledInputForm><Text>비밀번호</Text><Input type="password" name="pw1" id="pw1" value={password} onChange={onChangePassword} validations={[required]}/><br /></StyledInputForm>
+                        {passwordMessage && (<span className={`message ${ispassword ? 'success' : 'error'}`}>{passwordMessage}</span>)}
                     </StyledInputContainer>
                     
                     <StyledButtonContainer>
