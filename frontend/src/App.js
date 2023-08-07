@@ -27,10 +27,7 @@ function App() {
 		<Route path="start" element={<CreateCommunityPage />} />
 		<Route path="main/:communityid" element={<MainPage />} />
 		<Route path="main/:communityid/invite" element={<InviteCommunityPage />} />
-		<Route path="main/:communityid" element={<MainPage />} />
 		<Route path="main/create-community" element={<CreateCommunityPage />} />
-		{/* <Route path="main/post-write/:date" element={<PostWritePage />} /> */}
-		<Route path="main/:communityid/:date" element={<PostViewPage />} />
 	</Routes>
   );
 }

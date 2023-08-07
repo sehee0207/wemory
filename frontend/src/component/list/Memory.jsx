@@ -8,6 +8,8 @@ import PostWritePage from "../page/PostWritePage";
 import '../../style/Modal.css';
 import AuthService from "../../services/auth.service";
 import CommunityService from "../../services/community.service";
+import PostViewPage from "../page/PostViewPage";
+import { mark } from "react-input-emoji";
 
 const Wrapper = styled.div`
     width: 50vw;
@@ -37,6 +39,7 @@ function Memory(props){
     const { comname } = props;
     const [ value, onChange ] = useState(new Date());
     const [WritePageOpen, setWritePageOpen] = useState(false);
+    const [ViewPageOpen, setViewPageOpen] = useState(false);
     // const navigate = useNavigate();
     const params = useParams();
     const [community, setCommunity] = useState("");
@@ -59,8 +62,12 @@ function Memory(props){
         retrieveCommunity();
     }, [pathname]);
 
-    function Handler() {
+    function WritePageHandler() {
         setWritePageOpen(true);
+    }
+
+    function ViewPageHandler() {
+        setViewPageOpen(true);
     }
 
     return(
@@ -76,10 +83,21 @@ function Memory(props){
                         if (marks && marks.find((x) => x === moment(date).format("YYMMDD"))) {
                           return "highlight";
                         }
-                      }}
+                    }}
                     next2Label={null}
                     prev2Label={null}
-                    onClickDay={Handler}
+                    onClickDay={(date) =>
+                        {if (marks && marks.find((x) => x === moment(date).format("YYMMDD"))){
+                            setWritePageOpen(false);
+                            setViewPageOpen(true);
+                
+                        }
+                        else{
+                            setWritePageOpen(true);
+                            setViewPageOpen(false);
+                        }
+                    }}
+                    // onClickDay={WritePageHandler}
                 />
                 
                 {/* { createIsOpen && <Link to={`post-write/${moment(value).format('YYMMDD')}`}><p>눌러</p></Link> } */}
@@ -87,6 +105,7 @@ function Memory(props){
                 {/* 위에 주석은 지우지 말아주세요!~! */}
 
                 {WritePageOpen && <PostWritePage date = {moment(value).format('YYMMDD')}/>}
+                {ViewPageOpen && <PostViewPage date = {moment(value).format('YYMMDD')} />}
                 {/* {ViewPageOpen && <PostViewPage  date = {moment(value).format('YYMMDD')}}/>} */}
             </Container>
         </Wrapper>

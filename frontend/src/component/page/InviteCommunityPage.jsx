@@ -253,7 +253,7 @@ function CreateCommunityPage(props){
                       <Input
                         type="text"
                         name="m5username"
-                        value={memberlist[4] || ""}
+                        defaultValue={memberlist[4] || ""}
                         onChange={onChangeM5username[4]}
                         readOnly={read[4]}
                         /><br />
