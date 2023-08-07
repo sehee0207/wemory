@@ -158,8 +158,8 @@ function CreateCommunityPage(props){
 
     if (true) { //rewrite
         CommunityService.create(communityname, currentUser.username, member).then(
-        () => {
-            window.location.assign(`/main/${communitylist[0]}`);
+        (response) => {
+            window.location.assign(`/main/${response.data._id}`);
         },
         (error) => {
           // check community name
