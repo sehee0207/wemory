@@ -102,7 +102,6 @@ const Loginpage = () => {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState("");
     const navigate = useNavigate();
 
@@ -120,7 +119,6 @@ const Loginpage = () => {
         e.preventDefault();
 
         setMessage("");
-        setLoading(true);
 
         form.current.validateAll();
 
@@ -145,13 +143,9 @@ const Loginpage = () => {
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-
-                setLoading(false);
                 setMessage(resMessage);
             }
             );
-        } else {
-            setLoading(false);
         }
     };
 
@@ -168,7 +162,6 @@ const Loginpage = () => {
                     
                     <StyledButtonContainer>
                       <Button
-                        disabled={loading}
                         title="로그인"
                         />
                       <Under_text onClick={() => {navigate("/signup")}}>
