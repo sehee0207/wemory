@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import Select from 'react-select';
+import {GiPositionMarker} from 'react-icons/gi';
 
 import PydataService from "../../services/pydata.service";
 
@@ -25,6 +26,10 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
+    
+    .pointer {
+        padding-top: 3px;
+    }
 `
 
 const StyledSelect = styled.div`
@@ -92,7 +97,7 @@ function LocalCommunityList(props){
 
     return(
         <Wrapper>
-            <TitleText>지역 커뮤니티</TitleText>
+            <TitleText><GiPositionMarker className="pointer"/>&nbsp;지역 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <StyledSelect>
                 <Select

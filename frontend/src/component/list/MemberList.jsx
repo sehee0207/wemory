@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import Button from "../ui/Button";
 import { BsPeopleFill } from 'react-icons/bs';
+import {IoMdSettings} from 'react-icons/io';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -124,7 +125,7 @@ function MemberList(props){
                     <GreyBtn>
                         <Button
                             id="cancel-btn"
-                            title="커뮤니티 관리"
+                            title="⚙️ 커뮤니티 관리"
                             onClick={() => {
                                 navigate("invite");
                             }}
