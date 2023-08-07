@@ -283,6 +283,13 @@ function PostViewPage(props){
             console.log(e);
         });
     }
+    const deleteDiary = () => {
+        DiaryService
+        .deleteOne(params.communityid, props.date)
+        .then(() => {
+            window.location.assign(`/main/${params.communityid}`);
+        });
+    }
 
     useEffect(() => {
         retrieveDiary();
@@ -325,7 +332,7 @@ function PostViewPage(props){
             <Top>
                 <TitleDelete>
                 <TitleText>{diary.title}</TitleText>
-                <StyledButton><img src={deleteIcon}/></StyledButton>
+                <StyledButton onClick={deleteDiary}><img src={deleteIcon}/></StyledButton>
                 </TitleDelete>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>

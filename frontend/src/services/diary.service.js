@@ -19,6 +19,10 @@ const get = (communityid, date) => {
   });
 };
 
+const deleteOne = (communityid, date) => {
+  return axios.delete(API_URL + `${communityid}/${date}`);
+}
+
 const createComment = (communityid, date, username, comment) => {
   return axios.post(API_URL + "comment", {
     communityid,
@@ -35,6 +39,7 @@ const getComment = (commentid) => {
 const DiaryService = {
   create,
   get,
+  deleteOne,
   createComment,
   getComment
 }
