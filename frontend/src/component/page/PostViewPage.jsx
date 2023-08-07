@@ -1,35 +1,32 @@
 import {React, useState, useEffect, useRef} from "react";
-import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
-import Button from "../ui/Button";
 import exImg from "../img/ex-img.png";
 import Comment from '../ui/Comment';
-import InputEmoji, { async } from "react-input-emoji";
+import InputEmoji from "react-input-emoji";
 import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
+import AuthService from "../../services/auth.service";
 import {FaTrash} from 'react-icons/fa';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-import AuthService from "../../services/auth.service";
 import DiaryService from "../../services/diary.service";
-import BookmarkService from "../../services/bookmark.service";
+import { useParams } from "react-router-dom";
 
 const Wrapper = styled.div`
 `
 
 const Top = styled.div`
     display: flex;
-    height: 10vh;
+    // height: 10vh;
     justify-content: space-between;
     margin-right : 3vw;
-`
-const DateTitle = styled.div`
+    align-items: center;
 `
 const ContentText = styled.div`
     text-align : center;
@@ -37,10 +34,13 @@ const ContentText = styled.div`
     font-weight : 600;
 `
 const DateText = styled.div`
-    text-align : left;
-    color : #C7DB44;
-    margin-left : 3vw;
-    margin-top : 3vh;
+    text-align : center;
+    color: #C7DB44;
+    margin-bottom : 3vh;
+    // text-align : left;
+    // color : #C7DB44;
+    // margin-left : 3vw;
+    // margin-top : 3vh;
 `
 const TitleText = styled.div`
     text-align : left;
@@ -53,6 +53,7 @@ const TitleText = styled.div`
 const PostBox = styled.div`
     background-color: #fff;
     height: 65vh;
+    width: 40vw;
     margin-left : 3vw;
     margin-right : 3vw;
     margin-top: 2vh;
@@ -64,47 +65,66 @@ const PhotoBox = styled.div`
     padding-right: 10px;
 `
 const Img = styled.img`
-    width: 300px;
-    height: 400px;
+    height: 60vh;
+`
+
+const UserImg1 = styled.div`
+    height: 60vh;
+    ${(props) => 
+        props.url &&
+        `background-image: url(${props.url});`}
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #FBFFE0; 
+`
+const UserImg2 = styled.div`
+    height: 60vh;
+    ${(props) => 
+        props.url &&
+        `background-image: url(${props.url});`}
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #FBFFE0; 
+`
+const UserImg3 = styled.div`
+    height: 60vh;
+    ${(props) => 
+        props.url &&
+        `background-image: url(${props.url});`}
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-color: #FBFFE0; 
 `
 const TxtBox = styled.div`
     background-color: #fff;
     width: 100%;
-    height: 33%;
+    height: 20vh;
     max-height: 33%;
     padding: 3%;
-    // overflow-y: scroll;
+    overflow-y: auto;
 `
 const VerticalBox = styled.div`
-    width: 60%;
-    height: 100%;
+    width: 40vw;
+    height: 65vh;
 `
 const CommentBox = styled.div`
     width: 100%;
     background-color: #fff;
-    height: 57%;
-    padding: 3%;
+    height: 40vh;
+    padding: 1vw;
     // margin: 10px 0px;
     overflow-y: auto;
-    &::-webkit-scrollbar {
-        width: 4px;
-      }
-      &::-webkit-scrollbar-thumb {
-        border-radius: 2px;
-        background: #ccc;
-      }
 `
 const MyComment = styled.div`
-    .&>input{
-        border: 1px solid red;
-    }
 `
 const Line = styled.hr`
     position: fixed;
-    width : 310px;
+    width : 17vw;
     height: 0.1vh;
     background-color : #D9D9D9;
-    // border : 1px;
     margin: 3px;
 `
 
@@ -123,32 +143,19 @@ const StyledModal = {
  		background: "#fff",
  		overflow: "auto",
  		WebkitOverflowScrolling: "touch",
- 		borderRadius: "14px",
+ 		borderRadius: "30px",
  		outline: "none",
  		zIndex: 10,
-        top: '6vh',
+        top: '5vh',
         left: '25vw',
         right: '25vw',
-        bottom: '6vh',
+        bottom: '5vh',
  	},
 }
-
-const PreviewContainer = styled.div`
-    display: inline;
-    width: 230px;
-    height: 120px;
-    border-radius: 10px;
-    text-align:center;
-    padding-top: 5vh;
-    font-size: 3vh;
-    margin-right: 5%;
-    cursor: pointer;
-`
 
 function PostViewPage(props){
     const currentUser = AuthService.getCurrentUser();
     const params = useParams();
-    ///const today = params.date;
     const [modalIsOpen, setModalIsOpen] = useState(false);
 
     const [diary, setDiary] = useState("");
@@ -159,17 +166,10 @@ function PostViewPage(props){
     const [message, setMessage] = useState("");
 
     const [ text, setText ] = useState("");
-    // const [ comment, setComment ] = useState("");
     const [ bm, setBm ] = useState(false);
     const [toast, setToast] = useState(false);
 
     const handleBm = async (e) => {
-        if (bm === false) {
-            BookmarkService.create(params.communityid, props.date, currentUser.username);
-        }
-        if (bm === true) {
-            BookmarkService.deleteOne(params.communityid, props.date, currentUser.username);
-        }
         setBm(!bm);
         handleToast();
     };
@@ -177,11 +177,6 @@ function PostViewPage(props){
     const handleToast = async (e) => {
         setToast(true);
     };
-    
-    const [inputs, setInputs] = useState({
-        username: '',
-        comment: '',
-    })
     
     const nextId = useRef(1);
 
@@ -227,14 +222,6 @@ function PostViewPage(props){
                     }
                 })
             }
-
-            // check bookmark
-            BookmarkService
-            .get(params.communityid, props.date)
-            .then((bookmark) => {
-                if (bookmark)  setBm(true);
-                else            setBm(false);
-            });
         }).catch(e => {
             console.log(e);
         });
@@ -242,8 +229,6 @@ function PostViewPage(props){
 
     useEffect(() => {
         retrieveDiary();
-        setBm(false);
-        setComments([]);
         setModalIsOpen(true);
     }, [props.date]);
 
@@ -266,24 +251,29 @@ function PostViewPage(props){
                 style={StyledModal}
                 onRequestClose={() => setModalIsOpen(false)}
             >
-            <ContentText>추억 확인</ContentText>
+            <ContentText>추억 확인하기</ContentText>
+            <DateText>Date :  {props.date}</DateText>
             <Top>
-                <DateTitle>
-                    <DateText>Date :  {props.date}</DateText>
-                    <TitleText>{diary.title}</TitleText>
-                </DateTitle>
+                <TitleText>{diary.title}</TitleText>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
+
             <PostBox>
                 <PhotoBox>
                     <Slider {...settings}>
-                        {photo[0] !== "" && <Img src={photo[0]}></Img>}
-                        {photo[1] !== "" && <Img src={photo[1]}></Img>}
-                        {photo[2] !== "" && <Img src={photo[2]}></Img>}
+                        {photo[0] !== "" && <UserImg1 url={photo[0]} /> }
+                        {photo[0] === "" && <Img src={exImg} />}
+
+                        {photo[1] !== "" && <UserImg2 url={photo[1]} />}
+                        {photo[1] === "" && <Img src={exImg} />}
+
+                        {photo[2] !== "" && <UserImg3 url={photo[2]} />}
+                        {photo[2] === "" && <Img src={exImg} />}
                     </Slider>
                 </PhotoBox>
+
                 <VerticalBox>
-                    <TxtBox>{diary.content}</TxtBox>
+                    <TxtBox style={{whiteSpace: 'pre'}}>{diary.content}</TxtBox>
                     <Line />
                     {comments !== undefined && (
                     <CommentBox>
@@ -292,23 +282,15 @@ function PostViewPage(props){
                         })}
                     </CommentBox>)}
                     <MyComment>
-                    <InputEmoji
-                        value={text}
-                        cleanOnEnter
-                        onEnter={handleOnEnter}
-                        placeholder="댓글을 달아보세요"
-                    />
+                        <InputEmoji
+                            value={text}
+                            cleanOnEnter
+                            onEnter={handleOnEnter}
+                            placeholder="댓글을 달아보세요"
+                        />
                     </MyComment>
                 </VerticalBox>
             </PostBox>
-                    {/*<input
-                        type="text"
-                        name="content"
-                        id="content"
-                        value={content}
-                        onChange={onChangeContent}
-                        validations={[required]}
-                    />*/}
             </Modal>
         </Wrapper>
     )
