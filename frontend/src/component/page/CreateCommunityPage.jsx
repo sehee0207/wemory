@@ -5,16 +5,18 @@ import TopBar from "../ui/TopBar";
 import Input from "../ui/Input";
 import Button from "../ui/Button";
 import Form from "react-validation/build/form";
-
+import "../../style/Validation.css"
 import CommunityService from "../../services/community.service";
 import AuthService from "../../services/auth.service";
 
 const Wrapper = styled.div`
+  width: 100vw;
+  height: 100vh;
 `
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 `
 
 const SubTitle = styled.div`
@@ -60,11 +62,8 @@ const StyledInputForm = styled.div`
 `
 
 const StyledButtonContainer = styled.div`
-//   margin-top: 5vh;
   display: flex;
   flex-direction: column;
-//   padding-left: 30%;
-//   padding-right: 30%;
   justify-content: center;
   align-items: center;
   
@@ -95,6 +94,9 @@ function CreateCommunityPage(props){
   const [m3username, setM3username] = useState("");
   const [m4username, setM4username] = useState("");
   const [m5username, setM5username] = useState("");
+
+  const [isinvite, setIsInvite] = useState(false);
+  const [memberinviteMessage, setMemberinviteMessage] = useState('');
 
   const retrieveCommunities = () => {
     CommunityService
@@ -162,22 +164,26 @@ function CreateCommunityPage(props){
         (error) => {
           // check community name
           if (error.response.data.message === "Community name can not be empty!") {
-
+            setMemberinviteMessage("커뮤니티 이름은 비워둘 수 없습니다.");
+            setIsInvite(false);
           }
 
           // check member
           if (error.response.data.message === "Community members must be at least 2 people.") {
-
+            setMemberinviteMessage("최소 1명의 멤버를 더 초대해야합니다.");
+            setIsInvite(false);
           }
 
           // check host's community number
           if (error.response.data.message === "host's communities are too many.") {
-            
+            setMemberinviteMessage("초대하려고 하는 사용자의 커뮤니티 수가 3개가 넘어 초대할 수 없습니다.");
+            setIsInvite(false);
           }
 
           // check member's community number
           if (error.response.data.message === "member's ommunities are too many.") {
-
+            setMemberinviteMessage("초대하려고 하는 사용자의 커뮤니티 수가 3개가 넘어 초대할 수 없습니다.");
+            setIsInvite(false);
           }
         });
     }
@@ -250,8 +256,8 @@ function CreateCommunityPage(props){
                         /><br />
                     </StyledInputForm>
                 </StyledInputContainer>
-
                 <StyledButtonContainer>
+                {memberinviteMessage && (<span className={`message ${isinvite ? 'success' : 'error'}`}>{memberinviteMessage}</span>)}
                     <Button
                     title="초대 및 생성하기"
                     />
