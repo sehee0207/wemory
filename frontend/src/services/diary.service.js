@@ -19,9 +19,24 @@ const get = (communityid, date) => {
   });
 };
 
+const createComment = (communityid, date, username, comment) => {
+  return axios.post(API_URL + "comment", {
+    communityid,
+    date,
+    username,
+    comment
+  });
+};
+
+const getComment = (commentid) => {
+  return axios.get(API_URL + `comment/${commentid}`)
+}
+
 const DiaryService = {
   create,
-  get
+  get,
+  createComment,
+  getComment
 }
 
 export default DiaryService;

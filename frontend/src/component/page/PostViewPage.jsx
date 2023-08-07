@@ -153,6 +153,7 @@ function PostViewPage(props){
 
     const [diary, setDiary] = useState("");
     const [photo, setPhoto] = useState([]);
+    const [comments, setComments] = useState([]);
 
     const [successful, setSuccessful] = useState(false);
     const [message, setMessage] = useState("");
@@ -175,9 +176,6 @@ function PostViewPage(props){
         username: '',
         comment: '',
     })
-
-    const [comments, setComments] = useState([
-    ]);
     
     const nextId = useRef(1);
 
@@ -192,15 +190,37 @@ function PostViewPage(props){
             }  
             setComments([...comments, comment])
             nextId.current += 1;
+
+            DiaryService
+            .createComment(params.communityid, props.date, currentUser.username, comment.comment);
         }
     }
 
     const retrieveDiary = () => {
         DiaryService
-        .get(params.communityid, params.date)   //모달 구현 이후 props.date
+        .get(params.communityid, props.date)   //모달 구현 이후 props.date
         .then((response) => {
             setDiary(response.data.diary);
             setPhoto(response.data.diary.photo);
+
+            let firstComments = [];
+            for (let i=0; i<response.data.diary.comments.length; i++) {
+                DiaryService
+                .getComment(response.data.diary.comments[i])
+                .then((res) => {
+                    const comment = {
+                        id: nextId.current,
+                        username: res.data.comment.username,
+                        comment: res.data.comment.content,
+                    }
+                    firstComments.push(comment);
+                    nextId.current += 1;
+
+                    if (i === response.data.diary.comments.length-1) {
+                        setComments(firstComments);
+                    }
+                })
+            }
         }).catch(e => {
             console.log(e);
         });
@@ -234,7 +254,7 @@ function PostViewPage(props){
             <Top>
                 <DateTitle>
                     <DateText>Date :  {props.date}</DateText>
-                    <TitleText>{"제목제목제목" || diary.title}</TitleText>
+                    <TitleText>{diary.title}</TitleText>
                 </DateTitle>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
@@ -247,13 +267,14 @@ function PostViewPage(props){
                     </Slider>
                 </PhotoBox>
                 <VerticalBox>
-                    <TxtBox>{ "본문이에요" ||diary.content}</TxtBox>
+                    <TxtBox>{diary.content}</TxtBox>
                     <Line />
+                    {comments !== undefined && (
                     <CommentBox>
                         {comments.map(comment => {
                             return <Comment userid={comment.username} comment={comment.comment} key={comment.id} />
                         })}
-                    </CommentBox>
+                    </CommentBox>)}
                     <MyComment>
                     <InputEmoji
                         value={text}
