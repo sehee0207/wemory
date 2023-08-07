@@ -33,62 +33,74 @@ exports.create = (req, res) => {
             res.status(400).send({ message: "Cannot find user" });
             return;
         }
-    });
-    // check member
-    for (let i = 0; i < req.body.member.length; i++) {
-        if (req.body.member[i] === "")  continue;
 
-        User.findOne({
-            username: req.body.member[i]
-        }).exec((err, user) => {
-            if (err) {
-                res.status(500).send({ message: err });
-                return;
-            }
-            if (!user) {
-                res.status(400).send({ message: "Cannot find user" });
-                return;
-            }
-        });
-    };
-
-    // Save community in the User info
-    User.findOneAndUpdate(
-        {username: req.body.commuhost},
-        {$push: {commulist: community._id}}
-    )
-    .then(data => {
-        if (!data) {
-            res.status(404).send({ message: "Cannot find user" });
+        if (user.commulist.length >= 3) {
+            res.status(500).send({ message: "host's communities are too many." });
             return;
         }
-    });
-    for (let i = 0; i < req.body.member.length; i++) {
-        if (req.body.member[i] === "")  continue;
 
-        User.findOneAndUpdate(
-            {username: req.body.member[i]},
-            {$push: {commulist: community._id}}
-        )
-        .then(data => {
-            if (!data) {
-                res.status(404).send({ message: "Cannot find user" });
-                return;
-            }
-        });
-    };
+        // check member
+        for (let i = 0; i < req.body.member.length; i++) {
+            if (req.body.member[i] === "")  continue;
 
-    // Save community in the database
-    community
-    .save(community)
-    .then(data => {
-        res.send(data);
-    })
-    .catch(err => {
-        res.status(500).send({
-            message:
-            err.message || "Some error occurred while creating the community."
-        });
+            User.findOne({
+                username: req.body.member[i]
+            }).exec((err, user) => {
+                if (err) {
+                    res.status(500).send({ message: err });
+                    return;
+                }
+                if (!user) {
+                    res.status(400).send({ message: "Cannot find user" });
+                    return;
+                }
+
+                if (user.commulist.length >= 3) {
+                    res.status(500).send({ message: "member's ommunities are too many." });
+                    return;
+                }
+
+                // Save community in the User info
+                User.findOneAndUpdate(
+                    {username: req.body.commuhost},
+                    {$push: {commulist: community._id}}
+                )
+                .then(data => {
+                    if (!data) {
+                        res.status(404).send({ message: "Cannot find user" });
+                        return;
+                    }
+
+                    for (let i = 0; i < req.body.member.length; i++) {
+                        if (req.body.member[i] === "")  continue;
+    
+                        User.findOneAndUpdate(
+                            {username: req.body.member[i]},
+                            {$push: {commulist: community._id}}
+                        )
+                        .then(data => {
+                            if (!data) {
+                                res.status(404).send({ message: "Cannot find user" });
+                                return;
+                            }
+
+                            // Save community in the database
+                            community
+                            .save(community)
+                            .then(data => {
+                                res.send(data);
+                            })
+                            .catch(err => {
+                                res.status(500).send({
+                                    message:
+                                    err.message || "Some error occurred while creating the community."
+                                });
+                            });
+                        });
+                    };
+                });
+            });
+        };
     });
 };
 

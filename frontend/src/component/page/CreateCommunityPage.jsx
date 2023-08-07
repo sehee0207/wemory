@@ -164,8 +164,19 @@ function CreateCommunityPage(props){
           if (error.response.data.message === "Community name can not be empty!") {
 
           }
+
           // check member
           if (error.response.data.message === "Community members must be at least 2 people.") {
+
+          }
+
+          // check host's community number
+          if (error.response.data.message === "host's communities are too many.") {
+            
+          }
+
+          // check member's community number
+          if (error.response.data.message === "member's ommunities are too many.") {
 
           }
         });
