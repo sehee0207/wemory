@@ -10,6 +10,7 @@ import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
 import {FaTrash} from 'react-icons/fa';
+import deleteIcon from '../img/delete.svg';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -46,7 +47,7 @@ const DateText = styled.div`
 const TitleText = styled.div`
     text-align : left;
     margin-left : 3vw;
-    margin-right : 3vw;
+    margin-right : 1vw;
     font-size: 3vh;
     color: #545454;
     font-weight : 500;
@@ -127,6 +128,17 @@ const Line = styled.hr`
     height: 0.1vh;
     background-color : #D9D9D9;
     margin: 3px;
+`
+const StyledButton = styled.button`
+    background: #fff;
+    border: 0px;
+    cursor: pointer;
+    >img {
+        width: 7vw;
+    }
+`
+const TitleDelete = styled.div`
+    display: flex;
 `
 
 const StyledModal = {
@@ -311,7 +323,10 @@ function PostViewPage(props){
             <ContentText>추억 확인하기</ContentText>
             <DateText>Date :  {props.date}</DateText>
             <Top>
+                <TitleDelete>
                 <TitleText>{diary.title}</TitleText>
+                <StyledButton><img src={deleteIcon}/></StyledButton>
+                </TitleDelete>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
 
