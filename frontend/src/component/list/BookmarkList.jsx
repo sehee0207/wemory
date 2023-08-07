@@ -4,6 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 
 import BookmarkService from "../../services/bookmark.service";
 import AuthService from "../../services/auth.service";
+import PostViewPage from "../page/PostViewPage";
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -29,7 +30,9 @@ const TitleText = styled.p`
 `
 
 const CommunityList = styled.div`
-
+    height: 13vh;
+    overflow-y: scroll;
+    padding-bottom: 2vh;
 `
 
 const ContentText = styled.div`
@@ -40,6 +43,7 @@ const ContentText = styled.div`
     // margin-block-end: 0.5em;
     margin-inline-start: 1.5em;
     // margin-inline-end: 1em;
+    cursor: pointer;
 `
 
 
@@ -48,6 +52,8 @@ function BookmarkList(props){
     const {pathname} = useLocation();
 
     const [bookmark, setBookmark] = useState([]);
+    const [bmid, setBmid] = useState();
+    const [ViewPageOpen, setViewPageOpen] = useState(false);
 
     const retrieveBookmark = () => {
         setBookmark([]);
@@ -60,6 +66,14 @@ function BookmarkList(props){
             console.log(e);
         });
     }
+    function getInnerText() {
+        const element = document.getElementById('bmid');
+        setBmid(element.innerText);
+        setViewPageOpen(true);
+    }
+    function ViewPageHandler() {
+        setViewPageOpen(true);
+    }
 
     useEffect(() => {
         retrieveBookmark();
@@ -70,9 +84,13 @@ function BookmarkList(props){
             <TitleText>북마크</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
-                <ContentText>{bookmark[0]}</ContentText>
+                {bookmark.map((bookmark) => 
+                    <ContentText id='bmid' onClick={getInnerText}>{bookmark}</ContentText>
+                    )}{ViewPageOpen && <PostViewPage date = {bmid} />}
+                {/* <ContentText>{bookmark[0]}</ContentText>
                 <ContentText>{bookmark[1]}</ContentText>
                 <ContentText>{bookmark[2]}</ContentText>
+                <ContentText>{bookmark[3]}</ContentText> */}
             </CommunityList>
         </Wrapper>
     )
