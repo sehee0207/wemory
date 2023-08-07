@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import AuthService from "../../services/auth.service";
 import { motion } from 'framer-motion';
+import clover from '../img/yes-bookmark.svg';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -26,6 +27,10 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
+    >img {
+        width: 0.8vw;
+        margin-right: 2px;
+    }
 `
 
 const CommunityList = styled.div`
@@ -78,7 +83,7 @@ function MyCommunityList(props){
 
     return(
         <Wrapper>
-            <TitleText>나의 커뮤니티</TitleText>
+            <TitleText><img src={clover}/>&nbsp;나의 커뮤니티</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
                 <Community onClick={()=> navigate(`/main/${community[0]}`)} whileHover={["grow"]} variants={hoverVariants}>{communityname[0]}</Community>                  

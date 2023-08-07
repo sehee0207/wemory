@@ -1,6 +1,6 @@
 import {React, useState, useEffect, useRef} from "react";
 import { useParams } from "react-router-dom";
-import styled from "styled-components";
+import styled,{keyframes} from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
 import exImg from "../img/ex-img.png";
@@ -10,6 +10,7 @@ import Bookmark from "../ui/Bookmark";
 import Toast from "../ui/Toast";
 import {BsFillBookmarkFill} from 'react-icons/bs';
 import {FaTrash} from 'react-icons/fa';
+import deleteIcon from '../img/delete.svg';
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -46,7 +47,7 @@ const DateText = styled.div`
 const TitleText = styled.div`
     text-align : left;
     margin-left : 3vw;
-    margin-right : 3vw;
+    margin-right : 1vw;
     font-size: 3vh;
     color: #545454;
     font-weight : 500;
@@ -128,6 +129,17 @@ const Line = styled.hr`
     background-color : #D9D9D9;
     margin: 3px;
 `
+const StyledButton = styled.button`
+    background: #fff;
+    border: 0px;
+    cursor: pointer;
+    >img {
+        width: 7vw;
+    }
+`
+const TitleDelete = styled.div`
+    display: flex;
+`
 
 const StyledModal = {
     overlay: {
@@ -153,6 +165,36 @@ const StyledModal = {
         bottom: '5vh',
  	},
 }
+
+const fadeIn = keyframes `
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+`;
+const fadeOut = keyframes `
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+`;
+const ModalStyle = styled.div `
+  animation: ${(prop) => (prop.isOpen ? fadeIn : fadeOut)}
+    0.4s ease-in;
+    visibility: ${(prop) => prop.isOpen ? "visible" : "hidden"}
+    transition: visibility 0.2s ease-out;
+  
+`;
+const OverlayStyle = styled.div `
+  animation: ${(prop) => (prop.isOpen ? fadeIn : fadeOut)}
+    0.2s ease-in;
+  visibility: ${(prop) => prop.isOpen ? "visible" : "hidden"};
+  transition: visibility 0.2s ease-out;
+`;
 
 function PostViewPage(props){
     const currentUser = AuthService.getCurrentUser();
@@ -242,6 +284,22 @@ function PostViewPage(props){
         });
     }
 
+    const confirmDelete = () => {
+        if (window.confirm("정말 삭제합니까?")) {
+            alert("삭제되었습니다.");
+            deleteDiary();
+          } else {
+            //alert("취소합니다.");
+          }
+    }
+    const deleteDiary = () => {
+        DiaryService
+        .deleteOne(params.communityid, props.date)
+        .then(() => {
+            window.location.assign(`/main/${params.communityid}`);
+        });
+    }
+
     useEffect(() => {
         retrieveDiary();
         setBm(false);
@@ -267,11 +325,24 @@ function PostViewPage(props){
                 ariaHideApp={false}
                 style={StyledModal}
                 onRequestClose={() => setModalIsOpen(false)}
+                contentElement={(props, children) => (
+                    <ModalStyle isOpen={modalIsOpen} {...props}>
+                      {children}
+                    </ModalStyle>
+                  )}
+                  overlayElement={(props, contentElement) => (
+                    <OverlayStyle isOpen={modalIsOpen} {...props}>
+                      {contentElement}
+                    </OverlayStyle>
+                  )}
             >
             <ContentText>추억 확인하기</ContentText>
             <DateText>Date :  {props.date}</DateText>
             <Top>
+                <TitleDelete>
                 <TitleText>{diary.title}</TitleText>
+                <StyledButton onClick={confirmDelete}><img src={deleteIcon}/></StyledButton>
+                </TitleDelete>
                 <Bookmark bm={bm} onClick={handleBm}/>
             </Top>
 

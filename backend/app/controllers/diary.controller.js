@@ -1,7 +1,9 @@
+const { response } = require("express");
 const db = require("../models");
 const Diary = db.diary;
 const Community = db.community;
 const Comment = db.comment;
+const Bookmark = db.bookmark;
 
 // Create a new diary
 exports.create = (req, res) => {
@@ -74,6 +76,25 @@ exports.findOne = (req, res) => {
       return;
     });
 };
+
+exports.deleteOne = (req, res) => {
+  Diary.findOneAndDelete({
+    communityid: req.params.communityid,
+    date: req.params.date
+  }).then(() => {
+    Bookmark.findOneAndDelete({
+      communityid: req.params.communityid,
+      date: req.params.date
+    }).then(() => {
+      Community.findOneAndUpdate({
+        _id: req.params.communityid,
+      }, {$pull: {"postlist": req.params.date}})
+      .then((data) => {
+        res.send(data);
+      })
+    });
+  })
+}
 
 exports.addComment = (req, res) => {
   const comment = new Comment({

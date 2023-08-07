@@ -18,6 +18,8 @@ module.exports = function(app) {
   // Retrieve a single diary with communityid, date
   app.post("/api/diary/date", controller.findOne);
 
+  app.delete("/api/diary/:communityid/:date", controller.deleteOne);
+
   // add Comment
   app.post("/api/diary/comment", controller.addComment);
 

@@ -6,6 +6,7 @@ import BookmarkService from "../../services/bookmark.service";
 import AuthService from "../../services/auth.service";
 import PostViewPage from "../page/PostViewPage";
 import {motion} from 'framer-motion';
+import {BsFillBookmarkFill} from 'react-icons/bs';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -28,6 +29,10 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
+    
+    .bmicon {
+        padding-top: 3px;
+    }
 `
 
 const CommunityList = styled.div`
@@ -47,6 +52,10 @@ const ContentText = styled(motion.div)`
     cursor: pointer;
     &:hover {
         color: #9DD363;
+    }
+    
+    .bmicon {
+        padding-top: 3px;
     }
 `
 
@@ -88,11 +97,11 @@ function BookmarkList(props){
 
     return(
         <Wrapper>
-            <TitleText>북마크</TitleText>
+            <TitleText><BsFillBookmarkFill className="bmicon"/>&nbsp;북마크</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
                 {bookmark.map((bookmark, index, source) => 
-                    <ContentText onClick={() => {handleBookmarkBtn(`${index}`)}}>{bookmark}</ContentText>
+                    <ContentText onClick={() => {handleBookmarkBtn(`${index}`)}}><BsFillBookmarkFill className="bmicon"/>&nbsp;&nbsp;{bookmark}</ContentText>
                     )}{ViewPageOpen && <PostViewPage date = {bmid} />}
                 {/* <ContentText>{bookmark[0]}</ContentText>
                 <ContentText>{bookmark[1]}</ContentText>

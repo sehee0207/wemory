@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CommunityService from "../../services/community.service";
 import Button from "../ui/Button";
+import { BsPeopleFill } from 'react-icons/bs';
+import {IoMdSettings} from 'react-icons/io';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -25,6 +27,10 @@ const TitleText = styled.p`
     margin-inline-start: 10px;
     margin-inline-end: 0px;
     font-weight: 800;
+    
+    .member {
+        padding-top: 3px;
+    }
 `
 
 const CommunityList = styled.div`
@@ -99,7 +105,7 @@ function MemberList(props){
 
     return(
         <Wrapper>
-            <TitleText>멤버</TitleText>
+            <TitleText><BsPeopleFill className="member"/> &nbsp;멤버</TitleText>
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
 
             <MemberContainer>
@@ -119,7 +125,7 @@ function MemberList(props){
                     <GreyBtn>
                         <Button
                             id="cancel-btn"
-                            title="커뮤니티 관리"
+                            title="⚙️ 커뮤니티 관리"
                             onClick={() => {
                                 navigate("invite");
                             }}
