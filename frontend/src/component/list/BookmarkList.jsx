@@ -6,6 +6,7 @@ import BookmarkService from "../../services/bookmark.service";
 import AuthService from "../../services/auth.service";
 import PostViewPage from "../page/PostViewPage";
 import {motion} from 'framer-motion';
+import {BsFillBookmarkFill} from 'react-icons/bs';
 
 const Wrapper = styled.div`
     border-radius: 30px;
@@ -92,7 +93,7 @@ function BookmarkList(props){
             <hr style={{width: "90%", background: "#D9D9D9", height: "1px", border: "0"}} />
             <CommunityList>
                 {bookmark.map((bookmark, index, source) => 
-                    <ContentText onClick={() => {handleBookmarkBtn(`${index}`)}}>{bookmark}</ContentText>
+                    <ContentText onClick={() => {handleBookmarkBtn(`${index}`)}}><BsFillBookmarkFill/>&nbsp;&nbsp;{bookmark}</ContentText>
                     )}{ViewPageOpen && <PostViewPage date = {bmid} />}
                 {/* <ContentText>{bookmark[0]}</ContentText>
                 <ContentText>{bookmark[1]}</ContentText>
