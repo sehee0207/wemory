@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
 import styled from "styled-components";
 import TopBar from "../ui/TopBar";
 import Input from "../ui/Input";
@@ -86,7 +86,6 @@ const required = (value) => {
 function CreateCommunityPage(props){
   const form = useRef();
   const currentUser = AuthService.getCurrentUser();
-
   const [communityname, setCommunityname] = useState("");
   const [communitylist, setCommunityList] = useState([]);
   const [m1username, setM1username] = useState("");
@@ -192,7 +191,7 @@ function CreateCommunityPage(props){
 
   return(
       <Wrapper>
-          <TopBar />
+          <TopBar/>
           <Container>
               <SubTitle>커뮤니티 생성하기</SubTitle>
               <Form method="post" onSubmit={handleCreate} ref={form}>

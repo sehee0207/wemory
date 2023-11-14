@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import styled from "styled-components";
 import Modal from 'react-modal';
 import '../../style/Modal.css';
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation  } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import { BiSolidBellRing } from "react-icons/bi";
 import Notification from "./Notification";
@@ -76,9 +76,10 @@ const StyledModal = {
 
 function TopBar(props){
     const navigate = useNavigate();
+    const location = useLocation();
+    const [move, setMove] = useState(false);
     const currentUser = AuthService.getCurrentUser();
     const [OpenNotification, SetOpenNotification] = useState(false);
-
     const [community, setCommunity] = useState([]);
 
     const retrieveCommunities = () => {
@@ -103,7 +104,8 @@ function TopBar(props){
         <Wrapper>
             <MainTitle>
               <LogoImg src={logo}/>
-              <MainTitleText onClick={()=> navigate(`/main/${community[0]}`)}>Wemory</MainTitleText>
+              { location.pathname === '/start' && <MainTitleText>Wemory</MainTitleText>}
+              { location.pathname !== '/start' && <MainTitleText onClick={()=> navigate(`/main/${community[0]}`)}>Wemory</MainTitleText> }
               {/* navigate(`/main/${community[0]}` */}
             </MainTitle>
 
